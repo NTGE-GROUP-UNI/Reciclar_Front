@@ -1,0 +1,1 @@
+export type dirType = "row" | "col"

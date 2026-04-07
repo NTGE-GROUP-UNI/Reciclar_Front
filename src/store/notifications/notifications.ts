@@ -30,8 +30,8 @@ export const notificationStore = create<NotificationStoreProps>((set) => ({
 
 export const setNotification = (t: TFunction, theme: boolean) => {  
     notificationStore.getState().enable ? 
-        handleToasts({ message: t("settings.notifications.messageDisabled"), theme, type: "warn" }) : 
-        handleToasts({ message: t("settings.notifications.messageEnable"), theme, type: "success" })
+        handleToasts({ message: t("settings.cards.notifications.messageDisabled"), theme, type: "warn" }) : 
+        handleToasts({ message: t("settings.cards.notifications.messageEnable"), theme, type: "success" })
 
     notificationStore.getState().toggleNotification();
 }

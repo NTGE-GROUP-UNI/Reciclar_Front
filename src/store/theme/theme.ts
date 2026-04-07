@@ -24,6 +24,6 @@ export const themeStore = create<ThemeStoreProps>()(
 )
 
 export const setTheme = (t: TFunction, theme: boolean) => {
-    handleToasts({ message: t("settings.theme.message"), theme, type: "success" });
+    handleToasts({ message: t("settings.cards.theme.message"), theme, type: "success" });
     themeStore.getState().toggleTheme();
 }

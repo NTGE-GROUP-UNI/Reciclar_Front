@@ -49,7 +49,7 @@ export const Profile = () => {
                     text-xl ${themeStyles.name}
                     font-medium leading-normal
                     transition-colors duration-300
-                    text-zinc-950 dark:text-zinc-200
+                    text-zinc-200
                 "
             >
                 { displayName }

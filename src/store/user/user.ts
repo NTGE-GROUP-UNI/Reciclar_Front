@@ -18,6 +18,6 @@ export const userStore = create<UserStoreProps>((set) => ({
 }));
 
 export const setDisplayName = (t:TFunction, name: string, theme: boolean) => {
-    handleToasts({ message: t("settings.displayName.message"), theme, type: "success" });
+    handleToasts({ message: t("settings.cards.displayName.message"), theme, type: "success" });
     userStore.getState().changeDisplayName(name);
 } 

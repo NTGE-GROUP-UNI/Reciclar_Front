@@ -1,0 +1,1 @@
+export type ButtonType = "danger" | "default" | "sign-in"

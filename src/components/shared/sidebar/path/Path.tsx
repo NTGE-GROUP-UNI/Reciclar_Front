@@ -18,15 +18,22 @@ export const Path = ({ children, to, ...props}: PathProps) => {
         <Link
             to={to}
             className={`
-                text-left font-medium  py-2 px-4
-                rounded-md transition-all duration-300
+                text-left font-medium py-3 px-4
+                transition-all duration-300 relative
                 cursor-pointer flex flex-row gap-2
-                ${ isActive ? themeValue ? "bg-zinc-200" : "bg-zinc-900" : "bg-transparent" }
-                text-zinc-900 hover:bg-zinc-200 dark:text-zinc-200 dark:hover:bg-zinc-900
+                text-zinc-100 hover:bg-[--primary-blue-color-hover] dark:text-zinc-200 dark:hover:bg-zinc-900/80
+                ${ isActive ? themeValue ? "bg-zinc-200/20" : "bg-zinc-900/40" : "bg-transparent" }
             `}
             {...props}
         >
             { children }
+            <span 
+                className={`
+                    h-full w-1 absolute top-0 right-0
+                    ${ isActive ? themeValue ? "bg-zinc-200" : "bg-zinc-100" : "bg-transparent" }
+                `}
+            >
+            </span>
         </Link>
     )
 }

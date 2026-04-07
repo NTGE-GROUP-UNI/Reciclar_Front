@@ -1,5 +1,5 @@
 //COMPONENTS
-import { Form } from "./components/form/Form"
+import { Form } from "../../components/shared/form/Form"
 
 //HOOKS
 import { useTheme } from "../../hooks/theme/useTheme"
@@ -7,6 +7,7 @@ import { useTheme } from "../../hooks/theme/useTheme"
 //FONT AWESOME
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons"
+import { Button } from "../../components/shared/button/Button"
 
 export const SignIn = () => {
 
@@ -31,88 +32,98 @@ export const SignIn = () => {
                     rotate-[45deg] 
                     opacity-80
                     z-0
-                    bg-[--primary-blue-color] dark:bg-indigo-700
+                    bg-[--primary-blue-color] dark:bg-[--primary-blue-color-dark] 
                 `}
             ></div>
-            <Form.Root>
 
-                <div
-                    className="
+            <div
+                className="
+                    bg-zinc-100 dark:bg-zinc-900
+                    w-full max-w-md z-50
+                    rounded-md shadow-sm border
+                    border-zinc-200 dark:border-zinc-800 px-8 py-6
+                    transition-all duration-300
+                "
+            >
+                <Form.Root
+                    dir="col"
+                    submit={() => null}
+                >
+
+                    <div
+                        className="
                         w-full grid place-items-center
                     "
-                >
-                    <h1
-                        className="
+                    >
+                        <h1
+                            className="
                             font-medium text-3xl text-zinc-900
                             dark:text-zinc-200 leading-normal
                             mb-1
                         "
-                    >
-                        Bem-vindo!
-                    </h1>
-                    <p
-                        className="
+                        >
+                            Bem-vindo!
+                        </h1>
+                        <p
+                            className="
                             font-medium text-lg text-zinc-900
                             dark:text-zinc-200 leading-normal
                             mb-3
                         "
-                    >
-                        Entre agora com sua conta
-                    </p>
-                </div>
+                        >
+                            Entre agora com sua conta
+                        </p>
+                    </div>
 
-                <Form.Wrapper>
-                    <Form.Label
-                        htmlFor="email"
+                    <Form.Wrapper>
+                        <Form.Label
+                            htmlFor="email"
+                        >
+                            E-mail*
+                        </Form.Label>
+                        <Form.Input
+                            id="email"
+                            zodName="email"
+                            name="email"
+                            placeholder="Insira seu e-mail"
+                            type="email"
+                        />
+                    </Form.Wrapper>
+                    <Form.Wrapper>
+                        <Form.Label
+                            htmlFor="password"
+                        >
+                            Senha*
+                        </Form.Label>
+                        <Form.Input
+                            id="password"
+                            zodName="password"
+                            name="password"
+                            placeholder="Insira sua senha"
+                            type="password"
+                        />
+                    </Form.Wrapper>
+                    <Form.Wrapper>
+                        <Form.Label
+                            htmlFor="confirmPassword"
+                        >
+                            Confirme sua senha*
+                        </Form.Label>
+                        <Form.Input
+                            id="confirmPassword"
+                            zodName="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Repita sua senha"
+                            type="password"
+                        />
+                    </Form.Wrapper>
+                    <Button
+                        typeButton="sign-in"
                     >
-                        E-mail*
-                    </Form.Label>
-                    <Form.Input
-                        id="email"
-                        zodName="email"
-                        name="email"
-                        placeholder="Insira seu e-mail"
-                        type="email"
-                    />
-                    <Form.Error
-                        name="email"
-                    />
-                </Form.Wrapper>
-                <Form.Wrapper>
-                    <Form.Label
-                        htmlFor="password"
-                    >
-                        Senha*
-                    </Form.Label>
-                    <Form.Input
-                        id="password"
-                        zodName="password"
-                        name="password"
-                        placeholder="Insira sua senha"
-                        type="password"
-                    />
-                    <Form.Error
-                        name="password"
-                    />
-                </Form.Wrapper>
-                <Form.Wrapper>
-                    <Form.Label
-                        htmlFor="confirmPassword"
-                    >
-                        Confirme sua senha*
-                    </Form.Label>
-                    <Form.Input
-                        id="confirmPassword"
-                        zodName="confirmPassword"
-                        name="confirmPassword"
-                        placeholder="Repita sua senha"
-                        type="password"
-                    />
-                    <Form.Error
-                        name="confirmPassword"
-                    />
-                </Form.Wrapper>
-            </Form.Root>
+                        Entrar
+                    </Button>
+                </Form.Root>
+            </div>
 
             <button
                 onClick={toggleTheme}

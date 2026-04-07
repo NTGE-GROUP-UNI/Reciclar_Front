@@ -5,8 +5,10 @@
 @tailwind utilities;
 
 :root{
-  --primary-blue-color: #00009C;
-  --primary-blue-color-hover: #02026F;
+  --primary-blue-color: #001F3F;
+  --primary-blue-color-hover: #001A33;
+  --primary-blue-color-dark: #00428F;
+  --primary-blue-color-hover-dark: #003773;
   --primary-pink-color: #F519EA;
 }
 

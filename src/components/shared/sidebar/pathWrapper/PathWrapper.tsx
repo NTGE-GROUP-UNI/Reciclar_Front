@@ -5,7 +5,7 @@ export const PathWrapper = ({ children }: PathWrapperProps) => {
     return (
         <div
             className="
-                w-full flex flex-col gap-1
+                w-full flex flex-col
             "
         >
             { children }

@@ -31,6 +31,6 @@ export const languageStore = create<LanguageStoreProps>()(
 export const setLang = (t: TFunction, theme: boolean) => {
     const targetLng = languageStore.getState().language === "pt" ? "en" : "pt"
     languageStore.getState().toggleLanguage();
-    handleToasts({ message: t("settings.language.message"), theme, type: "info" })
+    handleToasts({ message: t("settings.cards.language.message"), theme, type: "info" })
     i18n.changeLanguage(targetLng);
 } 

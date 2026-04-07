@@ -8,7 +8,7 @@ export const Card = React.memo(({ children, description, title, icon: Icon }: Ca
     return (
         <div
             className="
-                w-full 2xl:max-w-4xl max-w-none border rounded-md
+                w-full max-w-none border rounded-md
                 bg-zinc-100 border-zinc-200 
                 dark:bg-zinc-900 dark:border-zinc-800
                 transition-all duration-300 shadow-sm

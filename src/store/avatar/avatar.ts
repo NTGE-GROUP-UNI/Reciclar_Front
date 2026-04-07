@@ -35,6 +35,6 @@ export const avatarStore = create<AvatarStoreProps>()(
 )
 
 export const setAvatar = (t:TFunction, { colors, name }:PayloadProps, theme: boolean) => {
-    handleToasts({ message: t("settings.avatar.message"), theme, type: "success" })
+    handleToasts({ message: t("settings.cards.avatar.message"), theme, type: "success" })
     avatarStore.getState().changeAvatar(colors, name);
 }

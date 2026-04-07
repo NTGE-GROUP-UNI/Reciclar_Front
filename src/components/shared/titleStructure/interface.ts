@@ -1,6 +1,6 @@
-//TYPES
+//REACT
 import type { ReactNode } from "react";
 
-export interface RootProps {
+export interface TitleStructureProps {
     children: ReactNode;
 }
