@@ -3,37 +3,10 @@ import {
     TitleStructure,
 } from "@/components/shared/shared";
 
-/*=========== REACT ===========*/
-import { useEffect, useState, useTransition } from "react";
-
 /*=========== LUCIDE REACT (LIB) ===========*/
 import { FileText } from "lucide-react";
 
-/*=========== SERVICE ===========*/
-import { getStudents } from "@/service/students/students";
-
-/*=========== INTERFACES ===========*/
-import type { IStudent } from "@/service/students/interfaces";
-
 export const Fouls = () => {
-
-    const [isFiltred, setIsFiltered] = useState(false);
-    const [students, setStudents] = useState<IStudent[]>([]);
-    const [cacheStudents, setCacheStudents] = useState<IStudent[]>([]);
-
-    const [isPending, startTransition] = useTransition();
-
-    useEffect(() => {
-        const fetchStudents = async () => {
-            const data = await getStudents();
-            setStudents(data);
-            setCacheStudents(data);
-        };
-        startTransition(() => fetchStudents());
-    },[]);
-
-
-
     return (
         <div
             className="
