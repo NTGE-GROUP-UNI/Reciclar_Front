@@ -2,9 +2,9 @@ export const Footer = () => {
     return (
         <footer
             className="
-                bg-[--primary-blue-color] text-zinc-950
+                bg-[--primary-blue-color] dark:bg-[--primary-blue-color-dark] text-zinc-950
                 dark:text-zinc-300
-                flex flex-col justify-center border-t border-zinc-700
+                flex flex-col justify-center border-t border-blue-800
                 items-center 2xl:p-6 p-4 z-30 font-inter
             "
         >

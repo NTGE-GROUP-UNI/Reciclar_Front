@@ -1,4 +1,4 @@
-//LUCIDE REACT
+/*=========== LUCIDE REACT (LIB) ===========*/
 import { 
     MoonStar, 
     SunMedium, 
@@ -13,39 +13,43 @@ import {
     BellOff
 } from "lucide-react";
 
-//STORE
+/*=========== STORE ===========*/
 import { setTheme } from "../../store/theme/theme"
 import { setNotification } from "../../store/notifications/notifications";
 import { setLang } from "../../store/language/language";
 import { setAvatar } from "../../store/avatar/avatar";
 import { setDisplayName } from "../../store/user/user";
 
-//MOTION
+/*=========== MOTION (LIB) ===========*/
 import { motion } from "motion/react";
 
-//BORING AVATAR
+/*=========== BORING AVATARS (LIB) ===========*/
 import Avatar from "boring-avatars";
 
-//HOOKS
+/*=========== HOOKS ===========*/
 import { useTheme } from "../../hooks/theme/useTheme";
 import { useLanguage } from "../../hooks/language/useLanguage";
 import { useNotification } from "../../hooks/notifications/useNotification";
 import { useUser } from "../../hooks/user/useUser";
 
-//I18N
+/*=========== I18N (LIB) ===========*/
 import { useTranslation } from "react-i18next";
 
-//COMPONENTS
+/*=========== COMPONENTS ===========*/
 import { Card } from "./components/card/card";
 import { ToggleButton } from "./components/toggleButton/ToggleButton";
-import { TitleStructure } from "../../components/shared/titleStructure/TitleStructure";
 
-//CONSTANTS
+/*=========== SHARED COMPONENTS ===========*/
+import {
+    TitleStructure,
+    Form,
+    Button
+} from "@/components/shared/shared";
+
+/*=========== CONSTANTS ===========*/
 import { avatars } from "./constants/avatars/avatars";
-import { Form } from "../../components/shared/form/Form";
-import { Button } from "../../components/shared/button/Button";
 
-//TYPE
+/*=========== TYPE ===========*/
 import type { FormData } from "../../components/shared/form/type";
 
 export const Settings = () => {
@@ -75,7 +79,7 @@ export const Settings = () => {
                         className="
                             font-medium text-zinc-950 
                             text-2xl dark:text-zinc-50
-                            mb-2 transition-colors duration-300
+                            mb-2 
                         "
                     >
                         {t("settings.title")}
@@ -84,7 +88,7 @@ export const Settings = () => {
                         className="
                             font-medium text-zinc-500 
                             text-md dark:text-zinc-400
-                            transition-colors duration-300
+                            
                         "
                     >
                         {t("settings.description")}

@@ -20,15 +20,16 @@ export const Root = ({ children, submit, dir, ...props }: RootProps) => {
         mode: "all",
     });
 
-    const { handleSubmit } = methods;
+    const { handleSubmit, reset } = methods;
 
     return (
         <FormProvider
             { ...methods }
         >
             <form
-                onSubmit={handleSubmit(submit, (errors) => {
-                    console.log(errors);
+                onSubmit={handleSubmit((data) => {
+                    submit(data);
+                    reset();
                 })}
                 {...props}
                 className={`

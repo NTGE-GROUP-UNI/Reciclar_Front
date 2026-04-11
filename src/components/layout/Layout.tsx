@@ -10,7 +10,6 @@ export const Layout = () => {
         <div
             className="
                 min-h-dvh flex flex-col w-full
-                transition-all duration-300
                 bg-zinc-100 dark:bg-zinc-950
             "
         >

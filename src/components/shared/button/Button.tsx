@@ -1,6 +1,9 @@
 //INTERFACE
 import type { ButtonProps } from "./interface"
 
+//MOTION
+import { motion } from "motion/react"
+
 export const Button = ({ children, typeButton, ...props }: ButtonProps) => {
 
     const style = {
@@ -10,15 +13,16 @@ export const Button = ({ children, typeButton, ...props }: ButtonProps) => {
     }
 
     return (
-        <button
+        <motion.button
             { ...props }
             className={`
-                px-5 rounded-md transition-all duration-300
+                px-5 rounded-md 
                 2xl:text-md text-sm h-10 
                 ${style[typeButton]}
             `}
+            whileTap={{ scale: 0.9 }}
         >
             {children}
-        </button>
+        </motion.button>
     )
 }

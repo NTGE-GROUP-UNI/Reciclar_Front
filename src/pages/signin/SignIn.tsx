@@ -1,13 +1,15 @@
-//COMPONENTS
-import { Form } from "../../components/shared/form/Form"
+/*=========== SHARED COMPONENTS ===========*/
+import {
+    Form,
+    Button
+} from "@/components/shared/shared";
 
-//HOOKS
+/*=========== HOOKS ===========*/
 import { useTheme } from "../../hooks/theme/useTheme"
 
-//FONT AWESOME
+/*=========== FONT AWESOME (LIB) ===========*/
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons"
-import { Button } from "../../components/shared/button/Button"
 
 export const SignIn = () => {
 
@@ -18,9 +20,9 @@ export const SignIn = () => {
             className={`
                 w-full flex flex-col justify-center
                 items-center py-12 min-h-dvh
-                bg-cover font-inter px-8 transition-all
+                bg-cover font-inter px-8 
                 bg-zinc-50 dark:bg-zinc-900
-                duration-300 relative overflow-hidden
+                relative overflow-hidden
             `}
         >
 
@@ -42,7 +44,7 @@ export const SignIn = () => {
                     w-full max-w-md z-50
                     rounded-md shadow-sm border
                     border-zinc-200 dark:border-zinc-800 px-8 py-6
-                    transition-all duration-300
+                     
                 "
             >
                 <Form.Root
@@ -130,13 +132,13 @@ export const SignIn = () => {
                 type="button"
                 className={`
                     absolute left-8 bottom-8  p-3 rounded-md
-                    transition-all duration-300
+                     
                     hover:bg-slate-200 dark:hover:bg-slate-800
                 `}
             >
                 <FontAwesomeIcon
                     className={`
-                        transition-all duration-300
+                         
                         text-zinc-900 -rotate-180
                         dark:text-zinc-50 dark:rotate-180
                     `}

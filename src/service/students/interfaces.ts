@@ -1,4 +1,4 @@
-export interface Student {
+export interface IStudent {
     id: string;
     fullName: string;
     className: string
@@ -7,8 +7,4 @@ export interface Student {
     updatedAt: string,
     status: string,
     absences: number
-}
-
-export interface CardProps {
-    student: Student;
 }

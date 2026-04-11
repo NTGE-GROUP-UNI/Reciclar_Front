@@ -1,10 +1,13 @@
 //REACT
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 //TYPE
 import type { ButtonType } from "./type";
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+//MOTION
+import type { HTMLMotionProps } from "motion/react";
+
+export interface ButtonProps extends HTMLMotionProps<"button"> {
     children: ReactNode;
     typeButton: ButtonType;
 }

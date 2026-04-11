@@ -24,7 +24,7 @@ export const Input = ({ zodName, ...props }: InputProps) => {
                 className={`
                 w-full border-2 rounded-md py-2 p-3
                 2xl:text-md text-sm
-                outline-none transition-all duration-300
+                outline-none
                 bg-zinc-100 text-zinc-900
                 dark:bg-zinc-800 dark:text-zinc-200
                 ${errors[zodName]?.message

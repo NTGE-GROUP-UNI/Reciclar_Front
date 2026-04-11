@@ -11,7 +11,7 @@ export const Card = React.memo(({ children, description, title, icon: Icon }: Ca
                 w-full max-w-none border rounded-md
                 bg-zinc-100 border-zinc-200 
                 dark:bg-zinc-900 dark:border-zinc-800
-                transition-all duration-300 shadow-sm
+                shadow-sm
             "
         >
             <div
@@ -21,7 +21,7 @@ export const Card = React.memo(({ children, description, title, icon: Icon }: Ca
                     2xl:px-6 2xl:pt-6 2xl:pb-4
                     px-4 pt-4 pb-4 
                     flex justify-between items-center
-                    transition-all duration-300
+                    
                 "
             >
                 <div className="flex items-center gap-3 2xl:gap-6">
@@ -32,7 +32,7 @@ export const Card = React.memo(({ children, description, title, icon: Icon }: Ca
                             grid place-items-center
                             bg-zinc-200 border-zinc-300 text-zinc-900
                             dark:bg-zinc-800 dark:border-zinc-700 dark:text-zinc-200
-                            transition-all duration-300
+                            
                         "
                     >
                         <Icon className="2xl:h-6 2xl:w-6 h-5 w-5" />

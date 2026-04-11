@@ -21,8 +21,11 @@ export const FormSchema = z
         displayName: z.string()
             .min(3, { message: "O campo não pode ser vazio" })
             .optional(),
-        filter: z.string()
-            .min(3, { message: "O campo não pode ser vazio" })
+        filterName: z.string()
+            .optional(),
+        filterShift: z.string()
+            .optional(),
+        filterClass: z.string()
             .optional(),
     })
     .refine((data) => data.password === data.confirmPassword, {

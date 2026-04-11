@@ -5,6 +5,11 @@ import { Clock4 } from "lucide-react";
 import type { CardProps } from "./interface"
 
 export const Card = ({ student }: CardProps) => {
+
+    const statusColors: Record<string, string> = {
+        alert: "bg-red-300 border-red-500 text-red-800 dark:bg-red-800 dark:border-red-500 dark:text-zinc-50"
+    }
+
     return (
         <div
             className="
@@ -12,9 +17,19 @@ export const Card = ({ student }: CardProps) => {
                 border border-zinc-200 dark:border-zinc-700
                 bg-zinc-100 dark:bg-zinc-900
                 shadow-sm rounded-lg flex p-4 justify-between
-                gap-3
+                gap-3 relative
             "
         >
+            <span
+                className={`
+                    absolute right-3 -top-4
+                    py-1 px-3 rounded-full
+                    border font-medium text-sm
+                    ${statusColors[student?.status]}
+                `}
+            >
+                {student?.status.charAt(0).toUpperCase() + student?.status.slice(1)}
+            </span>
             <div
                 className="
                     w-[48px] h-[48px]
@@ -29,7 +44,7 @@ export const Card = ({ student }: CardProps) => {
                         leading-normal
                     "
                 >
-                    {student.name.slice(0, 2)}
+                    {student.fullName.slice(0, 2)}
                 </h1>
             </div>
             <div
@@ -43,7 +58,7 @@ export const Card = ({ student }: CardProps) => {
                         leading-normal dark:text-zinc-200
                     "
                 >
-                    {student.name.slice(0, 17)}...
+                    {student.fullName.slice(0, 17)}...
                 </h1>
                 <div
                     className="
@@ -56,7 +71,7 @@ export const Card = ({ student }: CardProps) => {
                             leading-normal
                         "
                     >
-                        {student.class}
+                        {student.className.slice(0,7)}
                     </h2>
                     <span
                         className="
@@ -78,7 +93,7 @@ export const Card = ({ student }: CardProps) => {
                                 leading-normal
                             "
                         >
-                            {student.shiftClass}
+                            {student.className.slice(10)}
                         </h2>
                     </div>
                 </div>
@@ -102,7 +117,7 @@ export const Card = ({ student }: CardProps) => {
                                 leading-normal
                             "
                         >
-                            {student.presence}
+                            100
                         </h4>
                     </div>
                     <div>
@@ -120,7 +135,7 @@ export const Card = ({ student }: CardProps) => {
                                 leading-normal
                             "
                         >
-                            {student.fouls}
+                            8
                         </h4>
                     </div>
                 </div>
@@ -144,7 +159,7 @@ export const Card = ({ student }: CardProps) => {
                                 leading-normal
                             "
                         >
-                            {student.abandoned}
+                            10
                         </h4>
                     </div>
                     <div>
@@ -162,7 +177,7 @@ export const Card = ({ student }: CardProps) => {
                                 leading-normal
                             "
                         >
-                            {student.frequency.toFixed(2)}%
+                            75%
                         </h4>
                     </div>
                 </div>

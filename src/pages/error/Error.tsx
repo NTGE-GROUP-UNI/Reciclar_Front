@@ -1,10 +1,5 @@
-type ErrorInfo = {
-    img: string
-    title: string
-    text: string
-}
-
-type DefaultStatusCode = string
+/*=========== TYPES ===========*/
+import type { DefaultStatusCode, ErrorInfo } from "./types";
 
 export const Error = ({
     statusCode

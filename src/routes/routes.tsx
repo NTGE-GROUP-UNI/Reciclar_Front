@@ -1,12 +1,18 @@
-//REACT ROUTER DOM
+/*=========== REACT ROUTER DOM (LIB) ===========*/
 import { createBrowserRouter } from "react-router-dom";
 
-//COMPONENTS
+/*=========== COMPONENTS ===========*/
 import { Layout } from "../components/layout/Layout";
-import { Dashboard } from "../pages/dashboard/Dashboard";
-import { SignIn } from "../pages/signin/SignIn";
-import { Error } from "../pages/error/Error";
-import { Settings } from "../pages/settings/Settings";
+
+/*=========== PAGES ===========*/
+import { 
+    Dashboard,
+    Error,
+    Classes, 
+    Settings,
+    SignIn,
+    Fouls
+} from "@/pages/pages";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +25,14 @@ export const router = createBrowserRouter([
             {
                 element: <Settings />,
                 path: "/settings",
+            },
+            {
+                element: <Classes />,
+                path: "/classes",
+            },
+            {
+                element: <Fouls />,
+                path: "/fouls",
             },
         ]
     },

@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/inter";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root{
-  --primary-blue-color: #001F3F;
+  --primary-blue-color: #0D0D87;
+  --primary-blue-color-dark: #060643;
   --primary-blue-color-hover: #001A33;
-  --primary-blue-color-dark: #00428F;
   --primary-blue-color-hover-dark: #003773;
   --primary-pink-color: #F519EA;
 }

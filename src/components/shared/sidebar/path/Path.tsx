@@ -21,8 +21,8 @@ export const Path = ({ children, to, ...props}: PathProps) => {
                 text-left font-medium py-3 px-4
                 transition-all duration-300 relative
                 cursor-pointer flex flex-row gap-2
-                text-zinc-100 hover:bg-[--primary-blue-color-hover] dark:text-zinc-200 dark:hover:bg-zinc-900/80
-                ${ isActive ? themeValue ? "bg-zinc-200/20" : "bg-zinc-900/40" : "bg-transparent" }
+                text-zinc-100 hover:bg-zinc-200/10  dark:text-zinc-200 dark:hover:bg-zinc-400/20
+                ${ isActive ? "bg-zinc-200/20 dark:bg-zinc-400/40" : "bg-transparent" }
             `}
             {...props}
         >
