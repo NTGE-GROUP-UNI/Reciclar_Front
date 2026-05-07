@@ -3,7 +3,6 @@ import { X, MegaphoneOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@/shared/ui/spinner";
-import { useTheme } from "@/shared/hooks/theme/useTheme";
 import type { SetStateAction } from "react";
 import type { FormData } from "@/shared/components/form/type";
 import { useCurrentClassroom } from "@/shared/store/classroom/classroom.store";
@@ -16,7 +15,6 @@ interface ModalDangerProps {
 export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
 
     const { classroom } = useCurrentClassroom();
-    const { themeValue } = useTheme();
 
     const queryClient = useQueryClient();
 
