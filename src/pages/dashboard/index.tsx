@@ -1,0 +1,318 @@
+import {
+    TitleStructure,
+    Form,
+    Button,
+    Loader,
+    Description
+} from "@/shared/components/shared";
+import { Card } from "./components/card";
+import { FileText, RefreshCcw, SlidersHorizontal } from "lucide-react";
+import { useState } from "react";
+import type { FormData } from "@/shared/components/form/type";
+import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
+import { getStudentsMetrics } from "@/entities/student/api/get-students-metrics";
+import { motion } from "framer-motion";
+import type { IStudent } from "@/entities/student/model/types";
+import { useQuery } from "@tanstack/react-query";
+
+export const Dashboard = () => {
+
+    const [isFiltred, setIsFiltered] = useState(false);
+    const [filteredStudents, setFilteredStudents] = useState<IStudent[] | null>(null);
+
+    const { data: students, isLoading } = useQuery({
+        queryKey: ["dashboard"],
+        queryFn: getStudentsMetrics
+    })
+
+    const { data: classes } = useQuery({
+        queryKey: ["dashboard_classes_field"],
+        queryFn: getClassrooms
+    })
+
+    const uniqueClasses = [...new Set(classes?.map((cl) => cl.className.slice(6)) || [])];
+
+    const handleSubmit = (data: FormData) => {
+        const { filterName, filterClass, filterShift } = data;
+
+        const condition = filterName || filterClass || filterShift;
+
+        if (condition && students) {
+            const filtered = students.filter((student) => {
+                const matchName = filterName
+                    ? student.fullName.toLowerCase().includes(filterName.toLowerCase())
+                    : true;
+
+                const matchShift = filterShift
+                    ? student?.shift?.toLowerCase().includes(filterShift.toLowerCase())
+                    : true;
+
+                const matchClass = filterClass
+                    ? student?.className?.slice(6).toLowerCase() === filterClass.toLowerCase()
+                    : true;
+
+                return matchName && matchClass && matchShift;
+            });
+
+            setFilteredStudents(filtered);
+            setIsFiltered(true);
+        }
+    };
+
+    const reloadDatas = () => {
+        setFilteredStudents(null);
+        setIsFiltered(false);
+    };
+
+    const list = filteredStudents ?? students
+
+    return (
+        <div
+            className="
+                w-full
+                pt-8 px-8
+            "
+        >
+
+            <TitleStructure>
+                <div>
+                    <h1
+                        className="
+                            font-medium text-zinc-950 
+                            text-2xl dark:text-zinc-50
+                            mb-2
+                        "
+                    >
+                        Dashboard
+                    </h1>
+                    <div
+                        className="
+                            flex gap-2
+                        "
+                    >
+                        <p
+                            className="
+                            font-medium text-zinc-500 
+                            text-md dark:text-zinc-400
+                        "
+                        >
+                            Gerenciamento de alunos e frequência
+                        </p>
+                        {
+                            isFiltred
+                                ?
+                                <Description
+                                    description="Botão de reinicialização"
+                                    dirX="right"
+                                    dirY="top"
+                                >
+                                    <button
+                                        type="button"
+                                        onClick={reloadDatas}
+                                    >
+                                        <RefreshCcw
+                                            className="
+                                            text-zinc-700 
+                                            dark:text-zinc-400
+                                        "
+                                            height={17}
+                                            width={17}
+                                        />
+                                    </button>
+                                </Description>
+                                :
+                                null
+                        }
+                    </div>
+                </div>
+
+                <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ duration: 0.1, ease: "easeIn" }}
+                    className="
+                        bg-green-500 dark:bg-green-700
+                        text-zinc-50 dark:text-zinc-200
+                        w-full sm:max-w-48 px-2 py-3 rounded-xl
+                        flex items-center justify-center gap-2
+                    "
+                >
+                    <FileText /> <span>Exportar Excel</span>
+                </motion.button>
+            </TitleStructure>
+
+            <div
+                className="
+                    w-full flex flex-col
+                "
+            >
+                <Form.Root
+                    dir="row"
+                    submit={handleSubmit}
+                >
+                    <Form.Wrapper>
+                        <Form.Label
+                            htmlFor="filterName"
+                        >
+                            Buscar aluno
+                        </Form.Label>
+                        <Form.Input
+                            id="filterName"
+                            zodName="filterName"
+                            placeholder="Digite o nome do aluno..."
+                        />
+                    </Form.Wrapper>
+                    <Form.Select.Wrapper>
+                        <Description
+                            description="Filtro para turma"
+                            dirX="right"
+                            dirY="top"
+                        >
+                            <Form.Select.Root
+                                zodName="filterClass"
+                                defaultValue=""
+                            >
+                                <Form.Select.Option
+                                    disabled
+                                    hidden
+                                    value=""
+                                >
+                                    Turma
+                                </Form.Select.Option>
+                                {
+                                    uniqueClasses &&
+                                    uniqueClasses.map((className, idx) => {
+                                        return (
+                                            <Form.Select.Option
+                                                key={idx}
+                                                value={className}
+                                                id={className}
+                                            >
+                                                {className}
+                                            </Form.Select.Option>
+                                        )
+                                    })
+                                }
+                            </Form.Select.Root>
+                            <SlidersHorizontal
+                                className="
+                                    text-zinc-900 dark:text-zinc-400
+                                    absolute top-[50%] right-3 translate-y-[-50%]
+                                    pointer-events-none
+                                "
+                                height={20}
+                                width={20}
+                            />
+                        </Description>
+                    </Form.Select.Wrapper>
+                    <Form.Select.Wrapper>
+                        <Description
+                            description="Filtro para turno"
+                            dirX="right"
+                            dirY="top"
+                        >
+                            <Form.Select.Root
+                                zodName="filterShift"
+                                defaultValue=""
+                            >
+                                <Form.Select.Option
+                                    disabled
+                                    hidden
+                                    value=""
+                                >
+                                    Turno
+                                </Form.Select.Option>
+                                <Form.Select.Option
+                                    value="Manhã"
+                                    id="manha"
+                                >
+                                    Manhã
+                                </Form.Select.Option>
+                                <Form.Select.Option
+                                    value="Tarde"
+                                    id="Tarde"
+                                >
+                                    Tarde
+                                </Form.Select.Option>
+                                <Form.Select.Option
+                                    value="Noite"
+                                    id="Noite"
+                                >
+                                    Noite
+                                </Form.Select.Option>
+                            </Form.Select.Root>
+                            <SlidersHorizontal
+                                className="
+                                text-zinc-900 dark:text-zinc-400
+                                absolute top-[50%] right-3 translate-y-[-50%]
+                                pointer-events-none
+                            "
+                                height={20}
+                                width={20}
+                            />
+                        </Description>
+                    </Form.Select.Wrapper>
+                    <Button
+                        typeButton="default"
+                    >
+                        Buscar
+                    </Button>
+                </Form.Root>
+
+                {
+                    isLoading
+                        ?
+                        <div
+                            className="
+                            flex justify-center items-center
+                            w-full pt-60
+                        "
+                        >
+                            <Loader />
+                        </div>
+                        :
+                        list && list.length >= 1 ?
+                            <div
+                                className="
+                                py-8 flex flex-row flex-wrap gap-6 
+                                justify-center md:justify-start
+                            "
+                            >
+
+                                {
+                                    list.map((student, index) => (
+                                        <Card
+                                            student={student}
+                                            key={index}
+                                        />
+                                    ))
+                                }
+                            </div>
+                            :
+                            <div
+                                className="
+                            w-full flex flex-col
+                            justify-center items-center
+                            mt-6
+                        "
+                            >
+                                <h1
+                                    className="
+                                text-zinc-600 font-medium leading-normal
+                                dark:text-zinc-400 text-xl
+                            "
+                                >
+                                    Ops! Não foi possível encontrar...
+                                </h1>
+                                <img
+                                    src="public/not_found_filter.svg"
+                                    alt="Imagem ilustrativa"
+                                    className="
+                                        w-full max-w-md 
+                                    "
+                                />
+                            </div>
+                }
+            </div>
+        </div>
+    )
+}
