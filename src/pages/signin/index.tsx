@@ -156,7 +156,7 @@ export const SignIn = () => {
                 type="button"
                 className={`
                     absolute left-8 bottom-8  p-3 rounded-md
-                     
+                    hidden md:block 
                     hover:bg-slate-200 dark:hover:bg-slate-800
                 `}
             >

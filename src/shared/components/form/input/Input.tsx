@@ -36,8 +36,8 @@ export const Input = ({ zodName, ...props }: InputProps) => {
             <span
                 className="
                     absolute w-full left-0 
-                    2xl:-bottom-5 2xl:text-xs
-                    bottom-0 text-[.65rem] 
+                    -bottom-5 2xl:text-xs
+                    text-[.65rem] 
                     text-red-500 font-medium
                 "
             >
