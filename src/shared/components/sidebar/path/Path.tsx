@@ -2,8 +2,9 @@ import { Link, useLocation } from "react-router-dom"
 import type { PathProps } from "./interface"
 import { useTheme } from "../../../hooks/theme/useTheme";
 import { useLayoutStore } from "@/shared/store/layout/layout.store";
+import { cn } from "@/shared/lib/utils";
 
-export const Path = ({ children, to, ...props }: PathProps) => {
+export const Path = ({ children, to, className, ...props }: PathProps) => {
 
     const location = useLocation();
     const currentBasePath = "/" + location.pathname.split("/")[1];
@@ -16,13 +17,13 @@ export const Path = ({ children, to, ...props }: PathProps) => {
         <Link
             to={to}
             onClick={setSideOpen}
-            className={`
-                text-left font-medium py-3 px-4
-                transition-all duration-300 relative
-                cursor-pointer flex flex-row gap-2
-                text-zinc-100 hover:bg-zinc-200/10  dark:text-zinc-200 dark:hover:bg-zinc-400/20
-                ${isActive ? "bg-zinc-200/20 dark:bg-zinc-400/40" : "bg-transparent"}
-            `}
+            className={cn(
+                "text-left font-medium py-3 px-4 transition-all duration-300 relative",
+                "cursor-pointer flex flex-row gap-2 text-zinc-100 dark:text-zinc-200",
+                "hover:bg-zinc-200/10 dark:hover:bg-zinc-400/20",
+                isActive ? "bg-zinc-200/20 dark:bg-zinc-400/40" : "bg-transparent",
+                className
+            )}
             {...props}
         >
             {children}

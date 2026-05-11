@@ -14,6 +14,7 @@ import { getStudentsMetrics } from "@/entities/student/api/get-students-metrics"
 import { motion } from "framer-motion";
 import type { IStudent } from "@/entities/student/model/types";
 import { useQuery } from "@tanstack/react-query";
+import { getDownloadMetrics } from "@/entities/student/api/get-donwload-metrics";
 
 export const Dashboard = () => {
 
@@ -63,6 +64,17 @@ export const Dashboard = () => {
         setFilteredStudents(null);
         setIsFiltered(false);
     };
+
+    const downloadSpreadsheet = async () => {
+        const data = await getDownloadMetrics();
+        const url = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'dashboard_alunos.xlsx');
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
 
     const list = filteredStudents ?? students
 
@@ -128,6 +140,7 @@ export const Dashboard = () => {
 
                 <motion.button
                     whileTap={{ scale: 0.95 }}
+                    onClick={downloadSpreadsheet}
                     transition={{ duration: 0.1, ease: "easeIn" }}
                     className="
                         bg-green-500 dark:bg-green-700

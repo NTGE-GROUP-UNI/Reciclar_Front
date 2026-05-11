@@ -5,7 +5,7 @@ import type { MainProps } from "./interface"
 import { Sidebar } from "../../components/sidebar/Sidebar"
 
 //LUCIDE REACT
-import { Megaphone, NotebookTabs, LayoutDashboard, Bolt } from "lucide-react"
+import { Megaphone, NotebookTabs, LayoutDashboard, Bolt, QrCode } from "lucide-react"
 
 //I18N
 import { useTranslation } from "../../../../node_modules/react-i18next"
@@ -43,6 +43,12 @@ export const Main = ({ children }: MainProps) => {
                         to="/settings"
                     >
                         <Bolt /> {t("sidebar.sections.settings")}
+                    </Sidebar.Path>
+                    <Sidebar.Path
+                        className="md:hidden flex"
+                        to="/reader"
+                    >
+                        <QrCode /> Leitor de QR Code
                     </Sidebar.Path>
                 </Sidebar.PathWrapper>
             </Sidebar.Root>

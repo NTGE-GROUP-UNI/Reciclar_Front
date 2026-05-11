@@ -5,5 +5,6 @@ import { Classes } from "./classes";
 import { ClassPage } from "./class";
 import { SignIn } from "./signin";
 import { Error } from "./error";
+import { QrReader } from "./qr-reader";
 
-export { Dashboard, Fouls, Settings, ClassPage, Classes, SignIn, Error }
+export { Dashboard, Fouls, Settings, ClassPage, Classes, SignIn, Error, QrReader }
