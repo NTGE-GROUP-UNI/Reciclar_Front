@@ -176,7 +176,7 @@ export const SignIn = () => {
                             onClick={(e) => handleViewPassword(e)}
                             className="absolute top-8 right-4 text-zinc-700"
                         >
-                            <Eye />
+                            {passwordType === "password" ? <Eye /> : <EyeClosed /> }
                         </motion.button>
                     </Form.Wrapper>
                     <Form.Wrapper>
@@ -197,7 +197,7 @@ export const SignIn = () => {
                             onClick={(e) => handleViewPassword(e)}
                             className="absolute top-8 right-4 text-zinc-700"
                         >
-                            <Eye />
+                            {confirmPasswordType === "password" ? <Eye /> : <EyeClosed />}
                         </motion.button>
                     </Form.Wrapper>
                     <Button
