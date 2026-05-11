@@ -47,7 +47,9 @@ export const QrReader = () => {
                 }, 3000);
             }
         };
-        
+
+        scanner.render(onScanSuccess, undefined);
+
         return () => {
             scanner.clear().catch(error => console.error("Erro ao limpar scanner", error));
         };
