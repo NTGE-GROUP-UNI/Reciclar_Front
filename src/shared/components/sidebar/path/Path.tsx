@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom"
 import type { PathProps } from "./interface"
 import { useTheme } from "../../../hooks/theme/useTheme";
 import { useLayoutStore } from "@/shared/store/layout/layout.store";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/utils/tailwind-merge/cn";
 
 export const Path = ({ children, to, className, ...props }: PathProps) => {
 

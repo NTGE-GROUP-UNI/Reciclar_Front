@@ -16,9 +16,11 @@ import { useQuery } from "@tanstack/react-query";
 import { ModalDanger } from "./components/modal-danger";
 import { ModalEdit } from "./components/modal-edit";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
+import { useTranslation } from "react-i18next";
 
 export const Classes = () => {
 
+    const { t } = useTranslation();
     const [isFiltred, setIsFiltered] = useState(false);
     const [filteredClasses, setFilteredClasses] = useState<IClassSummary[] | null>(null);
     const [openModalRegister, setOpenModalRegister] = useState<boolean>(false);
@@ -85,7 +87,7 @@ export const Classes = () => {
                             mb-2
                         "
                     >
-                        Gestão de Turmas
+                        {t("classes.title")}
                     </h1>
                     <p
                         className="
@@ -93,7 +95,7 @@ export const Classes = () => {
                             text-md dark:text-zinc-400
                         "
                     >
-                        Gerenciamento de alunos e frequência
+                        {t("classes.description")}
                     </p>
                 </div>
 
@@ -103,7 +105,7 @@ export const Classes = () => {
                     className="md:max-w-48"
                     onClick={() => setOpenModalRegister(prev => !prev)}
                 >
-                    <Plus /> <span>Cadastrar turma</span>
+                    <Plus /> <span>{t("classes.buttons.registerClass")}</span>
                 </Button>
             </TitleStructure>
 
@@ -113,7 +115,7 @@ export const Classes = () => {
             >
                 <Form.Select.Wrapper>
                     <Description
-                        description="Filtro para turma"
+                        description={t("classes.inputs.filterClass.description")}
                         dirX="right"
                         dirY="top"
                     >
@@ -126,7 +128,7 @@ export const Classes = () => {
                                 hidden
                                 value=""
                             >
-                                Turma
+                                {t("classes.inputs.filterClass.value")}
                             </Form.Select.Option>
                             {
                                 uniqueClasses &&
@@ -156,7 +158,7 @@ export const Classes = () => {
                 </Form.Select.Wrapper>
                 <Form.Select.Wrapper>
                     <Description
-                        description="Filtro para turno"
+                        description={t("classes.inputs.filterShift.description")}
                         dirX="right"
                         dirY="top"
                     >
@@ -169,7 +171,7 @@ export const Classes = () => {
                                 hidden
                                 value=""
                             >
-                                Turno
+                                {t("classes.inputs.filterShift.value")}
                             </Form.Select.Option>
                             <Form.Select.Option
                                 value="Manhã"
@@ -205,7 +207,7 @@ export const Classes = () => {
                     typeButton="blue"
                     className="md:w-auto md:h-10 px-3"
                 >
-                    {!isFiltred ? "Buscar" : "Carregar novamente"}
+                    {!isFiltred ? t("global.buttons.search") : t("global.buttons.loadAgain")}
                 </Button>
             </Form.Root>
 

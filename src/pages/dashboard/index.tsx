@@ -14,9 +14,12 @@ import { getStudentsMetrics } from "@/entities/student/api/get-students-metrics"
 import type { IStudent } from "@/entities/student/model/types";
 import { useQuery } from "@tanstack/react-query";
 import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
+import { useTranslation } from "react-i18next";
+import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 
 export const Dashboard = () => {
 
+    const { t } = useTranslation();
     const [isFiltred, setIsFiltered] = useState(false);
     const [filteredStudents, setFilteredStudents] = useState<IStudent[] | null>(null);
 
@@ -30,7 +33,8 @@ export const Dashboard = () => {
         queryFn: getClassrooms
     })
 
-    const uniqueClasses = [...new Set(classes?.map((cl) => cl.className.slice(6)) || [])];
+    const uniqueClasses = seletecUniqueClasses(classes);
+    const list = filteredStudents ?? students
 
     const handleSubmit = (data: FormData) => {
 
@@ -70,8 +74,6 @@ export const Dashboard = () => {
         setIsFiltered(false);
     };
 
-    const list = filteredStudents ?? students
-
     return (
         <div
             className="
@@ -89,7 +91,7 @@ export const Dashboard = () => {
                             mb-2
                         "
                     >
-                        Dashboard
+                        {t("dashboard.title")}
                     </h1>
                     <p
                         className="
@@ -97,7 +99,7 @@ export const Dashboard = () => {
                         text-md dark:text-zinc-400
                     "
                     >
-                        Gerenciamento de alunos e frequência
+                        {t("dashboard.description")}
                     </p>
                 </div>
 
@@ -117,17 +119,17 @@ export const Dashboard = () => {
                         <Form.Label
                             htmlFor="filterName"
                         >
-                            Buscar aluno
+                            {t("dashboard.labels.searchStudent")}
                         </Form.Label>
                         <Form.Input
                             id="filterName"
                             zodName="filterName"
-                            placeholder="Digite o nome do aluno..."
+                            placeholder={t("dashboard.inputs.searchStudentPlaceholder")}
                         />
                     </Form.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description="Filtro para turma"
+                            description={t("dashboard.inputs.filterClass.description")}
                             dirX="right"
                             dirY="top"
                         >
@@ -140,7 +142,7 @@ export const Dashboard = () => {
                                     hidden
                                     value=""
                                 >
-                                    Turma
+                                    {t("dashboard.inputs.filterClass.value")}
                                 </Form.Select.Option>
                                 {
                                     uniqueClasses &&
@@ -170,7 +172,7 @@ export const Dashboard = () => {
                     </Form.Select.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description="Filtro para turno"
+                            description={t("dashboard.inputs.filterShift.description")}
                             dirX="right"
                             dirY="top"
                         >
@@ -183,7 +185,7 @@ export const Dashboard = () => {
                                     hidden
                                     value=""
                                 >
-                                    Turno
+                                    {t("dashboard.inputs.filterShift.value")}
                                 </Form.Select.Option>
                                 <Form.Select.Option
                                     value="Manhã"
@@ -219,7 +221,7 @@ export const Dashboard = () => {
                         typeButton="blue"
                         className="md:w-auto md:h-10 px-3"
                     >
-                        {!isFiltred ? "Buscar" : "Carregar novamente"}
+                        {!isFiltred ? t("global.buttons.search") : t("global.buttons.loadAgain")}
                     </Button>
                 </Form.Root>
 

@@ -11,12 +11,20 @@ import { postAuthSignin } from "@/entities/auth/api/post-auth-signin";
 import { useAuthStore } from "@/shared/store/auth/auth.store";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "@/shared/ui/spinner";
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { Eye, EyeClosed } from "lucide-react";
+import { useState } from "react";
 
 export const SignIn = () => {
 
+    const { t } = useTranslation();
     const { setToken } = useAuthStore((s) => s);
     const { toggleTheme } = useTheme((state) => state);
     const navigate = useNavigate();
+
+    const [passwordType, setPasswordType] = useState("password");
+    const [confirmPasswordType, setConfirmPasswordType] = useState("password");
 
     const mutation = useMutation({
         mutationFn: postAuthSignin,
@@ -38,6 +46,28 @@ export const SignIn = () => {
                }
             });
         }
+    }
+
+    const handleViewPassword = (e: any) => {
+
+        const { name } = e.target.parentNode.dataset;
+
+        if (name === "password") {
+            setPasswordType((prev) => {
+                if (prev === "password") return "text";
+                return "password"
+            })
+            return;
+        }
+
+        if (name === "confirmPassword") {
+            setConfirmPasswordType((prev) => {
+                if (prev === "password") return "text";
+                return "password"
+            })
+            return;
+        }
+        
     }
 
     return (
@@ -63,7 +93,19 @@ export const SignIn = () => {
                 `}
             ></div>
 
-            <div
+            <motion.div
+                initial={{
+                    opacity: 0,
+                    y: 30
+                }}
+                animate={{
+                    opacity: 1,
+                    y: 0
+                }}
+                transition={{
+                    duration: 0.7,
+                    ease: "easeOut"
+                }}
                 className="
                     bg-zinc-100 dark:bg-zinc-900
                     w-full max-w-md z-50
@@ -79,26 +121,26 @@ export const SignIn = () => {
 
                     <div
                         className="
-                        w-full grid place-items-center
-                    "
+                    w-full grid place-items-center
+                "
                     >
                         <h1
                             className="
-                            font-medium text-3xl text-zinc-900
-                            dark:text-zinc-200 leading-normal
-                            mb-1
-                        "
+                        font-medium text-3xl text-zinc-900
+                        dark:text-zinc-200 leading-normal
+                        mb-1
+                    "
                         >
-                            Bem-vindo!
+                            {t("signIn.title")}
                         </h1>
                         <p
                             className="
-                            font-medium text-lg text-zinc-900
-                            dark:text-zinc-200 leading-normal
-                            mb-3
-                        "
+                        font-medium text-lg text-zinc-900
+                        dark:text-zinc-200 leading-normal
+                        mb-3
+                    "
                         >
-                            Entre agora com sua conta
+                            {t("signIn.description")}
                         </p>
                     </div>
 
@@ -106,13 +148,13 @@ export const SignIn = () => {
                         <Form.Label
                             htmlFor="email"
                         >
-                            E-mail*
+                            {t("signIn.labels.email")}*
                         </Form.Label>
                         <Form.Input
                             id="email"
                             zodName="email"
                             name="email"
-                            placeholder="Insira seu e-mail"
+                            placeholder={t("signIn.inputs.emailPlaceholder")}
                             type="email"
                         />
                     </Form.Wrapper>
@@ -120,37 +162,51 @@ export const SignIn = () => {
                         <Form.Label
                             htmlFor="password"
                         >
-                            Senha*
+                            {t("signIn.labels.password")}*
                         </Form.Label>
                         <Form.Input
                             id="password"
                             zodName="password"
                             name="password"
-                            placeholder="Insira sua senha"
-                            type="password"
+                            placeholder={t("signIn.inputs.passwordPlaceholder")}
+                            type={passwordType}
                         />
+                        <motion.button
+                            data-name="password"
+                            onClick={(e) => handleViewPassword(e)}
+                            className="absolute top-8 right-4 text-zinc-700"
+                        >
+                            <Eye />
+                        </motion.button>
                     </Form.Wrapper>
                     <Form.Wrapper>
                         <Form.Label
                             htmlFor="confirmPassword"
                         >
-                            Confirme sua senha*
+                            {t("signIn.labels.confirmPassword")}*
                         </Form.Label>
                         <Form.Input
                             id="confirmPassword"
                             zodName="confirmPassword"
                             name="confirmPassword"
-                            placeholder="Repita sua senha"
-                            type="password"
+                            placeholder={t("signIn.inputs.confirmPasswordPlaceholder")}
+                            type={confirmPasswordType}
                         />
+                        <motion.button
+                            data-name="confirmPassword"
+                            onClick={(e) => handleViewPassword(e)}
+                            className="absolute top-8 right-4 text-zinc-700"
+                        >
+                            <Eye />
+                        </motion.button>
                     </Form.Wrapper>
                     <Button
                         typeButton="blue"
                     >
-                        {mutation.isPending ? <Spinner /> : "Entrar" }
+                        {mutation.isPending ? <Spinner /> : t("signIn.buttons.enter")}
                     </Button>
                 </Form.Root>
-            </div>
+            </motion.div>
 
             <button
                 onClick={toggleTheme}

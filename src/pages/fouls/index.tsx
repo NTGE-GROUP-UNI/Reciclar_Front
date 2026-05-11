@@ -17,9 +17,12 @@ import { useQuery } from "@tanstack/react-query";
 import { TableStudents, CardView } from "./components/export-components";
 import { Spinner } from "@/shared/ui/spinner";
 import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
+import { useTranslation } from "react-i18next";
+import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 
 export const Fouls = () => {
 
+    const { t } = useTranslation();
     const [isFiltred, setIsFiltered] = useState(false);
     const [filteredStudents, setFilteredStudents] = useState<IStudent[] | null>(null);
 
@@ -38,7 +41,7 @@ export const Fouls = () => {
         queryFn: getClassrooms
     })
 
-    const uniqueClasses = [...new Set(classes?.map((cl) => cl.className.slice(6)) || [])];
+    const uniqueClasses = seletecUniqueClasses(classes);
 
     const handleSubmit = (data: FormData) => {
         const { filterName, filterClass, filterShift, filterStatus } = data;
@@ -93,7 +96,7 @@ export const Fouls = () => {
                             mb-2
                         "
                     >
-                        Histórico de Faltas
+                        {t("fouls.title")}
                     </h1>
                     <div
                         className="
@@ -106,7 +109,7 @@ export const Fouls = () => {
                             text-md dark:text-zinc-400
                         "
                         >
-                            Visualize e gerencie todas as faltas registradas
+                            {t("fouls.description")}
                         </p>
                         {
                             isFiltred
@@ -157,17 +160,17 @@ export const Fouls = () => {
                         <Form.Label
                             htmlFor="filterName"
                         >
-                            Buscar aluno
+                            {t("fouls.labels.searchStudent")}
                         </Form.Label>
                         <Form.Input
                             id="filterName"
                             zodName="filterName"
-                            placeholder="Digite o nome do aluno..."
+                            placeholder={t("fouls.inputs.searchStudentPlaceholder")}
                         />
                     </Form.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description="Filtro para turma"
+                            description={t("fouls.inputs.filterClass.description")}
                             dirX="right"
                             dirY="top"
                         >
@@ -180,7 +183,7 @@ export const Fouls = () => {
                                     hidden
                                     value=""
                                 >
-                                    Turma
+                                    {t("fouls.inputs.filterClass.value")}
                                 </Form.Select.Option>
                                 {
                                     uniqueClasses &&
@@ -210,7 +213,7 @@ export const Fouls = () => {
                     </Form.Select.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description="Filtro para turno"
+                            description={t("fouls.inputs.filterShift.description")}
                             dirX="right"
                             dirY="top"
                         >
@@ -223,7 +226,7 @@ export const Fouls = () => {
                                     hidden
                                     value=""
                                 >
-                                    Turno
+                                    {t("fouls.inputs.filterShift.value")}
                                 </Form.Select.Option>
                                 <Form.Select.Option
                                     value="Manhã"
@@ -257,7 +260,7 @@ export const Fouls = () => {
                     </Form.Select.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description="Filtrar por status"
+                            description={t("fouls.inputs.filterStatus.description")}
                             dirX="right"
                             dirY="top"
                         >
@@ -270,7 +273,7 @@ export const Fouls = () => {
                                     hidden
                                     value=""
                                 >
-                                    Status
+                                    {t("fouls.inputs.filterStatus.value")}
                                 </Form.Select.Option>
                                 <Form.Select.Option
                                     value="Alerta"
@@ -306,7 +309,7 @@ export const Fouls = () => {
                         typeButton="blue"
                         className="max-w-24 h-10"
                     >
-                        Buscar
+                        {!isFiltred ? t("global.buttons.search") : t("global.buttons.loadAgain")}
                     </Button>
                 </Form.Root>
 

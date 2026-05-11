@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { HTMLMotionProps } from "motion/react";
 import { motion } from "motion/react"
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/utils/tailwind-merge/cn";
 
 interface ButtonProps extends HTMLMotionProps<"button"> {
     children: ReactNode;
@@ -19,7 +19,7 @@ export const Button = ({ children, typeButton, className, ...props }: ButtonProp
 
     return (
         <motion.button
-            { ...props }
+            {...props}
             className={cn(
                 "flex-shrink-0 border w-full px-2 py-3 rounded-xl flex items-center justify-center gap-2",
                 style[typeButton],

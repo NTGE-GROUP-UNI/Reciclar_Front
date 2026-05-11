@@ -1,14 +1,7 @@
-//INTERFACE
 import type { MainProps } from "./interface"
-
-//COMPONENTS
 import { Sidebar } from "../../components/sidebar/Sidebar"
-
-//LUCIDE REACT
 import { Megaphone, NotebookTabs, LayoutDashboard, Bolt, QrCode } from "lucide-react"
-
-//I18N
-import { useTranslation } from "../../../../node_modules/react-i18next"
+import { useTranslation } from "react-i18next"
 
 export const Main = ({ children }: MainProps) => {
 

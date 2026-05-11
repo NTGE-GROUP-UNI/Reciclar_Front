@@ -17,7 +17,7 @@ import Avatar from "boring-avatars";
 import { useTheme } from "@/shared/hooks/theme/useTheme";
 import { useLanguage } from "@/shared/hooks/language/useLanguage";
 import { useUser } from "@/shared/hooks/user/useUser";
-import { useTranslation } from "../../../node_modules/react-i18next";
+import { useTranslation } from "react-i18next"
 import { Card } from "./components/card";
 import {
     Button,
@@ -135,16 +135,16 @@ export const Settings = () => {
                         className={`
                         border bg-zinc-200 border-zinc-300 text-zinc-600 
                         dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-500"
-                        py-1 px-3 rounded-md
+                        rounded-md py-1 px-3 grid place-items-center
                     `}
                     >
-                        <p>
+                        <span className="m-0 p-0">
                             admin
-                        </p>
+                        </span>
                     </div>
                 </Card>
 
-                <Card icon={Smile} title={t("settings.cards.avatar.title")} description={t("settings.cards.avatar.description")} column={true}>
+                <Card className="md:block hidden" icon={Smile} title={t("settings.cards.avatar.title")} description={t("settings.cards.avatar.description")} column={true}>
                     <div
                         className="
                         flex flex-row justify-center items-center gap-2

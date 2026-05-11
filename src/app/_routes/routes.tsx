@@ -5,10 +5,10 @@ import { Dashboard, Fouls, Settings, Classes, ClassPage, SignIn, Error, QrReader
 
 export const router = createBrowserRouter([
     {
-        element: <PrivateRoute />, 
+        element: <PrivateRoute />,
         children: [
             {
-                element: <Layout />, 
+                element: <Layout />,
                 children: [
                     { element: <Dashboard />, path: "/" },
                     { element: <Settings />, path: "/settings" },

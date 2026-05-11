@@ -21,9 +21,6 @@
 
 html {
   scrollbar-width: none;
-}
-
-html {
   -ms-overflow-style: none;
 }
 
@@ -34,4 +31,33 @@ html {
 body{
   padding: 0px;
   margin: 0px;
+}
+
+#qr-reader {
+  border: none !important;
+  padding: 0 !important;
+}
+
+#html5-qrcode-anchor-scan-type {
+  display: flex flex-col items-center justify-center gap-4 p-4 !important;
+}
+
+#qr-reader button {
+  @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg 
+         transition-all duration-200 cursor-pointer border-none mt-4 uppercase text-xs tracking-wider;
+}
+
+#html5-qrcode-anchor-scan-type-change {
+  @apply hidden !important
+}
+
+#qr-reader select {
+  @apply w-full max-w-[280px] bg-white dark:bg-zinc-800 border border-zinc-300 
+         dark:border-zinc-700 rounded-lg px-3 py-2 text-sm text-zinc-700 
+         dark:text-zinc-300 outline-none !important;
+}
+
+#qr-reader__scan_region video {
+  border-radius: 12px;
+  object-fit: cover;
 }

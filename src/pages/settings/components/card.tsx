@@ -1,4 +1,5 @@
 import React, { type ElementType, type ReactNode } from "react";
+import { cn } from "@/shared/utils/tailwind-merge/cn";
 
 export interface CardProps {
     children?: ReactNode;
@@ -6,17 +7,16 @@ export interface CardProps {
     title: string;
     icon: ElementType;
     column?: boolean;
+    className?: string;
 }
 
-export const Card = React.memo(({ children, description, title, icon: Icon, column }: CardProps) => {
+export const Card = React.memo(({ children, description, title, icon: Icon, column, className }: CardProps) => {
     return (
         <div
-            className="
-                w-full max-w-none border rounded-md
-                bg-zinc-100 border-zinc-200 
-                dark:bg-zinc-900 dark:border-zinc-800
-                shadow-sm
-            "
+            className={cn(
+                "w-full max-w-none border rounded-md bg-zinc-100 border-zinc-200 dark:bg-zinc-900 dark:border-zinc-800 shadow-sm ${className}",
+                className
+            )}
         >
             <div
                 className={`
@@ -25,7 +25,7 @@ export const Card = React.memo(({ children, description, title, icon: Icon, colu
                     2xl:px-6 2xl:pt-6 2xl:pb-4
                     px-4 pt-4 pb-4
                     flex justify-between
-                    ${ column && "flex-col gap-4 md:flex-row md:items-center" }
+                    ${column && "flex-col gap-4 md:flex-row md:items-center"}
                 `}
             >
                 <div className="flex items-center gap-3 2xl:gap-6">

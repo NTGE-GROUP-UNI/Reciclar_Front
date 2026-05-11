@@ -16,4 +16,5 @@ export const postStudentPresence = async (id: string) => {
         })
     }
 
+    return response.data;
 }
