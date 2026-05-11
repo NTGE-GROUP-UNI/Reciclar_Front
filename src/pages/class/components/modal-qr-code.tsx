@@ -45,17 +45,26 @@ export const Modal = ({ setOpenModalQrCode }: ModalProps) => {
 
     useEffect(() => {
         if (canvasRef.current && student) {
-
-            console.log(student);
-
             QRCode.toCanvas(canvasRef.current, student.qrcodeId, {
                 width: 220
             });
         }
     }, []);
 
+    useEffect(() => {
+        if (canvasRef.current && student) {
+            QRCode.toCanvas(canvasRef.current, student.qrcodeId, {
+                margin: 1,
+                color: {
+                    dark: "#000000",
+                    light: "#FFFFFF",
+                },
+            });
+        }
+    }, [student]);
+
     return (
-        <section className="w-full h-full bg-zinc-950/50 fixed top-0 right-0 flex items-center justify-center z-50 flex-col">
+        <section className="w-full h-full bg-zinc-950/50 fixed top-0 right-0 flex items-center justify-center z-50 flex-col p-8">
             <div className="w-full bg-zinc-50 max-w-md rounded-lg shadow-sm flex flex-col items-center border border-zinc-200">
                 <div className="w-full flex justify-center items-center border-b border-zinc-200">
                     <div className="w-full flex justify-between p-8 items-center">
@@ -83,7 +92,12 @@ export const Modal = ({ setOpenModalQrCode }: ModalProps) => {
                         </h3>
 
                         <div className="w-full bg-white rounded-lg p-6 flex flex-col items-center">
-                            <canvas ref={canvasRef} className="mx-auto" />
+                            <div className="w-full flex justify-center items-center">
+                                <canvas
+                                    ref={canvasRef}
+                                    className="!w-full !h-auto aspect-square max-w-[200px]"
+                                />
+                            </div>
 
                             <h4 className="text-zinc-700 text-md dark:text-zinc-50 mt-2">
                                 Nome:

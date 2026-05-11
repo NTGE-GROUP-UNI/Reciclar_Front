@@ -62,7 +62,7 @@ export const Card = ({
     return (
         <div
             className="
-                w-full flex justify-between items-stretch
+                w-full flex flex-col md:flex-row justify-between items-stretch
                 border border-zinc-200 rounded-lg
                 px-6 py-8 shadow-sm gap-6 dark:border-zinc-600
                 bg-zinc-50 dark:bg-zinc-900 relative
@@ -139,52 +139,56 @@ export const Card = ({
                         gap-8
                     '
                 >
-                    <div>
-                        <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
-                            Presenças
-                        </h3>
-                        <span
-                            className={`text-lg font-normal leading-normal ${titleStatus["good"]}`}
-                        >
-                            {student.presences}
-                        </span>
+                    <div className='flex flex-col md:flex-row'>
+                        <div>
+                            <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
+                                Presenças
+                            </h3>
+                            <span
+                                className={`text-lg font-normal leading-normal ${titleStatus["good"]}`}
+                            >
+                                {student.presences}
+                            </span>
+                        </div>
+                        <div>
+                            <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
+                                Faltas
+                            </h3>
+                            <span
+                                className={`text-lg font-normal leading-normal ${titleStatus["bad"]}`}
+                            >
+                                {student.absences}
+                            </span>
+                        </div>
                     </div>
                     <div>
-                        <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
-                            Faltas
-                        </h3>
-                        <span
-                            className={`text-lg font-normal leading-normal ${titleStatus["bad"]}`}
-                        >
-                            {student.absences}
-                        </span>
-                    </div>
-                    <div>
-                        <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
-                            Abonadas
-                        </h3>
-                        <span
-                            className={`text-lg font-normal leading-normal ${titleStatus["warning"]}`}
-                        >
-                            {student.justified}
-                        </span>
-                    </div>
-                    <div>
-                        <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
-                            Frequência
-                        </h3>
-                        <span
-                            className={`text-lg font-normal leading-normal ${titleStatus["warning"]}`}
-                        >
-                            {student.frequency}
-                        </span>
+                        <div>
+                            <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
+                                Abonadas
+                            </h3>
+                            <span
+                                className={`text-lg font-normal leading-normal ${titleStatus["warning"]}`}
+                            >
+                                {student.justified}
+                            </span>
+                        </div>
+                        <div>
+                            <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
+                                Frequência
+                            </h3>
+                            <span
+                                className={`text-lg font-normal leading-normal ${titleStatus["warning"]}`}
+                            >
+                                {student.frequency}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className='flex flex-col items-end justify-between w-full max-w-40'>
+            <div className='flex flex-col items-end justify-between w-full md:max-w-40 gap-4'>
                 <div
                     className='
-                        flex h-9 gap-3 relative
+                        flex md:h-9 gap-3 md:relative absolute top-12 right-8 md:top-0 md:right-0
                     '
                 >
                     <motion.button
@@ -231,7 +235,7 @@ export const Card = ({
                             whileTap={{ scale: 0.95 }}
                             transition={{ duration: 0.1, ease: "easeIn" }}
                             className={`
-                            px-3 p-2
+                            px-3 p-2 w-full md:w-auto
                             rounded-xl ${statusColors[student?.status.toLowerCase() === "alerta" || student?.status.toLowerCase() === "ativo" ? "inativo" : "ativo"]}
                         `}
                             onClick={() => handleAction("danger")}

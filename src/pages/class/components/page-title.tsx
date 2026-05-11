@@ -31,7 +31,7 @@ export const PageTitle = ({
 
     return (
         <TitleStructure>
-            <div className="flex justify-between items-center w-full">
+            <div className="flex flex-col md:flex-row gap-4 justify-between md:items-center w-full">
                 <div className="flex gap-4 items-center">
                     <button onClick={handleBack} type="button">
                         <ArrowLeft height={25} width={25} className=" text-zinc-700 dark:text-zinc-400" />
@@ -73,7 +73,7 @@ export const PageTitle = ({
 
                 <motion.button whileTap={{ scale: 0.95 }} transition={{ duration: 0.1, ease: "easeIn" }}
                     onClick={() => setOpenModalRegister(prev => !prev)}
-                    className="bg-blue-500 dark:bg-blue-700 text-zinc-50 dark:text-zinc-200 w-full max-w-48 px-2 py-3 rounded-xl flex items-center justify-center gap-2">
+                    className="bg-blue-500 dark:bg-blue-700 text-zinc-50 dark:text-zinc-200 w-full md:max-w-48 px-2 py-3 rounded-xl flex items-center justify-center gap-2">
                     <Plus /> <span>Cadastrar aluno</span>
                 </motion.button>
             </div>

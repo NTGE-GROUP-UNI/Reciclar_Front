@@ -10,13 +10,13 @@ export const Footer = () => {
         >
             <h1
                 className="
-                    leading-normal text-sm text-zinc-50
+                    leading-normal text-sm text-zinc-50 text-center md:text-left mb-2
             ">
                 © 2026 Instituto Reciclar - Todos os direitos reservados
             </h1>
             <p
                 className="
-                    leading-normal text-sm text-zinc-50
+                    leading-normal text-sm text-zinc-50 text-center md:text-left
             ">
                     Sistema de Gestão de Alunos v1.0
             </p>
