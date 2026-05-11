@@ -1,9 +1,9 @@
-//REACT HOOK FORM
 import { useFormContext } from "react-hook-form"
+import type { InputHTMLAttributes } from "react";
 
-//INTERFACE
-import type { InputProps } from "./interface";
-
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+    zodName: string
+}
 
 export const Input = ({ zodName, ...props }: InputProps) => {
 
@@ -22,14 +22,14 @@ export const Input = ({ zodName, ...props }: InputProps) => {
                 {...props}
                 {...register(zodName)}
                 className={`
-                w-full border-2 rounded-md py-2 p-3
+                w-full border rounded-md py-2 p-3
                 2xl:text-md text-sm
                 outline-none
-                bg-zinc-100 text-zinc-900
-                dark:bg-zinc-800 dark:text-zinc-200
+                bg-zinc-200 text-zinc-900 border-zinc-400 placeholder-zinc-600
+                dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700
                 ${errors[zodName]?.message
-                    ? "border-red-300 focus:border-red-400 focus:shadow-[0px_0px_0px_3px_#fca5a5] dark:border-red-800 dark:focus:shadow-[0px_0px_0px_3px_#450a0a]"
-                    : "border-zinc-200 focus:border-zinc-300 focus:shadow-[0px_0px_0px_3px_#e4e4e7] dark:border-zinc-700 dark:focus:shadow-[0px_0px_0px_3px_#52525b]"
+                    ? "focus:border-red-400 focus:shadow-[0px_0px_0px_3px_#fca5a5] dark:border-red-800 dark:focus:shadow-[0px_0px_0px_3px_#450a0a]"
+                    : "focus:border-zinc-400 focus:shadow-[0px_0px_0px_3px_#D9D9D9] dark:border-zinc-700 dark:focus:shadow-[0px_0px_0px_3px_#52525b]"
                 }
             `}
             />

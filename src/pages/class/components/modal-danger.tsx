@@ -1,7 +1,6 @@
-import { Form } from "@/shared/components/shared";
+import { Button, Form } from "@/shared/components/shared";
 import { X, MegaphoneOff, ShieldCheck } from "lucide-react";
 import { useCurrentStudent } from "@/shared/store/student/student.store";
-import { motion } from "framer-motion";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { patchStudentStatus } from "@/entities/student/api/patch-student-status";
 import { Spinner } from "@/shared/ui/spinner";
@@ -58,15 +57,10 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
         }
     }
 
-    const buttonStatusStyles = {
-        "ativo": "bg-red-400 dark:bg-red-700 border border-red-700 dark:border-red-500 text-red-800 dark:text-red-300",
-        "inativo": "bg-blue-400 dark:bg-blue-700 border border-blue-700 dark:border-blue-500 text-blue-800 dark:text-blue-300"
-    }
-
     const statusKey = student?.status?.toLowerCase() === "alerta" || student?.status?.toLowerCase() === "ativo" ? "ativo" : "inativo";
 
     return (
-        <section className="w-full h-full bg-zinc-950/50 fixed top-0 right-0 flex items-center justify-center z-50 flex-col">
+        <section className="w-full h-full bg-zinc-950/50 fixed top-0 right-0 flex items-center justify-center z-50 flex-col p-8">
             <div className="w-full bg-zinc-50 dark:bg-zinc-900 max-w-md rounded-lg shadow-sm flex flex-col items-center border border-zinc-200 dark:border-zinc-800">
                 <div className="w-full flex justify-center items-center border-b border-zinc-200 dark:border-zinc-800">
                     <div className="w-full flex justify-between p-8 items-center">
@@ -98,13 +92,10 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                                 />
                             </Form.Wrapper>
                             <div className="flex flex-col gap-3">
-                                <motion.button type="button" whileTap={{ scale: 0.95 }} transition={{ duration: 0.1, ease: "easeIn" }}
-                                    onClick={() => setOpenModalDanger(false)}
-                                    className="bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-600 text-zinc-800 dark:text-zinc-50 w-full px-2 py-3 rounded-xl flex items-center justify-center gap-2">
+                                <Button type="button" typeButton="gray" onClick={() => setOpenModalDanger(false)}>
                                     <X /> Não
-                                </motion.button>
-                                <motion.button type="submit" whileTap={{ scale: 0.95 }} transition={{ duration: 0.1, ease: "easeIn" }}
-                                    className={`${buttonStatusStyles[statusKey]} w-full px-2 py-3 rounded-xl flex items-center justify-center gap-2`}>
+                                </Button>
+                                <Button type="submit" typeButton={`${statusKey === "inativo" ? "blue" : "red"}`}>
                                     {
                                         mutation.isPending
                                             ?
@@ -117,7 +108,7 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                                                 {student?.status.toLowerCase() === "ativo" || student?.status.toLowerCase() === "alerta" ? <MegaphoneOff /> : <ShieldCheck />} Sim, tenho certeza
                                             </>
                                     }
-                                </motion.button>
+                                </Button>
                             </div>
                         </Form.Root>
                     </div>

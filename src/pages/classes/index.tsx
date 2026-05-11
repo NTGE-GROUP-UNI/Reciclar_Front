@@ -8,14 +8,14 @@ import {
 import { ModalRegister } from "./components/modal-register";
 import { useState } from "react";
 import { Card } from "./components/card";
-import { Plus, RefreshCcw, SlidersHorizontal } from "lucide-react";
+import { Plus, SlidersHorizontal } from "lucide-react";
 import type { FormData } from "@/shared/components/form/type";
 import type { IClassSummary } from "@/entities/classroom/model/types";
 import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
-import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { ModalDanger } from "./components/modal-danger";
 import { ModalEdit } from "./components/modal-edit";
+import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 
 export const Classes = () => {
 
@@ -30,9 +30,15 @@ export const Classes = () => {
         queryFn: getClassrooms,
     });
 
-    const uniqueClasses = [...new Set(classes?.map((cl) => cl.className.slice(6)) || [])];
+    const uniqueClasses = seletecUniqueClasses(classes);
+    const list = filteredClasses ?? classes
 
     const handleSubmit = (data: FormData) => {
+
+        if (isFiltred) {
+            reloadDatas();
+            return;
+        }
 
         const { filterShift, filterClass } = data;
 
@@ -62,8 +68,6 @@ export const Classes = () => {
         setIsFiltered(false);
     };
 
-    const list = filteredClasses ?? classes
-
     return (
         <div
             className="
@@ -83,62 +87,24 @@ export const Classes = () => {
                     >
                         Gestão de Turmas
                     </h1>
-                    <div
+                    <p
                         className="
-                            flex gap-2
-                        "
-                    >
-                        <p
-                            className="
                             font-medium text-zinc-500 
                             text-md dark:text-zinc-400
                         "
-                        >
-                            Gerenciamento de alunos e frequência
-                        </p>
-                        {
-                            isFiltred
-                                ?
-                                <Description
-                                    description="Botão de reinicialização"
-                                    dirX="right"
-                                    dirY="top"
-                                >
-                                    <button
-                                        type="button"
-                                        onClick={reloadDatas}
-                                    >
-                                        <RefreshCcw
-                                            className="
-                                            text-zinc-700 
-                                            dark:text-zinc-400
-                                        "
-                                            height={17}
-                                            width={17}
-                                        />
-                                    </button>
-                                </Description>
-                                :
-                                null
-                        }
-                    </div>
+                    >
+                        Gerenciamento de alunos e frequência
+                    </p>
                 </div>
 
-                <motion.button
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.1, ease: "easeIn" }}
+                <Button
+                    type="button"
+                    typeButton="blue"
+                    className="md:max-w-48"
                     onClick={() => setOpenModalRegister(prev => !prev)}
-                    className="
-                        flex-shrink-0
-                        bg-blue-400 dark:bg-blue-700
-                        border border-blue-700 dark:border-blue-500
-                        text-blue-800 dark:text-blue-300
-                        w-full sm:max-w-48 px-2 py-3 rounded-xl
-                        flex items-center justify-center gap-2
-                    "
                 >
                     <Plus /> <span>Cadastrar turma</span>
-                </motion.button>
+                </Button>
             </TitleStructure>
 
             <Form.Root
@@ -236,9 +202,10 @@ export const Classes = () => {
                     </Description>
                 </Form.Select.Wrapper>
                 <Button
-                    typeButton="default"
+                    typeButton="blue"
+                    className="md:w-auto md:h-10 px-3"
                 >
-                    Buscar
+                    {!isFiltred ? "Buscar" : "Carregar novamente"}
                 </Button>
             </Form.Root>
 

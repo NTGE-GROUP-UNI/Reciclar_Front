@@ -6,15 +6,14 @@ import {
     Description
 } from "@/shared/components/shared";
 import { Card } from "./components/card";
-import { FileText, RefreshCcw, SlidersHorizontal } from "lucide-react";
+import { RefreshCcw, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import type { FormData } from "@/shared/components/form/type";
 import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
 import { getStudentsMetrics } from "@/entities/student/api/get-students-metrics";
-import { motion } from "framer-motion";
 import type { IStudent } from "@/entities/student/model/types";
 import { useQuery } from "@tanstack/react-query";
-import { getDownloadMetrics } from "@/entities/student/api/get-donwload-metrics";
+import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
 
 export const Dashboard = () => {
 
@@ -34,6 +33,12 @@ export const Dashboard = () => {
     const uniqueClasses = [...new Set(classes?.map((cl) => cl.className.slice(6)) || [])];
 
     const handleSubmit = (data: FormData) => {
+
+        if (isFiltred) {
+            reloadDatas();
+            return;
+        }
+
         const { filterName, filterClass, filterShift } = data;
 
         const condition = filterName || filterClass || filterShift;
@@ -65,17 +70,6 @@ export const Dashboard = () => {
         setIsFiltered(false);
     };
 
-    const downloadSpreadsheet = async () => {
-        const data = await getDownloadMetrics();
-        const url = window.URL.createObjectURL(new Blob([data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'dashboard_alunos.xlsx');
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-    }
-
     const list = filteredStudents ?? students
 
     return (
@@ -97,60 +91,17 @@ export const Dashboard = () => {
                     >
                         Dashboard
                     </h1>
-                    <div
+                    <p
                         className="
-                            flex gap-2
-                        "
+                        font-medium text-zinc-500 
+                        text-md dark:text-zinc-400
+                    "
                     >
-                        <p
-                            className="
-                            font-medium text-zinc-500 
-                            text-md dark:text-zinc-400
-                        "
-                        >
-                            Gerenciamento de alunos e frequência
-                        </p>
-                        {
-                            isFiltred
-                                ?
-                                <Description
-                                    description="Botão de reinicialização"
-                                    dirX="right"
-                                    dirY="top"
-                                >
-                                    <button
-                                        type="button"
-                                        onClick={reloadDatas}
-                                    >
-                                        <RefreshCcw
-                                            className="
-                                            text-zinc-700 
-                                            dark:text-zinc-400
-                                        "
-                                            height={17}
-                                            width={17}
-                                        />
-                                    </button>
-                                </Description>
-                                :
-                                null
-                        }
-                    </div>
+                        Gerenciamento de alunos e frequência
+                    </p>
                 </div>
 
-                <motion.button
-                    whileTap={{ scale: 0.95 }}
-                    onClick={downloadSpreadsheet}
-                    transition={{ duration: 0.1, ease: "easeIn" }}
-                    className="
-                        bg-green-500 dark:bg-green-700
-                        text-zinc-50 dark:text-zinc-200
-                        w-full sm:max-w-48 px-2 py-3 rounded-xl
-                        flex items-center justify-center gap-2
-                    "
-                >
-                    <FileText /> <span>Exportar Excel</span>
-                </motion.button>
+                <ExportExcelButton />
             </TitleStructure>
 
             <div
@@ -265,9 +216,10 @@ export const Dashboard = () => {
                         </Description>
                     </Form.Select.Wrapper>
                     <Button
-                        typeButton="default"
+                        typeButton="blue"
+                        className="md:w-auto md:h-10 px-3"
                     >
-                        Buscar
+                        {!isFiltred ? "Buscar" : "Carregar novamente"}
                     </Button>
                 </Form.Root>
 

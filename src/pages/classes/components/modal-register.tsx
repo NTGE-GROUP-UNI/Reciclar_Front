@@ -41,7 +41,7 @@ export const ModalRegister = ({ setModalRegister }: { setModalRegister: React.Di
             className="
                 w-full h-full bg-zinc-950/50
                 fixed top-0 right-0 flex items-center
-                justify-center z-50 flex-col
+                justify-center z-50 flex-col p-8
             "
         >
             <div
@@ -152,7 +152,7 @@ export const ModalRegister = ({ setModalRegister }: { setModalRegister: React.Di
                         </Form.Wrapper>
 
                         <Button
-                            typeButton="sign-in"
+                            typeButton="red"
                         >
                             {
                                 mutation.isPending

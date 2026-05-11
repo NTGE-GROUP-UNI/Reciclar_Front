@@ -9,6 +9,7 @@ import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
 import { useTheme } from "@/shared/hooks/theme/useTheme";
 import { Spinner } from "@/shared/ui/spinner";
 import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 
 interface ModalEditProps {
     setOpenModalEdit: React.Dispatch<SetStateAction<boolean>>;
@@ -40,11 +41,7 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
         (shift) => shift !== student?.shift
     );
 
-    const availableClasses = classes?.filter(
-        (cl) => cl.className.slice(6).toLowerCase() !== student?.className.slice(6).toLowerCase()
-    );
-
-    const uniqueClasses = [...new Set(availableClasses?.map((cl) => cl.className.slice(6)) || [])];
+    const uniqueClasses = seletecUniqueClasses(classes);
 
     const handleSubmit = (data: FormData) => {
 
@@ -82,7 +79,7 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
     }
 
     return (
-        <section className="w-full h-full bg-zinc-950/50 fixed top-0 right-0 flex items-center justify-center z-50 flex-col">
+        <section className="w-full h-full bg-zinc-950/50 fixed top-0 right-0 flex items-center justify-center z-50 flex-col p-8">
             <div className="w-full bg-zinc-50 max-w-md rounded-lg shadow-sm flex flex-col items-center border border-zinc-200">
                 <div className="w-full flex justify-center items-center border-b border-zinc-200">
                     <div className="w-full flex justify-between p-8 items-center">
@@ -131,28 +128,20 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
                                 id="className"
                             >
 
-                                <Form.Select.Option
-                                    id={student?.className.charAt(student.className.length - 1)}
-                                    value={student?.className.charAt(student.className.length - 1)}
-                                >
-                                    {student?.className.charAt(student.className.length - 1)}
-                                </Form.Select.Option>
-
                                 {
-                                    uniqueClasses && 
-                                    uniqueClasses?.map((cl, index) => {
+                                    uniqueClasses &&
+                                    uniqueClasses.map((className, idx) => {
                                         return (
                                             <Form.Select.Option
-                                                key={index}
-                                                value={cl}
-                                                id={cl}
+                                                key={idx}
+                                                value={className}
+                                                id={className}
                                             >
-                                                {cl}
+                                                {className}
                                             </Form.Select.Option>
                                         )
                                     })
                                 }
-
                                 
                             </Form.Select.Root>
                         </Form.Wrapper>
@@ -242,7 +231,7 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
                         </Form.Wrapper>
 
                         <Button
-                            typeButton="sign-in"
+                            typeButton="blue"
                         >
                             {
                                 mutation.isPending

@@ -10,6 +10,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postAuthSignin } from "@/entities/auth/api/post-auth-signin";
 import { useAuthStore } from "@/shared/store/auth/auth.store";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "@/shared/ui/spinner";
 
 export const SignIn = () => {
 
@@ -144,9 +145,9 @@ export const SignIn = () => {
                         />
                     </Form.Wrapper>
                     <Button
-                        typeButton="sign-in"
+                        typeButton="blue"
                     >
-                        Entrar
+                        {mutation.isPending ? <Spinner /> : "Entrar" }
                     </Button>
                 </Form.Root>
             </div>

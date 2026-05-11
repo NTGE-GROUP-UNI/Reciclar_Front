@@ -120,8 +120,9 @@ export const Settings = () => {
                                 />
                             </Form.Wrapper>
                             <Button
-                                typeButton="default"
+                                typeButton="blue"
                                 type="submit"
+                                className="md:max-w-40 md:h-10"
                             >
                                 {language === "pt" ? "Salvar" : "Save"}
                             </Button>
@@ -179,7 +180,9 @@ export const Settings = () => {
 
                 <Card icon={DoorOpen} title={t("settings.cards.logout.title")} description={t("settings.cards.logout.description")} column={true}>
                     <Button
-                        typeButton="danger"
+                        typeButton="red"
+                        type="button"
+                        className="md:max-w-40"
                         onClick={() => {
                             logout();
                             setToken(null);

@@ -5,10 +5,9 @@ import {
     TitleStructure
 } from "@/shared/components/shared"
 
-import { FileText, RefreshCcw, SlidersHorizontal } from "lucide-react";
+import { RefreshCcw, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import type { FormData } from "../../shared/components/form/type";
-import { motion } from "framer-motion";
 import { getStudents } from "@/entities/student/api/get-students";
 import { getClassroomsMetrics } from "@/entities/classroom/api/get-classrooms-metrics";
 import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
@@ -17,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { TableStudents, CardView } from "./components/export-components";
 import { Spinner } from "@/shared/ui/spinner";
+import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
 
 export const Fouls = () => {
 
@@ -136,18 +136,7 @@ export const Fouls = () => {
                     </div>
                 </div>
 
-                <motion.button
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.1, ease: "easeIn" }}
-                    className="
-                        bg-green-500 dark:bg-green-700
-                        text-zinc-50 dark:text-zinc-200
-                        w-full md:max-w-48 px-2 py-3 rounded-xl
-                        flex items-center justify-center gap-2
-                    "
-                >
-                    <FileText /> <span>Exportar Excel</span>
-                </motion.button>
+                <ExportExcelButton />
             </TitleStructure>
 
             {foulsMetrics ? (
@@ -314,7 +303,8 @@ export const Fouls = () => {
                         </Description>
                     </Form.Select.Wrapper>
                     <Button
-                        typeButton="default"
+                        typeButton="blue"
+                        className="max-w-24 h-10"
                     >
                         Buscar
                     </Button>

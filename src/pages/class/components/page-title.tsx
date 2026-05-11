@@ -1,8 +1,7 @@
-import { TitleStructure } from "@/shared/components/shared";
+import { Button, TitleStructure } from "@/shared/components/shared";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "@/shared/ui/spinner";
 import { ArrowLeft, Plus } from 'lucide-react';
-import { motion } from "framer-motion";
 import type { SetStateAction } from "react";
 import type { IStudent } from "@/entities/student/model/types";
 
@@ -71,11 +70,12 @@ export const PageTitle = ({
                     </div>
                 </div>
 
-                <motion.button whileTap={{ scale: 0.95 }} transition={{ duration: 0.1, ease: "easeIn" }}
+                <Button
+                    typeButton="blue"
                     onClick={() => setOpenModalRegister(prev => !prev)}
-                    className="bg-blue-500 dark:bg-blue-700 text-zinc-50 dark:text-zinc-200 w-full md:max-w-48 px-2 py-3 rounded-xl flex items-center justify-center gap-2">
+                    className="md:max-w-48">
                     <Plus /> <span>Cadastrar aluno</span>
-                </motion.button>
+                </Button>
             </div>
         </TitleStructure>
     )

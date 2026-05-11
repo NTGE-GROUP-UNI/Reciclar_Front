@@ -1,5 +1,5 @@
 //COMPONENTS
-import { Input } from "./input/Input";
+import { Input } from "./input/input";
 import { Label } from "./label/Label";
 import { Root } from "./root/Root";
 import { Select } from "./select/Select";

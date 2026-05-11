@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { animate, motion, useMotionValue, useMotionValueEvent } from 'framer-motion';
 import { useCurrentClassroom } from '@/shared/store/classroom/classroom.store';
 import type { IClassSummary } from '@/entities/classroom/model/types';
+import { Button } from '@/shared/components/shared';
 
 interface ClassesProps {
     classroom: IClassSummary;
@@ -110,7 +111,6 @@ export const Card = ({
                 className="
                     flex gap-2
                     items-center
-                    mb-5
                 "
             >
                 <Clock4
@@ -133,7 +133,7 @@ export const Card = ({
                 className="
                     w-full flex justify-between border border-blue-500
                     bg-blue-200 dark:bg-blue-900 rounded-lg
-                    py-4 px-4 items-center
+                    py-4 px-4 items-center my-4
                 "
             >
                 <div
@@ -166,21 +166,12 @@ export const Card = ({
                     {displayActive}
                 </span>
             </div>
-            <motion.button
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.1, ease: "easeIn" }}
+            <Button
+                typeButton='blue'
                 onClick={handleClick}
-                className="
-                    flex-shrink-0
-                    bg-blue-400 dark:bg-blue-700
-                    border border-blue-700 dark:border-blue-500
-                    text-blue-800  dark:text-blue-300 px-4 py-3
-                    rounded-lg w-full mt-2
-                    flex items-center justify-center gap-2 
-                "
             >
                 <FolderOpen height={20} width={20} /> Acessar turma
-            </motion.button>
+            </Button>
         </div>
     )
 }

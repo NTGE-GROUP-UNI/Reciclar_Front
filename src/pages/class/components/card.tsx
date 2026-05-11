@@ -139,7 +139,7 @@ export const Card = ({
                         gap-8
                     '
                 >
-                    <div className='flex flex-col md:flex-row'>
+                    <div className='flex flex-col md:flex-row gap-2'>
                         <div>
                             <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
                                 Presenças
@@ -161,7 +161,7 @@ export const Card = ({
                             </span>
                         </div>
                     </div>
-                    <div>
+                    <div className='flex flex-col md:flex-row gap-2'>
                         <div>
                             <h3 className=" text-md font-normal text-zinc-500 leading-normal dark:text-zinc-400">
                                 Abonadas

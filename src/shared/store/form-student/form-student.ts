@@ -1,6 +1,5 @@
 //ZUSTAND
 import { create } from "zustand";
-
 import type { IStudent } from "@/entities/student/model/types";
 
 

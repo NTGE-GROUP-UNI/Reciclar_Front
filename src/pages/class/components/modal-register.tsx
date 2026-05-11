@@ -216,7 +216,7 @@ export const ModalRegister = ({
                         </Form.Wrapper>
 
                         <Button
-                            typeButton="sign-in"
+                            typeButton="blue"
                         >
                             {
                                 mutation.isPending

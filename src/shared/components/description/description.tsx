@@ -1,8 +1,12 @@
-//REACT
-import { useState } from "react"
+import { useState, type ReactNode } from "react"
 
-//INTERFACE
-import type { DescriptionProps } from "./interface"
+export interface DescriptionProps {
+    children: ReactNode;
+    description: string;
+    dirX: "right" | "left";
+    dirY: "top" | "bottom";
+    styles?: string;
+}
 
 
 export const Description = ({ children, description, dirX, dirY, styles }: DescriptionProps) => {
@@ -15,8 +19,8 @@ export const Description = ({ children, description, dirX, dirY, styles }: Descr
             "left": "right-4"
         },
         y: {
-            "top": "-top-8",
-            "bottom": "-bottom-8"
+            "top": "-top-10",
+            "bottom": "-bottom-10"
         },
     }
 
