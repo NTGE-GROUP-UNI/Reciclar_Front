@@ -4,10 +4,9 @@ import { useCurrentStudent } from "@/shared/store/student/student.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { patchStudentStatus } from "@/entities/student/api/patch-student-status";
 import { Spinner } from "@/shared/ui/spinner";
-import { useTheme } from "@/shared/hooks/theme/useTheme";
 import type { FormData } from "@/shared/components/form/type";
 import type { SetStateAction } from "react";
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 
 interface ModalDangerProps {
     setOpenModalDanger: React.Dispatch<SetStateAction<boolean>>;
@@ -16,10 +15,9 @@ interface ModalDangerProps {
 export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
 
     const { student } = useCurrentStudent();
-    const { themeValue } = useTheme();
 
     const queryClient = useQueryClient();
-    
+
     const mutation = useMutation({
         mutationFn: patchStudentStatus,
         onSuccess: () => {
@@ -30,7 +28,7 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
 
     const handleInactive = (data: FormData) => {
 
-        if(student){
+        if (student) {
             const formName = data.name?.toLowerCase().trim();
             const studentName = student?.fullName?.toLowerCase().trim();
             const currentStatus = student?.status.toLowerCase() === "ativo" || student?.status.toLowerCase() === "alerta" ? "inativo" : (student?.absences > 1 ? "alerta" : "ativo");
@@ -40,8 +38,7 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                     student: {
                         id: student?.id,
                         status: currentStatus
-                    },
-                    theme: themeValue
+                    }
                 });
                 return;
             }
@@ -49,7 +46,6 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
             if (formName !== studentName) {
                 handleToasts({
                     message: "Nome incorreto",
-                    theme: themeValue,
                     type: "error"
                 })
                 return;

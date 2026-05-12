@@ -6,6 +6,8 @@ import { Html5Qrcode } from "html5-qrcode";
 import { Button } from "@/shared/components/shared";
 import { Spinner } from "@/shared/ui/spinner";
 import { useLocation } from "react-router-dom";
+import { patchStudentRegisterAbsence } from "@/entities/student/api/patch-student-register-absence";
+import { patchStudentRemoveAbsence } from "@/entities/student/api/patch-student-remove-absence";
 
 export const QrReader = () => {
 
@@ -15,12 +17,20 @@ export const QrReader = () => {
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
     const [message, setMessage] = useState("");
     const [isCameraActive, setIsCameraActive] = useState(false);
+    const [selectButton, setSelectButton] = useState<string | null>(null)
 
-    const startScanner = async () => {
+    const handleClickAction = (action: string) => {
+        setSelectButton(action);
+        startScanner(action);
+    }
+
+    const startScanner = async (action: string) => {
         if (scannerRef.current || isCameraActive) return;
 
         const scanner = new Html5Qrcode("qr-reader");
         scannerRef.current = scanner;
+
+        console.log(action);
 
         try {
             await scanner.start(
@@ -32,9 +42,28 @@ export const QrReader = () => {
 
                     try {
                         setStatus("loading");
-                        await postStudentPresence(decodedText);
-                        setStatus("success");
-                        setMessage("Presença confirmada!");
+
+                        if (action === "register_presence"){
+                            await postStudentPresence(decodedText);
+                            setStatus("success");
+                            setMessage("Presença confirmada!");
+                            return;
+                        }
+
+                        if (action === "register_absence") {
+                            await patchStudentRegisterAbsence(decodedText);
+                            setStatus("success");
+                            setMessage("Falta confirmada!");
+                            return;
+                        }
+
+                        if (action === "remove_absence") {
+                            await patchStudentRemoveAbsence(decodedText);
+                            setStatus("success");
+                            setMessage("Falta removida!");
+                            return;
+                        }
+                        
                     } catch {
                         setStatus("error");
                         setMessage("Erro ao validar QR Code");
@@ -64,6 +93,7 @@ export const QrReader = () => {
                 await scannerRef.current.stop();
             }
             scannerRef.current.clear();
+            setSelectButton(null)
         } catch (error) {
             console.error("Erro ao parar scanner:", error);
         } finally {
@@ -109,9 +139,16 @@ export const QrReader = () => {
                 )}
             </div>
 
-            <div className="flex gap-4 mt-4">
+            <div className="flex gap-4 mt-4 w-full max-w-sm">
                 {!isCameraActive ? (
-                    <Button typeButton="blue" onClick={startScanner}>Iniciar câmera</Button>
+                    !selectButton ?
+                    <div className="flex flex-col gap-2 w-full">
+                            <Button typeButton="green" onClick={() => handleClickAction("remove_absence")}>Remover falta</Button>
+                            <Button typeButton="blue" onClick={() => handleClickAction("register_presence")}>Registrar presença</Button>
+                            <Button typeButton="red" onClick={() => handleClickAction("register_absence")}>Registrar falta</Button>
+                    </div>
+                    :
+                    null
                 ) : (
                     <Button typeButton="red" onClick={stopScanner}>Parar câmera</Button>
                 )}

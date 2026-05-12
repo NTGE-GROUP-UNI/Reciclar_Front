@@ -6,7 +6,7 @@ import { persist } from "zustand/middleware"
 import i18n from "@/shared/lib/i18n/config";
 
 //TOASTS
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 import type { TFunction } from "i18next";
 
 type LanguageType = "pt" | "en";

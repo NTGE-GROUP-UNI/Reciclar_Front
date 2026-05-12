@@ -1,4 +1,3 @@
-//INTERFACES
 import type { AvatarProps } from "boring-avatars/dist/components/types"
 
 const avatarSize = 25;

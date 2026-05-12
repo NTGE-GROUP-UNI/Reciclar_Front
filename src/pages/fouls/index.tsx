@@ -13,7 +13,6 @@ import { getClassroomsMetrics } from "@/entities/classroom/api/get-classrooms-me
 import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
 import type { IStudent } from "@/entities/student/model/types";
 import { useQuery } from "@tanstack/react-query";
-
 import { TableStudents, CardView } from "./components/export-components";
 import { Spinner } from "@/shared/ui/spinner";
 import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
@@ -44,6 +43,12 @@ export const Fouls = () => {
     const uniqueClasses = seletecUniqueClasses(classes);
 
     const handleSubmit = (data: FormData) => {
+
+        if (isFiltred) {
+            reloadDatas();
+            return;
+        }
+
         const { filterName, filterClass, filterShift, filterStatus } = data;
 
         const condition = filterName || filterClass || filterShift || filterStatus;
@@ -68,6 +73,8 @@ export const Fouls = () => {
 
                 return matchName && matchClass && matchShift && matchStatus;
             });
+
+            console.log(filtered);
 
             setFilteredStudents(filtered);
             setIsFiltered(true);
@@ -111,31 +118,6 @@ export const Fouls = () => {
                         >
                             {t("fouls.description")}
                         </p>
-                        {
-                            isFiltred
-                                ?
-                                <Description
-                                    description="Botão de reinicialização"
-                                    dirX="right"
-                                    dirY="top"
-                                >
-                                    <button
-                                        type="button"
-                                        onClick={reloadDatas}
-                                    >
-                                        <RefreshCcw
-                                            className="
-                                            text-zinc-700 
-                                            dark:text-zinc-400
-                                        "
-                                            height={17}
-                                            width={17}
-                                        />
-                                    </button>
-                                </Description>
-                                :
-                                null
-                        }
                     </div>
                 </div>
 
@@ -307,9 +289,9 @@ export const Fouls = () => {
                     </Form.Select.Wrapper>
                     <Button
                         typeButton="blue"
-                        className="max-w-24 h-10"
+                        className="md:w-auto md:h-10 px-3"
                     >
-                        {!isFiltred ? t("global.buttons.search") : t("global.buttons.loadAgain")}
+                        {!isFiltred ? t("global.buttons.search") : t("global.buttons.uploadAgain")}
                     </Button>
                 </Form.Root>
 

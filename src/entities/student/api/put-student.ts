@@ -1,31 +1,34 @@
 import { baseApi } from "@/shared/lib/axios/axios";
 import type { IPutStudent } from "../model/types";
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
+import { isAxiosError } from "axios";
 
-export const putStudent = async ({ student, theme }: { student: IPutStudent, theme: boolean }) => {
+export const putStudent = async ({ student }: { student: IPutStudent }) => {
 
-    console.log(student);
+    try {
+        const response = await baseApi.put(`students/${student.id}`, {
+            fullName: student.fullName,
+            expirationYear: student.expirationYear,
+            shift: student.shift,
+            className: student.className
+        });
 
-    const response = await baseApi.put(`students/${student.id}`, {
-        fullName: student.fullName,
-        expirationYear: student.expirationYear,
-        shift: student.shift,
-        className: `Turma ${student.className}`
-    });
+        if (response.status === 200) {
+            handleToasts({
+                message: "Aluno atualizado com sucesso!",
+                type: "success"
+            })
+        }
+    } catch (error) {
 
-    if (response.status === 200) {
-        handleToasts({
-            message: "Aluno atualizado com sucesso!",
-            theme: theme,
-            type: "warn"
-        })
-    }
+        if (isAxiosError(error)) {
+            if (error.status === 500) {
+                handleToasts({
+                    message: "Erro no servidor",
+                    type: "error"
+                })
+            }
+        }
 
-    if (response.status === 500) {
-        handleToasts({
-            message: "Erro",
-            theme: theme,
-            type: "error"
-        })
     }
 }

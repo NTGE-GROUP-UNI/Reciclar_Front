@@ -2,18 +2,15 @@ import { baseApi } from "@/shared/lib/axios/axios";
 import { handleToasts } from "@/shared/lib/toast/toast-custom";
 import { isAxiosError } from "axios";
 
-export const getDownloadMetrics = async () => {
+export const patchStudentRegisterAbsence = async (id: string) => {
 
     try {
-        const response = await baseApi.get("/dashboard/export",
-            {
-                responseType: "blob"
-            }
-        );
+        const response = await baseApi.patch(`/students/${id}/absence`);
 
-        if (response.status === 200) {
+        if (response.status === 201 || response.status === 200) {
             handleToasts({
-                message: "Planilha obtida! Aguarde...",
+                message: "Falta confirmada!",
+                theme: true,
                 type: "success"
             })
         }
@@ -22,16 +19,15 @@ export const getDownloadMetrics = async () => {
     } catch (error) {
 
         if (isAxiosError(error)) {
-
             if (error.status === 500) {
                 handleToasts({
                     message: "Erro no servidor",
                     type: "error"
                 })
             }
-
         }
 
     }
+
 
 }

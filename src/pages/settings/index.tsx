@@ -8,15 +8,14 @@ import {
     PersonStanding,
     BriefcaseBusiness,
 } from "lucide-react";
-import { setTheme } from "@/shared/store/theme/theme";
+import { setTheme, themeStore } from "@/shared/store/theme/theme";
 import { setLang } from "@/shared/store/language/language";
 import { setAvatar } from "@/shared/store/avatar/avatar";
 import { setDisplayName } from "@/shared/store/user/user";
 import { motion } from "motion/react";
 import Avatar from "boring-avatars";
-import { useTheme } from "@/shared/hooks/theme/useTheme";
-import { useLanguage } from "@/shared/hooks/language/useLanguage";
-import { useUser } from "@/shared/hooks/user/useUser";
+import { useLanguage } from "@/shared/hooks/language/use-language";
+import { useUser } from "@/shared/hooks/user/use-user";
 import { useTranslation } from "react-i18next"
 import { Card } from "./components/card";
 import {
@@ -33,7 +32,7 @@ import { useNavigate } from "react-router-dom";
 export const Settings = () => {
 
     const { logout, setToken } = useAuthStore((s) => s);
-    const { themeValue } = useTheme((state) => state);
+    const themeValue = themeStore(state => state.themeValue)
     const { language } = useLanguage((state) => state);
     const { displayName } = useUser((state) => state);
     const { t } = useTranslation();

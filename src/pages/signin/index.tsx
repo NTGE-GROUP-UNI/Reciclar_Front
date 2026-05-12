@@ -2,7 +2,6 @@ import {
     Form,
     Button
 } from "@/shared/components/shared";
-import { useTheme } from "@/shared/hooks/theme/useTheme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleHalfStroke } from "@fortawesome/free-solid-svg-icons"
 import type { FormData } from "@/shared/components/form/type";
@@ -15,12 +14,13 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
+import { themeStore } from "@/shared/store/theme/theme";
 
 export const SignIn = () => {
 
     const { t } = useTranslation();
     const { setToken } = useAuthStore((s) => s);
-    const { toggleTheme } = useTheme((state) => state);
+    const toggleTheme = themeStore.getState().toggleTheme;
     const navigate = useNavigate();
 
     const [passwordType, setPasswordType] = useState("password");

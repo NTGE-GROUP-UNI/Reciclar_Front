@@ -1,31 +1,36 @@
 import { baseApi } from "@/shared/lib/axios/axios";
 import type { IPostStudent } from "../model/types";
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
+import { isAxiosError } from "axios";
 
-export const postStudent = async ({ student, theme }: { student: IPostStudent, theme: boolean }) => {
+export const postStudent = async ({ student }: { student: IPostStudent }) => {
 
-    const { className, expirationYear, fullName, shift } = student;
+    try {
+        const { className, expirationYear, fullName, shift } = student;
 
-    const response = await baseApi.post("/students", {
-        fullName: fullName,
-        className: `Turma ${className}`,
-        shift: shift,
-        expirationYear: Number(expirationYear)
-    });
+        const response = await baseApi.post("/students", {
+            fullName: fullName,
+            className: className,
+            shift: shift,
+            expirationYear: Number(expirationYear)
+        });
 
-    if (response.status === 201) {
-        handleToasts({
-            message: "Aluno cadastrado com sucesso!",
-            theme: theme,
-            type: "success"
-        })
-    }
+        if (response.status === 201) {
+            handleToasts({
+                message: "Aluno cadastrado com sucesso!",
+                type: "success"
+            })
+        }
+    } catch (error) {
 
-    if (response.status === 500) {
-        handleToasts({
-            message: "Erro",
-            theme: theme,
-            type: "error"
-        })
+        if (isAxiosError(error)) {
+            if (error.status === 500) {
+                handleToasts({
+                    message: "Erro no servidor",
+                    type: "error"
+                })
+            }
+        }
+
     }
 }

@@ -3,7 +3,6 @@ import { Button, Form } from "@/shared/components/shared";
 import { Spinner } from "@/shared/ui/spinner";
 import type { FormData } from "@/shared/components/form/type";
 import { postStudent } from "@/entities/student/api/post-student";
-import { useTheme } from "@/shared/hooks/theme/useTheme";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { SetStateAction } from "react";
 
@@ -19,7 +18,6 @@ export const ModalRegister = ({
     shift
 }: ModalRegisterProps) => {
 
-    const { themeValue } = useTheme((state) => state);
     const queryClient = useQueryClient();
     const mutation = useMutation({
         mutationFn: postStudent,
@@ -41,8 +39,7 @@ export const ModalRegister = ({
                     fullName: name?.trim(),
                     shift,
                     expirationYear
-                },
-                theme: themeValue
+                }
             })
         }
     }

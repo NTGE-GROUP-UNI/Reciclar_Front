@@ -4,12 +4,9 @@ import { Button, Form } from "@/shared/components/shared";
 import { Spinner } from "@/shared/ui/spinner";
 import type { FormData } from "@/shared/components/form/type";
 import { postClassroom } from "@/entities/classroom/api/post-classroom";
-import { useTheme } from "@/shared/hooks/theme/useTheme";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const ModalRegister = ({ setModalRegister }: { setModalRegister: React.Dispatch<SetStateAction<boolean>> }) => {
-
-    const { themeValue } = useTheme((state) => state);
 
     const queryClient = useQueryClient();
 
@@ -30,8 +27,7 @@ export const ModalRegister = ({ setModalRegister }: { setModalRegister: React.Di
                 targetClass: {
                     name: `Turma ${name?.trim()}`,
                     shift,
-                },
-                theme: themeValue
+                }
             });
         }
     }
@@ -124,13 +120,6 @@ export const ModalRegister = ({ setModalRegister }: { setModalRegister: React.Di
                                 id="shift"
                             >
                                 <Form.Select.Option
-                                    disabled
-                                    hidden
-                                    value=""
-                                >
-                                    Turno
-                                </Form.Select.Option>
-                                <Form.Select.Option
                                     value="Manhã"
                                     id="manha"
                                 >
@@ -152,7 +141,7 @@ export const ModalRegister = ({ setModalRegister }: { setModalRegister: React.Di
                         </Form.Wrapper>
 
                         <Button
-                            typeButton="red"
+                            typeButton="blue"
                         >
                             {
                                 mutation.isPending

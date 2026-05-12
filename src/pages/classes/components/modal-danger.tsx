@@ -34,7 +34,7 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
             mutation.mutate({
                 data: {
                     id: classroom?.classId,
-                },
+                }
             });
         }
 

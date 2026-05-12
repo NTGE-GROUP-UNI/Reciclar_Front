@@ -221,7 +221,7 @@ export const Dashboard = () => {
                         typeButton="blue"
                         className="md:w-auto md:h-10 px-3"
                     >
-                        {!isFiltred ? t("global.buttons.search") : t("global.buttons.loadAgain")}
+                        {!isFiltred ? t("global.buttons.search") : t("global.buttons.uploadAgain")}
                     </Button>
                 </Form.Root>
 

@@ -1,8 +1,31 @@
 import { baseApi } from "@/shared/lib/axios/axios";
 import type { IFoulsMetrics } from "../model/types";
+import { isAxiosError } from "axios";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 
 export const getClassroomsMetrics = async () => {
-    const response = await baseApi.get<IFoulsMetrics>("/attendance/historyfouls");
+    try {
+        const response = await baseApi.get<IFoulsMetrics>("/attendance/historyfouls");
+        return response.data;
+    } catch (error) {
 
-    return response.data;
+        if (isAxiosError(error)) {
+
+            if (error.status === 400) {
+                handleToasts({
+                    message: "Não foi possível obter as classses!",
+                    type: "error",
+                })
+            }
+
+            if (error.status === 500) {
+                handleToasts({
+                    message: "Erro no servidor",
+                    type: "error"
+                })
+            }
+
+        }
+    }
+
 }

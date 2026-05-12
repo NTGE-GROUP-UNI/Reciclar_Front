@@ -1,6 +1,6 @@
 import { baseApi } from "@/shared/lib/axios/axios";
 import type { IPostAuthSignin } from "../model/types";
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 import { isAxiosError } from "axios";
 
 export const postAuthSignin = async ({ data }: { data: IPostAuthSignin }) => {
@@ -12,9 +12,7 @@ export const postAuthSignin = async ({ data }: { data: IPostAuthSignin }) => {
             password
         });
 
-        console.log(response.status);
-
-        if (response.status === 401) {
+        if (response.status === 200) {
             handleToasts({
                 message: "Usuário autorizado!",
                 theme: true,
@@ -22,18 +20,25 @@ export const postAuthSignin = async ({ data }: { data: IPostAuthSignin }) => {
             })
         }
 
-        return response.data; 
+        return response.data;
 
     } catch (error) {
 
-        if(isAxiosError(error)){
-            if(error.status === 401){
+        if (isAxiosError(error)) {
+            if (error.status === 401) {
                 handleToasts({
                     message: "Usuário não autorizado",
                     theme: true,
                     type: "error"
                 })
             }
+
+            if (error.status === 500) {
+                handleToasts({
+                    message: "Erro",
+                    type: "error"
+                })
+            }
         }
-    }   
+    }
 }

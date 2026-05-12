@@ -6,9 +6,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { FormData } from "@/shared/components/form/type";
 import { putStudent } from "@/entities/student/api/put-student";
 import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
-import { useTheme } from "@/shared/hooks/theme/useTheme";
 import { Spinner } from "@/shared/ui/spinner";
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 
 interface ModalEditProps {
@@ -18,9 +17,6 @@ interface ModalEditProps {
 export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
 
     const { student } = useCurrentStudent();
-
-    const { themeValue } = useTheme();
-
     const { data: classes } = useQuery({
         queryKey: ["classes"],
         queryFn: getClassrooms,
@@ -45,14 +41,14 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
 
     const handleSubmit = (data: FormData) => {
 
-        if(student) {
+        if (student) {
             const existClass = classes?.find((cl) => {
-                if (cl.className.slice(6).toLowerCase() === data?.className?.toLowerCase() && cl.shift.toLowerCase() === data?.shift?.toLowerCase()){
+                if (cl.className.slice(6).toLowerCase() === data?.className?.toLowerCase() && cl.shift.toLowerCase() === data?.shift?.toLowerCase()) {
                     return cl;
                 }
             })
 
-            if(existClass){
+            if (existClass) {
                 mutation.mutate({
                     student: {
                         fullName: data?.name,
@@ -60,8 +56,7 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
                         shift: data?.shift,
                         className: data?.className,
                         expirationYear: data?.expirationYear
-                    },
-                    theme: themeValue
+                    }
                 });
 
                 setOpenModalEdit(false);
@@ -70,11 +65,11 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
 
             handleToasts({
                 message: "Classe/turno inexistente",
-                theme: themeValue,
                 type: "error"
             })
+
             return;
-            
+
         }
     }
 
@@ -142,7 +137,7 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
                                         )
                                     })
                                 }
-                                
+
                             </Form.Select.Root>
                         </Form.Wrapper>
 
@@ -235,15 +230,15 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
                         >
                             {
                                 mutation.isPending
-                                ?
-                                <Spinner
-                                    height={28}
-                                    width={28}
-                                />
-                                :
-                                <>
-                                    Atualizar dados
-                                </>
+                                    ?
+                                    <Spinner
+                                        height={28}
+                                        width={28}
+                                    />
+                                    :
+                                    <>
+                                        Atualizar dados
+                                    </>
                             }
                         </Button>
                     </Form.Root>

@@ -1,11 +1,6 @@
-//ZUSTAND
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
-
-//TOASTS
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
-
-//I18N
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 import type { TFunction } from "i18next";
 
 interface ThemeStoreProps {

@@ -1,29 +1,42 @@
 import { baseApi } from "@/shared/lib/axios/axios";
 import type { IPostClassroom } from "../model/types";
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
+import { isAxiosError } from "axios";
 
-export const postClassroom = async ({ targetClass, theme }: { targetClass: IPostClassroom, theme: boolean }) => {
+export const postClassroom = async ({ targetClass }: { targetClass: IPostClassroom }) => {
 
-    const { name, shift } = targetClass;
+    try {
+        const { name, shift } = targetClass;
 
-    const response = await baseApi.post("/classes", {
-        name: name,
-        shift: shift,
-    });
+        const response = await baseApi.post("/classes", {
+            name: name,
+            shift: shift,
+        });
 
-    if (response.status === 201) {
-        handleToasts({
-            message: "Classe cadastrada com sucesso!",
-            theme: theme,
-            type: "success"
-        })
-    }
+        if (response.status === 201) {
+            handleToasts({
+                message: "Classe cadastrada com sucesso!",
+                type: "success"
+            })
+        }
 
-    if (response.status === 500) {
-        handleToasts({
-            message: "Erro",
-            theme: theme,
-            type: "error"
-        })
+    } catch (error) {
+
+        if (isAxiosError(error)) {
+
+            if (error.status === 409) {
+                handleToasts({
+                    message: "Classe já existente!",
+                    type: "error",
+                })
+            }
+
+            if (error.status === 500) {
+                handleToasts({
+                    message: "Erro no servidor",
+                    type: "error"
+                })
+            }
+        }
     }
 }

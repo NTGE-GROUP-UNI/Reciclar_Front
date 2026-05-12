@@ -2,7 +2,7 @@
 import { create } from "zustand";
 
 //TOASTS
-import { handleToasts } from "@/shared/lib/toast/toastTypes";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 
 //I18N
 import type { TFunction } from "i18next";
