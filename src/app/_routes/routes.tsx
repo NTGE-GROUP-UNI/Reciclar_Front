@@ -3,9 +3,9 @@ import { Layout } from "../../shared/layout/layout";
 import { PrivateRoute } from "@/shared/components/private/private";
 import { Dashboard, Fouls, Settings, Classes, ClassPage, SignIn, Error, QrReader } from "@/pages/export-pages"
 
-/*
-
-element: <PrivateRoute />,
+export const router = createBrowserRouter([
+    {
+        element: <PrivateRoute />,
         children: [
             {
                 element: <Layout />,
@@ -18,20 +18,6 @@ element: <PrivateRoute />,
                     { element: <ClassPage />, path: "/classes/:shift/:id" },
                 ]
             }
-        ]
-
-*/
-
-export const router = createBrowserRouter([
-    {
-        element: <Layout />,
-        children: [
-            { element: <Dashboard />, path: "/" },
-            { element: <Settings />, path: "/settings" },
-            { element: <Classes />, path: "/classes" },
-            { element: <Fouls />, path: "/fouls" },
-            { element: <QrReader />, path: "/reader" },
-            { element: <ClassPage />, path: "/classes/:shift/:id" },
         ]
     },
     {
