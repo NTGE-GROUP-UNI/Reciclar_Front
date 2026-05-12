@@ -35,7 +35,7 @@ export const postAuthSignin = async ({ data }: { data: IPostAuthSignin }) => {
 
             if (error.status === 500) {
                 handleToasts({
-                    message: "Erro",
+                    message: "Erro no servidor",
                     type: "error"
                 })
             }
