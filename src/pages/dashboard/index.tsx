@@ -268,7 +268,7 @@ export const Dashboard = () => {
                                 dark:text-zinc-400 text-xl
                             "
                                 >
-                                    Ops! Não foi possível encontrar...
+                                    {t("dashboard.errors.notFound")}
                                 </h1>
                                 <img
                                     src="public/not_found_filter.svg"

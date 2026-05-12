@@ -318,7 +318,7 @@ export const Fouls = () => {
                                 dark:text-zinc-400 text-xl
                             "
                                 >
-                                    Ops! Não foi possível encontrar...
+                                    {t("fouls.errors.notFound")}
                                 </h1>
                                 <img
                                     src="public/not_found_filter.svg"

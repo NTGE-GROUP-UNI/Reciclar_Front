@@ -2,7 +2,7 @@ import { useAuthStore } from "@/shared/store/auth/auth.store";
 import axios from "axios";
 
 export const baseApi = axios.create({
-    baseURL: "https://ong-reciclar.vercel.app/"
+    baseURL: import.meta.env.VITE_API_URL
 });
 
 

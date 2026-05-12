@@ -82,6 +82,9 @@ const resources = {
                         value: "Turno",
                         description: "Filtro para turno"
                     }
+                },
+                errors: {
+                    notFound: "Ops! Não foi possível encontrar..."
                 }
             },
             classes: {
@@ -100,6 +103,9 @@ const resources = {
                         value: "Turno",
                         description: "Filtro para turno"
                     }
+                },
+                errors: {
+                    notFound: "Ops! Não foi possível encontrar..."
                 }
             },
             fouls: {
@@ -125,6 +131,9 @@ const resources = {
                         value: "Status",
                         description: "Filtro para status"
                     },
+                },
+                errors: {
+                    notFound: "Ops! Não foi possível encontrar..."
                 }
             },
             signIn: {
@@ -227,6 +236,9 @@ const resources = {
                         value: "Shift",
                         description: "Shift filter"
                     }
+                },
+                errors: {
+                    notFound: "Oops! Couldn't find it..."
                 }
             },
             classes: {
@@ -245,6 +257,9 @@ const resources = {
                         value: "Shift",
                         description: "Shift filter"
                     }
+                },
+                errors: {
+                    notFound: "Oops! Couldn't find it..."
                 }
             },
             fouls: {
@@ -270,6 +285,9 @@ const resources = {
                         value: "Status",
                         description: "Status filter"
                     },
+                },
+                errors: {
+                    notFound: "Oops! Couldn't find it..."
                 }
             },
             signIn: {
