@@ -78,7 +78,7 @@ export const Dashboard = () => {
         <div
             className="
                 w-full
-                pt-8 px-8
+                p-8
             "
         >
 
@@ -264,14 +264,14 @@ export const Dashboard = () => {
                             >
                                 <h1
                                     className="
-                                text-zinc-600 font-medium leading-normal
-                                dark:text-zinc-400 text-xl
-                            "
+                                        text-zinc-600 font-medium leading-normal
+                                        dark:text-zinc-400 text-xl text-center
+                                    "
                                 >
                                     {t("dashboard.errors.notFound")}
                                 </h1>
                                 <img
-                                    src="public/not_found_filter.svg"
+                                    src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1778615035/not_found_filter_iylac4.svg"
                                     alt="Imagem ilustrativa"
                                     className="
                                         w-full max-w-md 

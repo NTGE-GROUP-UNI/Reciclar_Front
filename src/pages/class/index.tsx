@@ -34,7 +34,7 @@ export const ClassPage = () => {
     return (
         <div className="
                 w-full
-                pt-8 px-8
+                p-8
             ">
             <PageTitle
                 classId={String(id)}
@@ -80,11 +80,11 @@ export const ClassPage = () => {
                             ">
                                 <h1 className="
                                 text-zinc-600 font-medium leading-normal
-                                dark:text-zinc-400 text-xl
+                                dark:text-zinc-400 text-xl text-center
                             ">
                                     Ops! Aluno não foi encontrado...
                                 </h1>
-                                <img src="/not_found_filter.svg" alt="Imagem ilustrativa" className="
+                                <img src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1778615035/not_found_filter_iylac4.svg" alt="Imagem ilustrativa" className="
                                     w-full max-w-md
                                 " />
                             </div>

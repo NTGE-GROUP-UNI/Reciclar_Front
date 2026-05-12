@@ -74,8 +74,8 @@ export const SignIn = () => {
         <main
             className={`
                 w-full flex flex-col justify-center
-                items-center py-12 min-h-dvh
-                bg-cover font-inter px-8 
+                items-center p-8 min-h-dvh
+                bg-cover font-inter 
                 bg-zinc-50 dark:bg-zinc-900
                 relative overflow-hidden
             `}

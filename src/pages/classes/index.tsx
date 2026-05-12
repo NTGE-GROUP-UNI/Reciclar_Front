@@ -74,7 +74,7 @@ export const Classes = () => {
         <div
             className="
                 w-full
-                pt-8 px-8
+                p-8
             "
         >
 
@@ -257,13 +257,13 @@ export const Classes = () => {
                                 <h1
                                     className="
                             text-zinc-600 font-medium leading-normal
-                            dark:text-zinc-400 text-xl
+                            dark:text-zinc-400 text-xl text-center
                         "
                                 >
                                     {t("classes.errors.notFound")}
                                 </h1>
                                 <img
-                                    src="public/not_found_filter.svg"
+                                    src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1778615035/not_found_filter_iylac4.svg"
                                     alt="Imagem ilustrativa"
                                     className="
                                     w-full max-w-md 

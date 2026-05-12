@@ -47,7 +47,7 @@ export const Settings = () => {
         <div
             className="
                 w-full flex flex-col gap-6 justify-start 
-                pb-12 px-8 pt-8 items-center
+                p-8 items-center
             "
         >
 

@@ -90,7 +90,7 @@ export const Fouls = () => {
         <div
             className="
                 w-full
-                pt-8 px-8
+                p-8
             "
         >
 
@@ -126,7 +126,7 @@ export const Fouls = () => {
 
             {foulsMetrics ? (
                 <CardView metrics={foulsMetrics} />
-            ) : <section className="w-full flex justify-center"><Spinner /></section>}
+            ) : <section className="w-full flex justify-center"><Spinner className="text-zinc-700 dark:text-zinc-200"/></section>}
 
             <section
                 className="
@@ -314,14 +314,14 @@ export const Fouls = () => {
                             >
                                 <h1
                                     className="
-                                text-zinc-600 font-medium leading-normal
-                                dark:text-zinc-400 text-xl
-                            "
+                                        text-zinc-600 font-medium leading-normal
+                                        dark:text-zinc-400 text-xl text-center
+                                    "
                                 >
                                     {t("fouls.errors.notFound")}
                                 </h1>
                                 <img
-                                    src="public/not_found_filter.svg"
+                                    src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1778615035/not_found_filter_iylac4.svg"
                                     alt="Imagem ilustrativa"
                                     className="
                                 w-full max-w-md 

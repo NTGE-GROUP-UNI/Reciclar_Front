@@ -27,7 +27,7 @@ export const Error = ({
     const { img, title, text } = statusCodeMap[statusCode] ?? defaultError;
 
     return (
-        <div className="min-h-dvh flex flex-row justify-center items-center w-full bg-zinc-100 dark:bg-zinc-900 font-inter px-8">
+        <div className="min-h-dvh flex flex-row justify-center items-center w-full bg-zinc-100 dark:bg-zinc-900 font-inter p-8">
             <section className="w-full flex flex-col justify-center items-center lg:flex-row max-w-5xl gap-8">
                 <img className="w-full max-w-md lg:max-w-lg" src={img} alt={title} />
 
