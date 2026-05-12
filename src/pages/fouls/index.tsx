@@ -5,7 +5,7 @@ import {
     TitleStructure
 } from "@/shared/components/shared"
 
-import { RefreshCcw, SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import type { FormData } from "../../shared/components/form/type";
 import { getStudents } from "@/entities/student/api/get-students";
