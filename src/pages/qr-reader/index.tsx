@@ -1,6 +1,6 @@
 import { postStudentPresence } from "@/entities/student/api/post-student-presence";
 import { cn } from "@/shared/utils/tailwind-merge/cn";
-import { Camera, CheckCircle, XCircle } from "lucide-react";
+import { BadgeInfo, Camera, CheckCircle, Flag, FlagOff, Wind, XCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import { Button } from "@/shared/components/shared";
@@ -8,6 +8,7 @@ import { Spinner } from "@/shared/ui/spinner";
 import { useLocation } from "react-router-dom";
 import { patchStudentRegisterAbsence } from "@/entities/student/api/patch-student-register-absence";
 import { patchStudentRemoveAbsence } from "@/entities/student/api/patch-student-remove-absence";
+import { patchStudentJustifyAbsence } from "@/entities/student/api/patch-student-justify-absence";
 
 export const QrReader = () => {
 
@@ -43,10 +44,17 @@ export const QrReader = () => {
                     try {
                         setStatus("loading");
 
-                        if (action === "register_presence"){
-                            await postStudentPresence(decodedText);
+                        if (action === "register_entry"){
+                            await postStudentPresence(decodedText, "entry");
                             setStatus("success");
-                            setMessage("Presença confirmada!");
+                            setMessage("Presença registrada!");
+                            return;
+                        }
+
+                        if (action === "register_exit") {
+                            await postStudentPresence(decodedText, "exit");
+                            setStatus("success");
+                            setMessage("Saída registrada!");
                             return;
                         }
 
@@ -61,6 +69,13 @@ export const QrReader = () => {
                             await patchStudentRemoveAbsence(decodedText);
                             setStatus("success");
                             setMessage("Falta removida!");
+                            return;
+                        }
+
+                        if (action === "justify_absence") {
+                            await patchStudentJustifyAbsence(decodedText);
+                            setStatus("success");
+                            setMessage("Falta justificada!");
                             return;
                         }
                         
@@ -111,7 +126,7 @@ export const QrReader = () => {
     }, [location.pathname]);
 
     return (
-        <div className="w-full pt-8 px-8 flex flex-col items-center">
+        <div className="w-full p-8 flex flex-col items-center">
             <div className="flex items-center gap-2 mb-6">
                 <h1 className="text-2xl font-bold m-0 text-zinc-600">Leitor de Presença</h1>
                 {isCameraActive ? <Spinner className="text-zinc-600" /> : null}
@@ -143,9 +158,11 @@ export const QrReader = () => {
                 {!isCameraActive ? (
                     !selectButton ?
                     <div className="flex flex-col gap-2 w-full">
-                            <Button typeButton="green" onClick={() => handleClickAction("remove_absence")}>Remover falta</Button>
-                            <Button typeButton="blue" onClick={() => handleClickAction("register_presence")}>Registrar presença</Button>
-                            <Button typeButton="red" onClick={() => handleClickAction("register_absence")}>Registrar falta</Button>
+                            <Button typeButton="blue" onClick={() => handleClickAction("register_entry")}><strong>Registrar entrada</strong> <Flag /></Button>
+                            <Button typeButton="red" onClick={() => handleClickAction("register_exit")}><strong>Registrar saída</strong> <Wind /></Button>
+                            <Button typeButton="red" onClick={() => handleClickAction("register_absence")}><strong>Registrar falta</strong> <FlagOff /></Button>
+                            <Button typeButton="red" onClick={() => handleClickAction("remove_absence")}><strong>Remover falta</strong> <FlagOff /></Button>
+                            <Button typeButton="yellow" onClick={() => handleClickAction("justify_absence")}><strong>Abonar falta</strong> <BadgeInfo /></Button>
                     </div>
                     :
                     null

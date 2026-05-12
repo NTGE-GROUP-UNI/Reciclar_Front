@@ -8,7 +8,6 @@ import {
 import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import type { FormData } from "../../shared/components/form/type";
-import { getStudents } from "@/entities/student/api/get-students";
 import { getClassroomsMetrics } from "@/entities/classroom/api/get-classrooms-metrics";
 import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
 import type { IStudent } from "@/entities/student/model/types";
@@ -18,16 +17,17 @@ import { Spinner } from "@/shared/ui/spinner";
 import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
 import { useTranslation } from "react-i18next";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
+import { getAbsencesHistory } from "@/entities/attendance/api/get-absences-history";
 
 export const Fouls = () => {
 
     const { t } = useTranslation();
     const [isFiltred, setIsFiltered] = useState(false);
-    const [filteredStudents, setFilteredStudents] = useState<IStudent[] | null>(null);
+    const [filteredHistory, setFilteredHistory] = useState<IStudent[] | null>(null);
 
-    const { data: students = [], isFetching } = useQuery({
+    const { data: history = [], isFetching } = useQuery({
         queryKey: ["fouls"],
-        queryFn: getStudents
+        queryFn: getAbsencesHistory
     })
 
     const { data: foulsMetrics } = useQuery({
@@ -54,35 +54,35 @@ export const Fouls = () => {
         const condition = filterName || filterClass || filterShift || filterStatus;
 
         if (condition) {
-            const filtered = students?.filter((student) => {
+            const filtered = history?.filter((h:any) => {
                 const matchName = filterName
-                    ? student.fullName.toLowerCase().includes(filterName.toLowerCase())
+                    ? h?.studentName.fullName.toLowerCase().includes(filterName.toLowerCase())
                     : true;
 
-                const matchShift = filterShift
+                /*const matchShift = filterShift
                     ? student?.shift?.toLowerCase().includes(filterShift.toLowerCase())
-                    : true;
+                    : true;*/
 
                 const matchClass = filterClass
-                    ? student?.className?.slice(6).toLowerCase() === filterClass.toLowerCase()
+                    ? h?.className?.slice(6).toLowerCase() === filterClass.toLowerCase()
                     : true;
 
                 const matchStatus = filterStatus
-                    ? student.status.toLowerCase().includes(filterStatus.toLowerCase())
+                    ? h?.status.toLowerCase().includes(filterStatus.toLowerCase())
                     : true;
 
-                return matchName && matchClass && matchShift && matchStatus;
+                return matchName && matchClass  && matchStatus;
             });
 
             console.log(filtered);
 
-            setFilteredStudents(filtered);
+            setFilteredHistory(filtered);
             setIsFiltered(true);
         }
     };
 
     const reloadDatas = () => {
-        setFilteredStudents(null);
+        setFilteredHistory(null);
         setIsFiltered(false);
     };
 
@@ -302,8 +302,8 @@ export const Fouls = () => {
                             <div className="h-20 bg-zinc-300 dark:bg-zinc-800 rounded"></div>
                         </div>
                         :
-                        students && students.length >= 1 ?
-                            <TableStudents students={filteredStudents ?? students ?? []} />
+                        history && history.length >= 1 ?
+                            <TableStudents historical={filteredHistory ?? history ?? []} />
                             :
                             <div
                                 className="

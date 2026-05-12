@@ -1,10 +1,8 @@
-import type { IStudent } from "@/entities/student/model/types";
-
 interface TableStudentsProps {
-    students: IStudent[];
+    historical: any[];
 }
 
-export const TableStudents = ({ students }: TableStudentsProps) => {
+export const TableStudents = ({ historical }: TableStudentsProps) => {
 
     const statusColors: Record<string, string> = {
         inativo: "bg-red-300 border-red-500 text-red-800 dark:bg-red-800 dark:border-red-500 dark:text-zinc-50",
@@ -23,10 +21,7 @@ export const TableStudents = ({ students }: TableStudentsProps) => {
                         Turma
                     </th>
                     <th className="bg-zinc-200 dark:bg-zinc-700 py-2 px-6 text-center dark:text-zinc-50">
-                        Turno
-                    </th>
-                    <th className="bg-zinc-200 dark:bg-zinc-700 py-2 px-6 text-center dark:text-zinc-50">
-                        Data de criação
+                        Data do registro
                     </th>
                     <th className="bg-zinc-200 dark:bg-zinc-700 py-2 px-6 text-center dark:text-zinc-50">
                         Status
@@ -35,9 +30,9 @@ export const TableStudents = ({ students }: TableStudentsProps) => {
             </thead>
             <tbody className="[&>tr:nth-child(even)]:bg-zinc-200 [&>tr:nth-child(odd)]:bg-zinc-100 dark:[&>tr:nth-child(even)]:bg-zinc-800 dark:[&>tr:nth-child(odd)]:bg-zinc-900">
                 {
-                    students.map((student, index) => {
+                    historical.map((h, index) => {
 
-                        const { fullName, className, status, createdAt } = student;
+                        const { studentName, className, status, createdAt } = h;
 
                         const date = new Date(createdAt ?? 0);
                         const convertDate = date.toLocaleString("pt-BR", {
@@ -47,13 +42,10 @@ export const TableStudents = ({ students }: TableStudentsProps) => {
                         return (
                             <tr key={index}>
                                 <td className="py-4 px-6 text-center text-zinc-800 dark:text-zinc-400">
-                                    {fullName}
+                                    {studentName}
                                 </td>
                                 <td className="py-4 px-6 text-center text-zinc-800 dark:text-zinc-400">
                                     {className?.slice(6)}
-                                </td>
-                                <td className="py-4 px-6 text-center text-zinc-800 dark:text-zinc-400">
-                                    { student.shift && (student.shift === "Noite" ? `${student.shift} 🌙​`:(student.shift === "Tarde" ?`${student.shift} ⛅​​`:`${student.shift} ☀️​​`)) }
                                 </td>
                                 <td className="py-4 px-6 text-center text-zinc-800 dark:text-zinc-400">
                                     {convertDate.slice(0, 10)}
@@ -62,7 +54,7 @@ export const TableStudents = ({ students }: TableStudentsProps) => {
                                     <span
                                         className={`
                                             py-1 px-3 rounded-full border
-                                            ${statusColors[student?.status.toLowerCase()]}
+                                            ${statusColors[h?.status.toLowerCase()]}
                                         `}
                                     >
                                         {status.charAt(0).toUpperCase() + status.slice(1)}

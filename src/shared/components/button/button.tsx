@@ -5,7 +5,7 @@ import { cn } from "@/shared/utils/tailwind-merge/cn";
 
 interface ButtonProps extends HTMLMotionProps<"button"> {
     children: ReactNode;
-    typeButton: "red" | "green" | "blue" | "gray";
+    typeButton: "red" | "green" | "blue" | "gray" | "yellow";
 }
 
 export const Button = ({ children, typeButton, className, ...props }: ButtonProps) => {
@@ -14,7 +14,8 @@ export const Button = ({ children, typeButton, className, ...props }: ButtonProp
         "red": "bg-red-400 dark:bg-red-700 border-red-700 dark:border-red-500 text-red-800 dark:text-red-300",
         "green": "bg-green-400 dark:bg-green-700 border-green-700 dark:border-green-500 text-green-800 dark:text-green-300",
         "blue": "bg-blue-400 dark:bg-blue-700 border-blue-700 dark:border-blue-500 text-blue-800 dark:text-blue-300",
-        "gray": "bg-gray-200 dark:bg-gray-700 border-gray-300 dark:border-gray-500 text-gray-800 dark:text-gray-300"
+        "gray": "bg-gray-200 dark:bg-gray-700 border-gray-300 dark:border-gray-500 text-gray-800 dark:text-gray-300",
+        "yellow": "bg-yellow-200 dark:bg-yellow-700 border-yellow-300 dark:border-yellow-500 text-yellow-800 dark:text-yellow-300"
     }
 
     return (

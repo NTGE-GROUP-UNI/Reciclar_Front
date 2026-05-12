@@ -172,6 +172,7 @@ export const SignIn = () => {
                             type={passwordType}
                         />
                         <motion.button
+                            type="button"
                             data-name="password"
                             onClick={(e) => handleViewPassword(e)}
                             className="absolute top-8 right-4 text-zinc-700"
@@ -193,6 +194,7 @@ export const SignIn = () => {
                             type={confirmPasswordType}
                         />
                         <motion.button
+                            type="button"
                             data-name="confirmPassword"
                             onClick={(e) => handleViewPassword(e)}
                             className="absolute top-8 right-4 text-zinc-700"
@@ -201,6 +203,7 @@ export const SignIn = () => {
                         </motion.button>
                     </Form.Wrapper>
                     <Button
+                        type="submit"
                         typeButton="blue"
                     >
                         {mutation.isPending ? <Spinner /> : t("signIn.buttons.enter")}
