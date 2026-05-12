@@ -217,7 +217,7 @@ export const Classes = () => {
                     <div
                         className="
                         flex justify-center items-center
-                        w-full pt-60
+                        w-full pt-8 md:pt-60
                     "
                     >
                         <Loader />
