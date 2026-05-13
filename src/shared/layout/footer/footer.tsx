@@ -1,6 +1,15 @@
+import { motion } from "framer-motion"
+
 export const Footer = () => {
     return (
-        <footer
+        <motion.footer
+            initial={{ opacity: 0, translateY: 300 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: [0, 0.71, 0.2, 1.01],
+            }}
             className="
                 bg-[--primary-blue-color] dark:bg-[--primary-blue-color-dark] text-zinc-950
                 dark:text-zinc-300
@@ -20,6 +29,6 @@ export const Footer = () => {
             ">
                     Sistema de Gestão de Alunos v1.0
             </p>
-        </footer>
+        </motion.footer>
     )
 }

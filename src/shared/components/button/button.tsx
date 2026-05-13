@@ -20,6 +20,13 @@ export const Button = ({ children, typeButton, className, ...props }: ButtonProp
 
     return (
         <motion.button
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: [0, 0.71, 0.2, 1.01],
+            }}
             {...props}
             className={cn(
                 "flex-shrink-0 border w-full px-2 py-3 rounded-xl flex items-center justify-center gap-2",

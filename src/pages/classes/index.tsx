@@ -17,6 +17,7 @@ import { ModalDanger } from "./components/modal-danger";
 import { ModalEdit } from "./components/modal-edit";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
 
 export const Classes = () => {
 
@@ -247,7 +248,14 @@ export const Classes = () => {
 
                             :
 
-                            <div
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.8,
+                                    delay: 0.2,
+                                    ease: [0, 0.71, 0.2, 1.01],
+                                }}
                                 className="
                                 w-full flex flex-col
                                 justify-center items-center
@@ -269,7 +277,7 @@ export const Classes = () => {
                                     w-full max-w-md 
                                 "
                                 />
-                            </div>
+                            </motion.div>
                     )
             }
 

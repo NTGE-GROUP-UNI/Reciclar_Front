@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
 import { useTranslation } from "react-i18next";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
+import { motion } from "framer-motion";
 
 export const Dashboard = () => {
 
@@ -255,12 +256,19 @@ export const Dashboard = () => {
                                 }
                             </div>
                             :
-                            <div
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    duration: 0.8,
+                                    delay: 0.2,
+                                    ease: [0, 0.71, 0.2, 1.01],
+                                }}
                                 className="
-                            w-full flex flex-col
-                            justify-center items-center
-                            mt-6
-                        "
+                                    w-full flex flex-col
+                                    justify-center items-center
+                                    mt-6
+                                "
                             >
                                 <h1
                                     className="
@@ -277,7 +285,7 @@ export const Dashboard = () => {
                                         w-full max-w-md 
                                     "
                                 />
-                            </div>
+                            </motion.div>
                 }
             </div>
         </div>
