@@ -12,13 +12,15 @@ interface CardProps {
     setOpenModalQrCode: React.Dispatch<SetStateAction<boolean>>;
     setOpenModalEdit: React.Dispatch<SetStateAction<boolean>>;
     student: IStudent;
+    delay: number;
 }
 
 export const Card = ({ 
     student, 
     setOpenModalDanger, 
     setOpenModalQrCode, 
-    setOpenModalEdit
+    setOpenModalEdit,
+    delay
 }: CardProps) => {
 
     const { changeStudent } = useCurrentStudent();
@@ -60,7 +62,10 @@ export const Card = ({
     }
 
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: delay, ease: "easeIn" }}
             className="
                 w-full flex flex-col md:flex-row justify-between items-stretch
                 border border-zinc-200 rounded-lg
@@ -246,6 +251,6 @@ export const Card = ({
                         <Spinner />
                 }
             </div>
-        </div>
+        </motion.div>
     )
 }

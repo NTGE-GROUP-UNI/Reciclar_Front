@@ -34,6 +34,7 @@ export const Input = ({ zodName, onChange,...props }: InputProps) => {
                 outline-none
                 bg-zinc-200 text-zinc-900 border-zinc-400 placeholder-zinc-600
                 dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700
+                disabled:cursor-not-allowed disabled:opacity-40
                 ${errors[zodName]?.message
                     ? "focus:border-red-400 focus:shadow-[0px_0px_0px_3px_#fca5a5] dark:border-red-800 dark:focus:shadow-[0px_0px_0px_3px_#450a0a]"
                     : "focus:border-zinc-400 focus:shadow-[0px_0px_0px_3px_#D9D9D9] dark:border-zinc-700 dark:focus:shadow-[0px_0px_0px_3px_#52525b]"

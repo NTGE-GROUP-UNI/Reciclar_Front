@@ -8,7 +8,7 @@ import {
 import { ModalRegister } from "./components/modal-register";
 import { useState } from "react";
 import { Card } from "./components/card";
-import { Plus, SlidersHorizontal } from "lucide-react";
+import { Plus, RotateCcw, Search, SlidersHorizontal } from "lucide-react";
 import type { FormData } from "@/shared/components/form/type";
 import type { IClassSummary } from "@/entities/classroom/model/types";
 import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
@@ -28,7 +28,7 @@ export const Classes = () => {
     const [openModalDanger, setOpenModalDanger] = useState<boolean>(false);
     const [openModalEdit, setOpenModalEdit] = useState<boolean>(false);
 
-    const { data: classes, isLoading } = useQuery({
+    const { data: classes, isFetching: classesFetching } = useQuery({
         queryKey: ["classes"],
         queryFn: getClassrooms,
     });
@@ -123,6 +123,7 @@ export const Classes = () => {
                         <Form.Select.Root
                             zodName="filterClass"
                             defaultValue=""
+                            disabled={isFiltred && true}
                         >
                             <Form.Select.Option
                                 disabled
@@ -166,6 +167,7 @@ export const Classes = () => {
                         <Form.Select.Root
                             zodName="filterShift"
                             defaultValue=""
+                            disabled={isFiltred && true}
                         >
                             <Form.Select.Option
                                 disabled
@@ -208,12 +210,12 @@ export const Classes = () => {
                     typeButton="blue"
                     className="md:w-auto md:h-10 px-3"
                 >
-                    {!isFiltred ? t("global.buttons.search") : t("global.buttons.uploadAgain")}
+                    {!isFiltred ? <>{t("global.buttons.search")} <Search /></> : <>{t("global.buttons.uploadAgain")} <RotateCcw /></>}
                 </Button>
             </Form.Root>
 
             {
-                isLoading
+                classesFetching
                     ?
                     <div
                         className="
@@ -236,6 +238,7 @@ export const Classes = () => {
                                     list.map((cl, index) => {
                                         return (
                                             <Card
+                                                delay={index * 0.2}
                                                 setOpenModalDanger={setOpenModalDanger}
                                                 setOpenModalEdit={setOpenModalEdit}
                                                 classroom={cl}

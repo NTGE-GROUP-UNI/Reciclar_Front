@@ -1,6 +1,7 @@
 import { Button } from "@/shared/components/shared";
 import type { SetStateAction } from "react";
 import { useCurrentFoul } from "@/shared/store/foul/foul.store";
+import { motion } from "framer-motion";
 
 interface TableStudentsProps {
     historical: any[];
@@ -27,7 +28,7 @@ export const TableStudents = ({ historical, setOpenModalDanger }: TableStudentsP
     }
     
     return (
-        <table className="w-full">
+        <motion.table initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, ease: "easeIn" }} className="w-full">
             <thead>
                 <tr>
                     <th className="bg-zinc-200 dark:bg-zinc-700 py-2 px-6 text-center dark:text-zinc-50">
@@ -35,6 +36,9 @@ export const TableStudents = ({ historical, setOpenModalDanger }: TableStudentsP
                     </th>
                     <th className="bg-zinc-200 dark:bg-zinc-700 py-2 px-6 text-center dark:text-zinc-50">
                         Turma
+                    </th>
+                    <th className="bg-zinc-200 dark:bg-zinc-700 py-2 px-6 text-center dark:text-zinc-50">
+                        Turno
                     </th>
                     <th className="bg-zinc-200 dark:bg-zinc-700 py-2 px-6 text-center dark:text-zinc-50">
                         Data do registro
@@ -51,7 +55,7 @@ export const TableStudents = ({ historical, setOpenModalDanger }: TableStudentsP
                 {
                     historical.map((h, index) => {
 
-                        const { studentName, className, status, createdAt, id } = h;
+                        const { studentName, className, status, createdAt, id, shift } = h;
 
                         const formatedStatus = h.status.normalize("NFD")
                             .replace(/[\u0300-\u036f]/g, "")
@@ -69,7 +73,10 @@ export const TableStudents = ({ historical, setOpenModalDanger }: TableStudentsP
                                     {studentName}
                                 </td>
                                 <td align="center" valign="middle" className="py-4 px-6 text-center text-zinc-800 dark:text-zinc-400">
-                                    {className?.slice(6)}
+                                    {className}
+                                </td>
+                                <td align="center" valign="middle" className="py-4 px-6 text-center text-zinc-800 dark:text-zinc-400">
+                                    {shift}
                                 </td>
                                 <td align="center" valign="middle" className="py-4 px-6 text-center text-zinc-800 dark:text-zinc-400">
                                     {convertDate.slice(0, 10)}
@@ -100,6 +107,6 @@ export const TableStudents = ({ historical, setOpenModalDanger }: TableStudentsP
                     })
                 }
             </tbody>
-        </table>
+        </motion.table>
     )
 }

@@ -23,6 +23,7 @@ export const ModalRegister = ({
         mutationFn: postStudent,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["dashboard"] })
+            queryClient.invalidateQueries({ queryKey: ["classes"] })
             openModalRegister(false);
         }
     })

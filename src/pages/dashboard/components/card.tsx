@@ -1,11 +1,13 @@
 import type { IStudent } from "@/entities/student/model/types";
 import { Clock4 } from "lucide-react";
+import { motion } from "framer-motion";
 
 export interface CardProps {
     student: IStudent;
+    delay: number;
 }
 
-export const Card = ({ student }: CardProps) => {
+export const Card = ({ student, delay }: CardProps) => {
 
     const statusColors: Record<string, string> = {
         inativo: "bg-red-300 border-red-500 text-red-800 dark:bg-red-800 dark:border-red-500 dark:text-zinc-50",
@@ -14,7 +16,10 @@ export const Card = ({ student }: CardProps) => {
     }
 
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: delay, ease: "easeIn" }}
             className="
                 w-full sm:max-w-[260px]
                 border border-zinc-200 dark:border-zinc-700
@@ -185,6 +190,6 @@ export const Card = ({ student }: CardProps) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 } 

@@ -8,14 +8,16 @@ import { Button } from '@/shared/components/shared';
 
 interface ClassesProps {
     classroom: IClassSummary;
-    setOpenModalDanger: React.Dispatch<SetStateAction<boolean>>,
-    setOpenModalEdit: React.Dispatch<SetStateAction<boolean>>
+    setOpenModalDanger: React.Dispatch<SetStateAction<boolean>>;
+    setOpenModalEdit: React.Dispatch<SetStateAction<boolean>>;
+    delay: number;
 }
 
 export const Card = ({
     classroom,
     setOpenModalDanger,
-    setOpenModalEdit
+    setOpenModalEdit,
+    delay
 }: ClassesProps) => {
 
     const navigate = useNavigate();
@@ -54,7 +56,10 @@ export const Card = ({
     }
 
     return (
-        <div
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: delay, ease: "easeIn" }}
             className="
                 w-full md:max-w-72 bg-zinc-100
                 dark:bg-zinc-900
@@ -172,6 +177,6 @@ export const Card = ({
             >
                 <FolderOpen height={20} width={20} /> Acessar turma
             </Button>
-        </div>
+        </motion.div>
     )
 }

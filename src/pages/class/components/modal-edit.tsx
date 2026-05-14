@@ -54,7 +54,7 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
                         fullName: data?.name,
                         id: student.id,
                         shift: data?.shift,
-                        className: data?.className,
+                        className: `Turma ${data?.className}`,
                         expirationYear: data?.expirationYear
                     }
                 });

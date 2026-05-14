@@ -16,7 +16,7 @@ export const FormSchema = z
             .min(1, { message: "Confirme sua senha" })
             .optional(),
         shift: z.enum(["Manhã", "Tarde", "Noite"]).optional().or(z.literal("")),
-        status: z.enum(["Ativo", "Inativo"]).optional().or(z.literal("")),
+        status: z.enum(["Ativo", "Inativo", "Abonada", "Nao_abonada"]).optional().or(z.literal("")),
         className: z.string().optional(),
         expirationYear: z.string().optional(),
         displayName: z.string().min(3, { message: "Mínimo 3 caracteres" }).optional(),

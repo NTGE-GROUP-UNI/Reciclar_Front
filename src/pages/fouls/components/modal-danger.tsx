@@ -8,6 +8,7 @@ import type { FormData } from "@/shared/components/form/type";
 import { useCurrentFoul } from "@/shared/store/foul/foul.store";
 import { patchStudentJustifyAbsence } from "@/entities/student/api/patch-student-justify-absence";
 import { handleToasts } from "@/shared/lib/toast/toast-custom";
+import { maskClassName } from "@/shared/utils/classroom/utils";
 
 interface ModalDangerProps {
     setOpenModalDanger: React.Dispatch<SetStateAction<boolean>>;
@@ -31,6 +32,8 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                     queryKey: ["fouls_metrics"]
                 })
             ])
+
+            setOpenModalDanger(false)
         }
     })
 
@@ -70,7 +73,15 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                         </h1>
                     </div>
                 </div>
-                <div className="w-full p-8">
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3, ease: "easeIn" }}
+                    className="w-full p-8"
+                >
+                    <p className="font-bold text-zinc-800 text-lg dark:text-zinc-50 mb-2">
+                        Esta ação é irreversível*
+                    </p>
                     <p className="font-medium text-zinc-800 text-lg dark:text-zinc-50 mb-8">
                         Vocẽ tem certeza que da ação que está tomando? Ao clicar no botão <strong>"Sim, tenho certeza"</strong> você irá abonar a falta do aluno <strong>{foul?.name}</strong> da turma/classe <strong>({foul?.className})</strong> do dia <strong>{foul?.date}</strong>.
                     </p>
@@ -98,6 +109,7 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                                     Nome da turma
                                 </Form.Label>
                                 <Form.Input
+                                    onChange={maskClassName}
                                     id="className"
                                     zodName="className"
                                     placeholder="Digite o nome da turma para concluir a ação"
@@ -127,7 +139,7 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                             </div>
                         </Form.Root>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

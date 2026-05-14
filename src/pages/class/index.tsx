@@ -63,7 +63,8 @@ export const ClassPage = () => {
                         filteredStudents && filteredStudents.length >= 1 ?
                             filteredStudents.map((student, index) => {
                                 return (
-                                    <Card 
+                                    <Card
+                                        delay={index * 0.2}
                                         setOpenModalDanger={setOpenModalDanger}
                                         setOpenModalQrCode={setOpenModalQrCode}
                                         setOpenModalEdit={setOpenModalEdit}

@@ -6,7 +6,7 @@ import {
     Description
 } from "@/shared/components/shared";
 import { Card } from "./components/card";
-import { SlidersHorizontal } from "lucide-react";
+import { RotateCcw, Search, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import type { FormData } from "@/shared/components/form/type";
 import { getClassrooms } from "@/entities/classroom/api/get-classrooms";
@@ -127,6 +127,7 @@ export const Dashboard = () => {
                             {t("dashboard.labels.searchStudent")}
                         </Form.Label>
                         <Form.Input
+                            disabled={isFiltred && true}
                             id="filterName"
                             zodName="filterName"
                             placeholder={t("dashboard.inputs.searchStudentPlaceholder")}
@@ -141,6 +142,7 @@ export const Dashboard = () => {
                             <Form.Select.Root
                                 zodName="filterClass"
                                 defaultValue=""
+                                disabled={isFiltred && true}
                             >
                                 <Form.Select.Option
                                     disabled
@@ -184,6 +186,7 @@ export const Dashboard = () => {
                             <Form.Select.Root
                                 zodName="filterShift"
                                 defaultValue=""
+                                disabled={isFiltred && true}
                             >
                                 <Form.Select.Option
                                     disabled
@@ -226,7 +229,7 @@ export const Dashboard = () => {
                         typeButton="blue"
                         className="md:w-auto md:h-10 px-3"
                     >
-                        {!isFiltred ? t("global.buttons.search") : t("global.buttons.uploadAgain")}
+                        {!isFiltred ? <>{t("global.buttons.search")} <Search /></> : <>{t("global.buttons.uploadAgain")} <RotateCcw /></>}
                     </Button>
                 </Form.Root>
 
@@ -253,6 +256,7 @@ export const Dashboard = () => {
                                 {
                                     list.map((student, index) => (
                                         <Card
+                                            delay={index * 0.05}
                                             student={student}
                                             key={index}
                                         />

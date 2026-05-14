@@ -4,7 +4,7 @@ import {
     Form,
     TitleStructure
 } from "@/shared/components/shared"
-import { SlidersHorizontal } from "lucide-react";
+import { SlidersHorizontal, Search, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import type { FormData } from "../../shared/components/form/type";
 import { getClassroomsMetrics } from "@/entities/classroom/api/get-classrooms-metrics";
@@ -20,6 +20,7 @@ import { getAbsencesHistory } from "@/entities/attendance/api/get-absences-histo
 import { motion } from "framer-motion";
 import { getDownloadAbsencesHistory } from "@/entities/attendance/api/get-download-absences-history";
 import { ModalDanger } from "./components/modal-danger";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 
 export const Fouls = () => {
 
@@ -29,12 +30,12 @@ export const Fouls = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [openModalDanger, setOpenModalDanger] = useState<boolean>(false);
 
-    const { data: history, isFetching } = useQuery({
+    const { data: history, isFetching: historyFetching } = useQuery({
         queryKey: ["fouls", currentPage],
         queryFn: () => getAbsencesHistory(currentPage)
     })
 
-    const { data: foulsMetrics } = useQuery({
+    const { data: foulsMetrics, isFetching: foulsMetricsFetching } = useQuery({
         queryKey: ["fouls_metrics"],
         queryFn: getClassroomsMetrics
     })
@@ -57,35 +58,47 @@ export const Fouls = () => {
 
         const condition = filterName || filterClass || filterShift || filterStatus;
 
-        if (condition) {
+        if (condition && history.data.length > 1) {
             const filtered = history.data?.filter((h:any) => {
                 const matchName = filterName
                     ? h?.studentName.fullName.toLowerCase().includes(filterName.toLowerCase())
                     : true;
 
-                /*const matchShift = filterShift
-                    ? student?.shift?.toLowerCase().includes(filterShift.toLowerCase())
-                    : true;*/
+                const matchShift = filterShift
+                    ? h?.shift?.toLowerCase().includes(filterShift.toLowerCase())
+                    : true;
 
                 const matchClass = filterClass
                     ? h?.className?.slice(6).toLowerCase() === filterClass.toLowerCase()
                     : true;
 
                 const matchStatus = filterStatus
-                    ? h?.status.toLowerCase().includes(filterStatus.toLowerCase())
+                    ? h?.status.toLowerCase() === filterStatus?.toLocaleLowerCase()
                     : true;
 
-                return matchName && matchClass  && matchStatus;
+                return matchName && matchClass && matchShift && matchStatus;
             });
+
             setFilteredHistory(filtered);
             setIsFiltered(true);
         }
+
+        if (history.data.length <= 1){
+            handleToasts({
+                message: "O filtro não pode ser aplicado para apenas um registro...",
+                type: "info"
+            })
+        }
+
+        
     };
 
     const reloadDatas = () => {
         setFilteredHistory(null);
         setIsFiltered(false);
     };
+
+    const list = filteredHistory ?? history?.data
 
     return (
         <div
@@ -128,7 +141,7 @@ export const Fouls = () => {
                 />
             </TitleStructure>
 
-            {foulsMetrics ? (
+            {!foulsMetricsFetching ? (
                 <CardView metrics={foulsMetrics} />
             ) : <section className="w-full flex justify-center"><Spinner className="text-zinc-700 dark:text-zinc-200"/></section>}
 
@@ -149,6 +162,7 @@ export const Fouls = () => {
                             {t("fouls.labels.searchStudent")}
                         </Form.Label>
                         <Form.Input
+                            disabled={isFiltred && true}
                             id="filterName"
                             zodName="filterName"
                             placeholder={t("fouls.inputs.searchStudentPlaceholder")}
@@ -163,6 +177,7 @@ export const Fouls = () => {
                             <Form.Select.Root
                                 zodName="filterClass"
                                 defaultValue=""
+                                disabled={isFiltred && true}
                             >
                                 <Form.Select.Option
                                     disabled
@@ -206,6 +221,7 @@ export const Fouls = () => {
                             <Form.Select.Root
                                 zodName="filterShift"
                                 defaultValue=""
+                                disabled={isFiltred && true}
                             >
                                 <Form.Select.Option
                                     disabled
@@ -253,6 +269,7 @@ export const Fouls = () => {
                             <Form.Select.Root
                                 zodName="filterStatus"
                                 defaultValue=""
+                                disabled={isFiltred && true}
                             >
                                 <Form.Select.Option
                                     disabled
@@ -262,22 +279,16 @@ export const Fouls = () => {
                                     {t("fouls.inputs.filterStatus.value")}
                                 </Form.Select.Option>
                                 <Form.Select.Option
-                                    value="Alerta"
-                                    id="alerta"
+                                    value="Não abonada"
+                                    id="Nao_abonada"
                                 >
-                                    Alerta
+                                    Não abonada
                                 </Form.Select.Option>
                                 <Form.Select.Option
-                                    value="Ativo"
-                                    id="ativo"
+                                    value="Abonada"
+                                    id="Abonada"
                                 >
-                                    Ativo
-                                </Form.Select.Option>
-                                <Form.Select.Option
-                                    value="Inativo"
-                                    id="inativo"
-                                >
-                                    Inativo
+                                    Abonada
                                 </Form.Select.Option>
                             </Form.Select.Root>
                             <SlidersHorizontal
@@ -295,43 +306,52 @@ export const Fouls = () => {
                         typeButton="blue"
                         className="md:w-auto md:h-10 px-3"
                     >
-                        {!isFiltred ? t("global.buttons.search") : t("global.buttons.uploadAgain")}
+                        {!isFiltred ? <>{t("global.buttons.search")} <Search /></> : <>{t("global.buttons.uploadAgain")} <RotateCcw /></>}
                     </Button>
                 </Form.Root>
 
                 {
-                    isFetching
+                    historyFetching
                         ?
                         <div className="animate-pulse space-y-4">
                             <div className="h-20 bg-zinc-300 dark:bg-zinc-800 rounded"></div>
                         </div>
                         :
-                        history.data && history.data.length >= 1 ?
+                        list && list.length >= 1 ?
                             <>
-                                <TableStudents setOpenModalDanger={setOpenModalDanger} historical={filteredHistory ?? history.data ?? []} />
-                                <div className="flex gap-2 w-full justify-between">
-                                    <Button
-                                        typeButton="blue"
-                                        className="w-auto py-2 px-5"
-                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                        disabled={currentPage === 1}
-                                    >
-                                        Anterior
-                                    </Button>
-                                    <span
-                                        className="text-zinc-500 medium leading-normal"
-                                    >
-                                        Página {currentPage}
-                                    </span>
-                                    <Button
-                                        typeButton="blue"
-                                        className="w-auto py-2 px-5"
-                                        disabled={currentPage === history.meta.totalPages}
-                                        onClick={() => setCurrentPage(prev => prev + 1)}
-                                    >
-                                        Próxima
-                                    </Button>
-                                </div>
+                                <TableStudents setOpenModalDanger={setOpenModalDanger} historical={filteredHistory ?? list} />
+                                {
+                                    history.meta.totalPages > 1 
+                                    ?
+                                        <div className="flex gap-2 w-full justify-between">
+                                            {currentPage > 1 && (
+                                                <Button
+                                                    typeButton="blue"
+                                                    className="w-auto py-2 px-5"
+                                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                                >
+                                                    Anterior
+                                                </Button>
+                                            )}
+
+                                            <span className="text-zinc-500 medium leading-normal">
+                                                Página {currentPage}
+                                            </span>
+
+                                            {currentPage < history?.meta?.totalPages && (
+                                                <Button
+                                                    typeButton="blue"
+                                                    className="w-auto py-2 px-5"
+                                                    onClick={() => setCurrentPage(prev => prev + 1)}
+                                                >
+                                                    Próxima
+                                                </Button>
+                                            )}
+                                        </div>
+                                    :
+                                    null
+                                }
+                                
                             </>
                             :
                             <motion.div
