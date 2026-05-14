@@ -1,6 +1,6 @@
 import { postStudentPresence } from "@/entities/student/api/post-student-presence";
 import { cn } from "@/shared/utils/tailwind-merge/cn";
-import { BadgeInfo, Camera, CheckCircle, Flag, FlagOff, Wind, XCircle } from "lucide-react";
+import { Camera, CheckCircle, Flag, FlagOff, Wind, XCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import { Button } from "@/shared/components/shared";
