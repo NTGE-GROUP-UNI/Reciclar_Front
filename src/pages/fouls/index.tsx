@@ -49,6 +49,7 @@ export const Fouls = () => {
 
         if (isFiltred) {
             reloadDatas();
+            setCurrentPage(1);
             handleToasts({
                 message: "Alunos atualizados!",
                 type: "success"
@@ -83,6 +84,7 @@ export const Fouls = () => {
 
             setFilteredHistory(filtered);
             setIsFiltered(true);
+            setCurrentPage(1);
 
             handleToasts({
                 message: "Busca concluída!",
@@ -90,7 +92,7 @@ export const Fouls = () => {
             })
         }
 
-        if (list <= 1){
+        if (history.data.length <= 1){
             handleToasts({
                 message: "O filtro não pode ser aplicado para apenas um registro...",
                 type: "info"
@@ -105,7 +107,7 @@ export const Fouls = () => {
         setIsFiltered(false);
     };
 
-    const list = filteredHistory ?? history?.data
+    const list = filteredHistory ?? history?.data;
 
     return (
         <div

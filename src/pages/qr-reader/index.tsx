@@ -120,7 +120,7 @@ export const QrReader = () => {
     return (
         <div className="w-full p-8 flex flex-col items-center">
             <div className="flex items-center gap-2 mb-6">
-                <h1 className="text-2xl font-bold m-0 text-zinc-600">Leitor de Presença</h1>
+                <h1 className="text-2xl font-bold m-0 text-zinc-600">Leitor QR Code</h1>
                 {isCameraActive ? <Spinner className="text-zinc-600" /> : null}
             </div>
 
