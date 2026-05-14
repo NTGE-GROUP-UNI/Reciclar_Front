@@ -8,7 +8,6 @@ import { Spinner } from "@/shared/ui/spinner";
 import { useLocation } from "react-router-dom";
 import { patchStudentRegisterAbsence } from "@/entities/student/api/patch-student-register-absence";
 import { patchStudentRemoveAbsence } from "@/entities/student/api/patch-student-remove-absence";
-import { patchStudentJustifyAbsence } from "@/entities/student/api/patch-student-justify-absence";
 
 export const QrReader = () => {
 
@@ -69,13 +68,6 @@ export const QrReader = () => {
                             await patchStudentRemoveAbsence(decodedText);
                             setStatus("success");
                             setMessage("Falta removida!");
-                            return;
-                        }
-
-                        if (action === "justify_absence") {
-                            await patchStudentJustifyAbsence(decodedText);
-                            setStatus("success");
-                            setMessage("Falta justificada!");
                             return;
                         }
                         
@@ -162,7 +154,6 @@ export const QrReader = () => {
                             <Button typeButton="red" onClick={() => handleClickAction("register_exit")}><strong>Registrar saída</strong> <Wind /></Button>
                             <Button typeButton="red" onClick={() => handleClickAction("register_absence")}><strong>Registrar falta</strong> <FlagOff /></Button>
                             <Button typeButton="red" onClick={() => handleClickAction("remove_absence")}><strong>Remover falta</strong> <FlagOff /></Button>
-                            <Button typeButton="yellow" onClick={() => handleClickAction("justify_absence")}><strong>Abonar falta</strong> <BadgeInfo /></Button>
                     </div>
                     :
                     null

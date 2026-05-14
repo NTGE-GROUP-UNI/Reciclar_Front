@@ -2,10 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 import { Layout } from "../../shared/layout/layout";
 import { Dashboard, Fouls, Settings, Classes, ClassPage, SignIn, Error, QrReader } from "@/pages/export-pages"
 import { MobileProtect } from "@/shared/components/mobile-only-protect/mobile-only-protect";
+import { PrivateRoute } from "@/shared/components/private/private";
 
-/*
-
-element: <PrivateRoute />,
+export const router = createBrowserRouter([
+    {
+        element: <PrivateRoute />,
         children: [
             {
                 element: <Layout />,
@@ -14,29 +15,12 @@ element: <PrivateRoute />,
                     { element: <Settings />, path: "/settings" },
                     { element: <Classes />, path: "/classes" },
                     { element: <Fouls />, path: "/fouls" },
-                    { element: <QrReader />, path: "/reader" },
+                    { element:  <MobileProtect/>, children: [
+                        { element: <QrReader />, path: "/reader" }
+                    ] },
                     { element: <ClassPage />, path: "/classes/:shift/:id" },
                 ]
             }
-        ]
-
-*/
-
-export const router = createBrowserRouter([
-    {
-        element: <Layout />,
-        children: [
-            { element: <Dashboard />, path: "/" },
-            { element: <Settings />, path: "/settings" },
-            { element: <Classes />, path: "/classes" },
-            { element: <Fouls />, path: "/fouls" },
-            { 
-                element: <MobileProtect/>, 
-                children: [
-                    { element: <QrReader />, path: "/reader" },
-                ]
-            },
-            { element: <ClassPage />, path: "/classes/:shift/:id" },
         ]
     },
     {

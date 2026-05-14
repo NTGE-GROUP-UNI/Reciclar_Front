@@ -5,9 +5,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Spinner } from "@/shared/ui/spinner";
 import type { SetStateAction } from "react";
 import type { FormData } from "@/shared/components/form/type";
-import { useCurrentClassroom } from "@/shared/store/classroom/classroom.store";
-import { deleteClassroom } from "@/entities/classroom/api/delete-classrooms";
-import { maskClassName } from "@/shared/utils/classroom/utils";
+import { useCurrentFoul } from "@/shared/store/foul/foul.store";
+import { patchStudentJustifyAbsence } from "@/entities/student/api/patch-student-justify-absence";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 
 interface ModalDangerProps {
     setOpenModalDanger: React.Dispatch<SetStateAction<boolean>>;
@@ -15,33 +15,49 @@ interface ModalDangerProps {
 
 export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
 
-    const { classroom } = useCurrentClassroom();
+    const { foul } = useCurrentFoul();
 
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
-        mutationFn: deleteClassroom,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["classes"] });
-            setOpenModalDanger(false);
+        mutationFn: patchStudentJustifyAbsence,
+        onSuccess: async () => {
+            await Promise.all([
+                queryClient.invalidateQueries({
+                    queryKey: ["fouls"],
+                    exact: false
+                }),
+                queryClient.invalidateQueries({
+                    queryKey: ["fouls_metrics"]
+                })
+            ])
         }
     })
 
     const handleSubmit = (data: FormData) => {
+        if (foul) {
+            const foulStudentName = foul.name?.toLowerCase().trim();
+            const foulClassName = foul.className?.toLowerCase().trim();
+            const name = data.name?.toLowerCase().trim();
+            const className = data.className?.toLowerCase().trim();
 
-        const formClassName = `turma ${data.className?.toLowerCase().trim()}`;
-        const className = classroom?.className?.toLowerCase().trim();
+            console.log(foulStudentName, foulClassName, name, className);
 
-        console.log(formClassName, className);
+            if (name === foulStudentName && className === foulClassName) {
+                if(foul.id){
+                    mutation.mutate(foul.id);
+                    return;
+                }       
+            }
 
-        if (formClassName === className){
-            mutation.mutate({
-                data: {
-                    id: classroom?.classId,
-                }
-            });
+            if (name !== foulStudentName || className !== foulClassName) {
+                handleToasts({
+                    message: "Operação inválida",
+                    type: "error"
+                })
+                return;
+            }
         }
-
     }
 
     return (
@@ -56,14 +72,25 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                 </div>
                 <div className="w-full p-8">
                     <p className="font-medium text-zinc-800 text-lg dark:text-zinc-50 mb-8">
-                        Vocẽ tem certeza que da ação que está tomando? Ao clicar no botão <strong>"Sim, tenho certeza"</strong> você irá excluir essa turma <strong>({classroom?.className})</strong> em <strong>inativo</strong>.
+                        Vocẽ tem certeza que da ação que está tomando? Ao clicar no botão <strong>"Sim, tenho certeza"</strong> você irá abonar a falta do aluno <strong>{foul?.name}</strong> da turma/classe <strong>({foul?.className})</strong> do dia <strong>{foul?.date}</strong>.
                     </p>
                     <div className="w-full flex flex-col">
-
                         <Form.Root
                             dir="col"
                             submit={handleSubmit}
                         >
+                            <Form.Wrapper>
+                                <Form.Label
+                                    htmlFor="name"
+                                >
+                                    Nome do aluno
+                                </Form.Label>
+                                <Form.Input
+                                    id="name"
+                                    zodName="name"
+                                    placeholder="Digite o nome do aluno para concluir a ação"
+                                />
+                            </Form.Wrapper>
                             <Form.Wrapper>
                                 <Form.Label
                                     htmlFor="className"
@@ -71,7 +98,6 @@ export const ModalDanger = ({ setOpenModalDanger }: ModalDangerProps) => {
                                     Nome da turma
                                 </Form.Label>
                                 <Form.Input
-                                    onChange={maskClassName}
                                     id="className"
                                     zodName="className"
                                     placeholder="Digite o nome da turma para concluir a ação"

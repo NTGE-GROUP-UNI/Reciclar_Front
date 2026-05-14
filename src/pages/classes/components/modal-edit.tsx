@@ -6,6 +6,7 @@ import type { FormData } from "@/shared/components/form/type";
 import { useCurrentClassroom } from "@/shared/store/classroom/classroom.store";
 import { putClassrooms } from "@/entities/classroom/api/put-classrooms";
 import { Spinner } from "@/shared/ui/spinner";
+import { maskClassName } from "@/shared/utils/classroom/utils";
 
 interface ModalEditProps {
     setOpenModalEdit: React.Dispatch<SetStateAction<boolean>>;
@@ -38,7 +39,7 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
                 data: {
                     id: classroom.classId,
                     shift: data?.shift,
-                    name: data?.className,
+                    name: `Turma ${data?.className}`,
                 },
             });
             return;
@@ -75,6 +76,7 @@ export const ModalEdit = ({ setOpenModalEdit }: ModalEditProps) => {
                                 Nome da turma
                             </Form.Label>
                             <Form.Input
+                                onChange={maskClassName}
                                 id="className"
                                 zodName="className"
                                 name="className"

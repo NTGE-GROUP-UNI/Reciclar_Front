@@ -4,7 +4,6 @@ import {
     Form,
     TitleStructure
 } from "@/shared/components/shared"
-
 import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import type { FormData } from "../../shared/components/form/type";
@@ -19,16 +18,20 @@ import { useTranslation } from "react-i18next";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 import { getAbsencesHistory } from "@/entities/attendance/api/get-absences-history";
 import { motion } from "framer-motion";
+import { getDownloadAbsencesHistory } from "@/entities/attendance/api/get-download-absences-history";
+import { ModalDanger } from "./components/modal-danger";
 
 export const Fouls = () => {
 
     const { t } = useTranslation();
     const [isFiltred, setIsFiltered] = useState(false);
     const [filteredHistory, setFilteredHistory] = useState<IStudent[] | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [openModalDanger, setOpenModalDanger] = useState<boolean>(false);
 
-    const { data: history = [], isFetching } = useQuery({
-        queryKey: ["fouls"],
-        queryFn: getAbsencesHistory
+    const { data: history, isFetching } = useQuery({
+        queryKey: ["fouls", currentPage],
+        queryFn: () => getAbsencesHistory(currentPage)
     })
 
     const { data: foulsMetrics } = useQuery({
@@ -55,7 +58,7 @@ export const Fouls = () => {
         const condition = filterName || filterClass || filterShift || filterStatus;
 
         if (condition) {
-            const filtered = history?.filter((h:any) => {
+            const filtered = history.data?.filter((h:any) => {
                 const matchName = filterName
                     ? h?.studentName.fullName.toLowerCase().includes(filterName.toLowerCase())
                     : true;
@@ -74,9 +77,6 @@ export const Fouls = () => {
 
                 return matchName && matchClass  && matchStatus;
             });
-
-            console.log(filtered);
-
             setFilteredHistory(filtered);
             setIsFiltered(true);
         }
@@ -122,7 +122,10 @@ export const Fouls = () => {
                     </div>
                 </div>
 
-                <ExportExcelButton />
+                <ExportExcelButton
+                    name="fouls_history"
+                    fn={getDownloadAbsencesHistory}
+                />
             </TitleStructure>
 
             {foulsMetrics ? (
@@ -303,8 +306,33 @@ export const Fouls = () => {
                             <div className="h-20 bg-zinc-300 dark:bg-zinc-800 rounded"></div>
                         </div>
                         :
-                        history && history.length >= 1 ?
-                            <TableStudents historical={filteredHistory ?? history ?? []} />
+                        history.data && history.data.length >= 1 ?
+                            <>
+                                <TableStudents setOpenModalDanger={setOpenModalDanger} historical={filteredHistory ?? history.data ?? []} />
+                                <div className="flex gap-2 w-full justify-between">
+                                    <Button
+                                        typeButton="blue"
+                                        className="w-auto py-2 px-5"
+                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                        disabled={currentPage === 1}
+                                    >
+                                        Anterior
+                                    </Button>
+                                    <span
+                                        className="text-zinc-500 medium leading-normal"
+                                    >
+                                        Página {currentPage}
+                                    </span>
+                                    <Button
+                                        typeButton="blue"
+                                        className="w-auto py-2 px-5"
+                                        disabled={currentPage === history.meta.totalPages}
+                                        onClick={() => setCurrentPage(prev => prev + 1)}
+                                    >
+                                        Próxima
+                                    </Button>
+                                </div>
+                            </>
                             :
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.8 }}
@@ -337,6 +365,8 @@ export const Fouls = () => {
                                 />
                             </motion.div>
                 }
+
+                {openModalDanger && <ModalDanger setOpenModalDanger={setOpenModalDanger} />}
             </section>
         </div>
     )

@@ -20,7 +20,7 @@ export const Root = ({ children }: RootProps) => {
                 x: shouldShowSidebar ? 0 : "-100%",
             }}
             transition={{
-                duration: 0.8,
+                duration: 0.2,
             }}
             className="
                 bg-[--primary-blue-color]

@@ -1,20 +1,24 @@
-import { getDownloadMetrics } from "@/entities/student/api/get-donwload-metrics";
 import { FileText } from "lucide-react"
 import { Button } from "../shared";
 import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { Spinner } from "@/shared/ui/spinner";
 
-export const ExportExcelButton = () => {
+interface ExportExcelButtonProps {
+    fn: () => any;
+    name: string;
+}
+
+export const ExportExcelButton = ({ fn, name }:ExportExcelButtonProps) => {
 
     const { t } = useTranslation();
 
     const downloadSpreadsheet = async () => {
-        const data = await getDownloadMetrics();
+        const data = await fn();
         const url = window.URL.createObjectURL(new Blob([data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'dashboard_alunos.xlsx');
+        link.setAttribute('download', `${name}.xlsx`);
         document.body.appendChild(link);
         link.click();
         link.remove();

@@ -8,9 +8,11 @@ export const postStudent = async ({ student }: { student: IPostStudent }) => {
     try {
         const { className, expirationYear, fullName, shift } = student;
 
+        console.log(student);
+
         const response = await baseApi.post("/students", {
             fullName: fullName,
-            className: className,
+            className: `Turma ${className}`,
             shift: shift,
             expirationYear: Number(expirationYear)
         });

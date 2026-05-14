@@ -5,12 +5,14 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     zodName: string;
 }
 
-export const Input = ({ zodName, ...props }: InputProps) => {
+export const Input = ({ zodName, onChange,...props }: InputProps) => {
 
     const {
         register,
         formState: { errors }
     } = useFormContext();
+
+    const { onChange: rhfOnChange, ...rest } = register(zodName);
 
     return (
         <div
@@ -20,7 +22,12 @@ export const Input = ({ zodName, ...props }: InputProps) => {
         >
             <input
                 {...props}
-                {...register(zodName)}
+                {...rest}
+                onChange={(e) => {
+                    onChange?.(e);
+                    e.target.value = e.target.value;
+                    rhfOnChange(e);
+                }}
                 className={`
                 w-full border rounded-md py-2 p-3
                 2xl:text-md text-sm

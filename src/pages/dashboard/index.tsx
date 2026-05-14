@@ -17,6 +17,7 @@ import { ExportExcelButton } from "@/shared/components/export-excel/export-excel
 import { useTranslation } from "react-i18next";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 import { motion } from "framer-motion";
+import { getDownloadMetrics } from "@/entities/student/api/get-donwload-metrics";
 
 export const Dashboard = () => {
 
@@ -104,7 +105,10 @@ export const Dashboard = () => {
                     </p>
                 </div>
 
-                <ExportExcelButton />
+                <ExportExcelButton
+                    name="dashboard_students"
+                    fn={getDownloadMetrics}
+                />
             </TitleStructure>
 
             <div

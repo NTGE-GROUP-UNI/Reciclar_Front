@@ -1,10 +1,11 @@
-import { type SetStateAction } from "react";
+import React, { type SetStateAction } from "react";
 import { X } from "lucide-react";
 import { Button, Form } from "@/shared/components/shared";
 import { Spinner } from "@/shared/ui/spinner";
 import type { FormData } from "@/shared/components/form/type";
 import { postClassroom } from "@/entities/classroom/api/post-classroom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { maskClassName } from "@/shared/utils/classroom/utils";
 
 export const ModalRegister = ({ setModalRegister }: { setModalRegister: React.Dispatch<SetStateAction<boolean>> }) => {
 
@@ -101,6 +102,7 @@ export const ModalRegister = ({ setModalRegister }: { setModalRegister: React.Di
                                 Nome
                             </Form.Label>
                             <Form.Input
+                                onChange={maskClassName}
                                 id="name"
                                 zodName="name"
                                 name="name"
