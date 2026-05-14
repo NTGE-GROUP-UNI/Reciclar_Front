@@ -14,14 +14,12 @@ import { getStudentsMetrics } from "@/entities/student/api/get-students-metrics"
 import type { IStudent } from "@/entities/student/model/types";
 import { useQuery } from "@tanstack/react-query";
 import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
-import { useTranslation } from "react-i18next";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 import { motion } from "framer-motion";
 import { getDownloadMetrics } from "@/entities/student/api/get-donwload-metrics";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 
 export const Dashboard = () => {
-
-    const { t } = useTranslation();
     const [isFiltred, setIsFiltered] = useState(false);
     const [filteredStudents, setFilteredStudents] = useState<IStudent[] | null>(null);
 
@@ -42,6 +40,10 @@ export const Dashboard = () => {
 
         if (isFiltred) {
             reloadDatas();
+            handleToasts({
+                message: "Alunos atualizados!",
+                type: "success"
+            })
             return;
         }
 
@@ -49,7 +51,9 @@ export const Dashboard = () => {
 
         const condition = filterName || filterClass || filterShift;
 
-        if (condition && students) {
+        if(!students) return;
+
+        if (condition && students.length > 1) {
             const filtered = students.filter((student) => {
                 const matchName = filterName
                     ? student.fullName.toLowerCase().includes(filterName.toLowerCase())
@@ -68,6 +72,17 @@ export const Dashboard = () => {
 
             setFilteredStudents(filtered);
             setIsFiltered(true);
+            handleToasts({
+                message: "Busca foi concluída!",
+                type: "success"
+            })
+        }
+
+        if (students.length <= 1) {
+            handleToasts({
+                message: "O filtro não pode ser aplicado para apenas um registro...",
+                type: "info"
+            })
         }
     };
 
@@ -93,7 +108,7 @@ export const Dashboard = () => {
                             mb-2
                         "
                     >
-                        {t("dashboard.title")}
+                        Painel
                     </h1>
                     <p
                         className="
@@ -101,7 +116,7 @@ export const Dashboard = () => {
                         text-md dark:text-zinc-400
                     "
                     >
-                        {t("dashboard.description")}
+                        Gerenciamento de alunos e frequência
                     </p>
                 </div>
 
@@ -124,18 +139,18 @@ export const Dashboard = () => {
                         <Form.Label
                             htmlFor="filterName"
                         >
-                            {t("dashboard.labels.searchStudent")}
+                            Buscar aluno
                         </Form.Label>
                         <Form.Input
                             disabled={isFiltred && true}
                             id="filterName"
                             zodName="filterName"
-                            placeholder={t("dashboard.inputs.searchStudentPlaceholder")}
+                            placeholder="Digite o nome do aluno"
                         />
                     </Form.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description={t("dashboard.inputs.filterClass.description")}
+                            description="Filtrar por turma"
                             dirX="right"
                             dirY="top"
                         >
@@ -149,7 +164,7 @@ export const Dashboard = () => {
                                     hidden
                                     value=""
                                 >
-                                    {t("dashboard.inputs.filterClass.value")}
+                                    Turma
                                 </Form.Select.Option>
                                 {
                                     uniqueClasses &&
@@ -179,7 +194,7 @@ export const Dashboard = () => {
                     </Form.Select.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description={t("dashboard.inputs.filterShift.description")}
+                            description="Filtrar por turno"
                             dirX="right"
                             dirY="top"
                         >
@@ -193,7 +208,7 @@ export const Dashboard = () => {
                                     hidden
                                     value=""
                                 >
-                                    {t("dashboard.inputs.filterShift.value")}
+                                    Turno
                                 </Form.Select.Option>
                                 <Form.Select.Option
                                     value="Manhã"
@@ -229,7 +244,7 @@ export const Dashboard = () => {
                         typeButton="blue"
                         className="md:w-auto md:h-10 px-3"
                     >
-                        {!isFiltred ? <>{t("global.buttons.search")} <Search /></> : <>{t("global.buttons.uploadAgain")} <RotateCcw /></>}
+                        {!isFiltred ? <>Buscar <Search /></> : <>Carregar novamente <RotateCcw /></>}
                     </Button>
                 </Form.Root>
 
@@ -284,7 +299,7 @@ export const Dashboard = () => {
                                         dark:text-zinc-400 text-xl text-center
                                     "
                                 >
-                                    {t("dashboard.errors.notFound")}
+                                    Não foi possível encontrar o aluno...
                                 </h1>
                                 <img
                                     src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1778615035/not_found_filter_iylac4.svg"

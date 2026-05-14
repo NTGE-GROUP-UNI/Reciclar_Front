@@ -10,7 +10,6 @@ import { postAuthSignin } from "@/entities/auth/api/post-auth-signin";
 import { useAuthStore } from "@/shared/store/auth/auth.store";
 import { useNavigate } from "react-router-dom";
 import { Spinner } from "@/shared/ui/spinner";
-import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
@@ -18,7 +17,6 @@ import { themeStore } from "@/shared/store/theme/theme";
 
 export const SignIn = () => {
 
-    const { t } = useTranslation();
     const { setToken } = useAuthStore((s) => s);
     const toggleTheme = themeStore.getState().toggleTheme;
     const navigate = useNavigate();
@@ -131,7 +129,7 @@ export const SignIn = () => {
                         mb-1
                     "
                         >
-                            {t("signIn.title")}
+                            Bem-vindo!
                         </h1>
                         <p
                             className="
@@ -140,7 +138,7 @@ export const SignIn = () => {
                         mb-3
                     "
                         >
-                            {t("signIn.description")}
+                            Entre agora com sua conta
                         </p>
                     </div>
 
@@ -148,13 +146,13 @@ export const SignIn = () => {
                         <Form.Label
                             htmlFor="email"
                         >
-                            {t("signIn.labels.email")}*
+                            E-mail*
                         </Form.Label>
                         <Form.Input
                             id="email"
                             zodName="email"
                             name="email"
-                            placeholder={t("signIn.inputs.emailPlaceholder")}
+                            placeholder="Insira seu e-mail"
                             type="email"
                         />
                     </Form.Wrapper>
@@ -162,13 +160,13 @@ export const SignIn = () => {
                         <Form.Label
                             htmlFor="password"
                         >
-                            {t("signIn.labels.password")}*
+                            Senha*
                         </Form.Label>
                         <Form.Input
                             id="password"
                             zodName="password"
                             name="password"
-                            placeholder={t("signIn.inputs.passwordPlaceholder")}
+                            placeholder="Insira sua senha"
                             type={passwordType}
                         />
                         <motion.button
@@ -184,13 +182,13 @@ export const SignIn = () => {
                         <Form.Label
                             htmlFor="confirmPassword"
                         >
-                            {t("signIn.labels.confirmPassword")}*
+                            Confirmar senha*
                         </Form.Label>
                         <Form.Input
                             id="confirmPassword"
                             zodName="confirmPassword"
                             name="confirmPassword"
-                            placeholder={t("signIn.inputs.confirmPasswordPlaceholder")}
+                            placeholder="Confirme sua senha"
                             type={confirmPasswordType}
                         />
                         <motion.button
@@ -206,7 +204,7 @@ export const SignIn = () => {
                         type="submit"
                         typeButton="blue"
                     >
-                        {mutation.isPending ? <Spinner /> : t("signIn.buttons.enter")}
+                        {mutation.isPending ? <Spinner /> : "Entrar"}
                     </Button>
                 </Form.Root>
             </motion.div>

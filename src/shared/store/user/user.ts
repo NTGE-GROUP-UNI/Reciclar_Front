@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { handleToasts } from "@/shared/lib/toast/toast-custom";
-import type { TFunction } from "i18next";
 import { persist } from "zustand/middleware";
 
 interface UserStoreProps {
@@ -18,7 +17,7 @@ export const userStore = create<UserStoreProps>()(
     })
 );
 
-export const setDisplayName = (t: TFunction, name: string, theme: boolean) => {
-    handleToasts({ message: t("settings.cards.displayName.message"), theme, type: "success" });
+export const setDisplayName = (name: string) => {
+    handleToasts({ message: "Nome de exibição alterado com sucesso!", type: "success" });
     userStore.getState().changeDisplayName(name);
 } 

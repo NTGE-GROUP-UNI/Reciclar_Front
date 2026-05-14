@@ -14,7 +14,6 @@ import { useQuery } from "@tanstack/react-query";
 import { TableStudents, CardView } from "./components/export-components";
 import { Spinner } from "@/shared/ui/spinner";
 import { ExportExcelButton } from "@/shared/components/export-excel/export-excel";
-import { useTranslation } from "react-i18next";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
 import { getAbsencesHistory } from "@/entities/attendance/api/get-absences-history";
 import { motion } from "framer-motion";
@@ -24,7 +23,6 @@ import { handleToasts } from "@/shared/lib/toast/toast-custom";
 
 export const Fouls = () => {
 
-    const { t } = useTranslation();
     const [isFiltred, setIsFiltered] = useState(false);
     const [filteredHistory, setFilteredHistory] = useState<IStudent[] | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -51,6 +49,10 @@ export const Fouls = () => {
 
         if (isFiltred) {
             reloadDatas();
+            handleToasts({
+                message: "Alunos atualizados!",
+                type: "success"
+            })
             return;
         }
 
@@ -58,7 +60,7 @@ export const Fouls = () => {
 
         const condition = filterName || filterClass || filterShift || filterStatus;
 
-        if (condition && history.data.length > 1) {
+        if (condition && list.length > 1) {
             const filtered = history.data?.filter((h:any) => {
                 const matchName = filterName
                     ? h?.studentName.fullName.toLowerCase().includes(filterName.toLowerCase())
@@ -81,9 +83,14 @@ export const Fouls = () => {
 
             setFilteredHistory(filtered);
             setIsFiltered(true);
+
+            handleToasts({
+                message: "Busca concluída!",
+                type: "success"
+            })
         }
 
-        if (history.data.length <= 1){
+        if (list <= 1){
             handleToasts({
                 message: "O filtro não pode ser aplicado para apenas um registro...",
                 type: "info"
@@ -117,7 +124,7 @@ export const Fouls = () => {
                             mb-2
                         "
                     >
-                        {t("fouls.title")}
+                        Histórico de Faltas
                     </h1>
                     <div
                         className="
@@ -130,7 +137,7 @@ export const Fouls = () => {
                             text-md dark:text-zinc-400
                         "
                         >
-                            {t("fouls.description")}
+                            Visualize e gerencie todas as faltas registradas
                         </p>
                     </div>
                 </div>
@@ -159,18 +166,18 @@ export const Fouls = () => {
                         <Form.Label
                             htmlFor="filterName"
                         >
-                            {t("fouls.labels.searchStudent")}
+                            Buscar aluno
                         </Form.Label>
                         <Form.Input
                             disabled={isFiltred && true}
                             id="filterName"
                             zodName="filterName"
-                            placeholder={t("fouls.inputs.searchStudentPlaceholder")}
+                            placeholder="Digite o nome do aluno"
                         />
                     </Form.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description={t("fouls.inputs.filterClass.description")}
+                            description="Filtrar por turma"
                             dirX="right"
                             dirY="top"
                         >
@@ -184,7 +191,7 @@ export const Fouls = () => {
                                     hidden
                                     value=""
                                 >
-                                    {t("fouls.inputs.filterClass.value")}
+                                   Turma
                                 </Form.Select.Option>
                                 {
                                     uniqueClasses &&
@@ -214,7 +221,7 @@ export const Fouls = () => {
                     </Form.Select.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description={t("fouls.inputs.filterShift.description")}
+                            description="Filtrar por turno"
                             dirX="right"
                             dirY="top"
                         >
@@ -228,7 +235,7 @@ export const Fouls = () => {
                                     hidden
                                     value=""
                                 >
-                                    {t("fouls.inputs.filterShift.value")}
+                                    Turno
                                 </Form.Select.Option>
                                 <Form.Select.Option
                                     value="Manhã"
@@ -262,7 +269,7 @@ export const Fouls = () => {
                     </Form.Select.Wrapper>
                     <Form.Select.Wrapper>
                         <Description
-                            description={t("fouls.inputs.filterStatus.description")}
+                            description="Filtrar por status"
                             dirX="right"
                             dirY="top"
                         >
@@ -276,7 +283,7 @@ export const Fouls = () => {
                                     hidden
                                     value=""
                                 >
-                                    {t("fouls.inputs.filterStatus.value")}
+                                    Status
                                 </Form.Select.Option>
                                 <Form.Select.Option
                                     value="Não abonada"
@@ -306,7 +313,7 @@ export const Fouls = () => {
                         typeButton="blue"
                         className="md:w-auto md:h-10 px-3"
                     >
-                        {!isFiltred ? <>{t("global.buttons.search")} <Search /></> : <>{t("global.buttons.uploadAgain")} <RotateCcw /></>}
+                        {!isFiltred ? <>Buscar <Search /></> : <>Carregar novamente <RotateCcw /></>}
                     </Button>
                 </Form.Root>
 
@@ -374,7 +381,7 @@ export const Fouls = () => {
                                         dark:text-zinc-400 text-xl text-center
                                     "
                                 >
-                                    {t("fouls.errors.notFound")}
+                                    Não foi possível encontrar o registro
                                 </h1>
                                 <img
                                     src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1778615035/not_found_filter_iylac4.svg"

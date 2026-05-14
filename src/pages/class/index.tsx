@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import {
     ModalRegister,
     Card,
-    Modal,
+    ModalQrCode,
     PageTitle
 } from "./components/export-components"
 import { useState } from "react";
@@ -95,7 +95,7 @@ export const ClassPage = () => {
             { 
                 openModalQrCode 
                 &&
-                <Modal 
+                <ModalQrCode 
                     setOpenModalQrCode={setOpenModalQrCode}
                 />
             }

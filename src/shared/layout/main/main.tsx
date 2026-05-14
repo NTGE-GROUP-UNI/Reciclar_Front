@@ -1,15 +1,12 @@
 import type { ReactNode } from "react";
 import { Sidebar } from "../../components/sidebar/sidebar"
-import { Megaphone, NotebookTabs, LayoutDashboard, Bolt, QrCode } from "lucide-react"
-import { useTranslation } from "react-i18next"
+import { Megaphone, NotebookTabs, LayoutDashboard, Bolt, QrCode, View } from "lucide-react"
 
 export interface MainProps {
     children: ReactNode
 }
 
 export const Main = ({ children }: MainProps) => {
-
-    const { t } = useTranslation();
 
     return (
         <main
@@ -24,28 +21,33 @@ export const Main = ({ children }: MainProps) => {
                     <Sidebar.Path
                         to="/"
                     >
-                        <LayoutDashboard /> {t("sidebar.sections.dashboard")}
+                        <LayoutDashboard className="flex-shrink-0" /> Painel
                     </Sidebar.Path>
                     <Sidebar.Path
                         to="/classes"
                     >
-                        <NotebookTabs /> {t("sidebar.sections.classes")}
+                        <NotebookTabs className="flex-shrink-0" /> Turmas
                     </Sidebar.Path>
                     <Sidebar.Path
                         to="/fouls"
                     >
-                        <Megaphone /> {t("sidebar.sections.fouls")}
+                        <Megaphone className="flex-shrink-0" /> Faltas
                     </Sidebar.Path>
                     <Sidebar.Path
-                        to="/settings"
+                        to="/monitoring"
                     >
-                        <Bolt /> {t("sidebar.sections.settings")}
+                        <View className="flex-shrink-0" /> Monitoramento (Em desenvolvimento)
                     </Sidebar.Path>
                     <Sidebar.Path
                         className="md:hidden flex"
                         to="/reader"
                     >
-                        <QrCode /> Leitor de QR Code
+                        <QrCode className="flex-shrink-0" /> Leitor de QR Code
+                    </Sidebar.Path>
+                    <Sidebar.Path
+                        to="/settings"
+                    >
+                        <Bolt className="flex-shrink-0" /> Configurações
                     </Sidebar.Path>
                 </Sidebar.PathWrapper>
             </Sidebar.Root>

@@ -3,20 +3,16 @@ import {
     SunMedium,
     Info,
     DoorOpen,
-    Languages,
     Smile,
     PersonStanding,
     BriefcaseBusiness,
 } from "lucide-react";
 import { setTheme, themeStore } from "@/shared/store/theme/theme";
-import { setLang } from "@/shared/store/language/language";
 import { setAvatar } from "@/shared/store/avatar/avatar";
 import { setDisplayName } from "@/shared/store/user/user";
 import { motion } from "motion/react";
 import Avatar from "boring-avatars";
-import { useLanguage } from "@/shared/hooks/language/use-language";
 import { useUser } from "@/shared/hooks/user/use-user";
-import { useTranslation } from "react-i18next"
 import { Card } from "./components/card";
 import {
     Button,
@@ -33,14 +29,12 @@ export const Settings = () => {
 
     const { logout, setToken } = useAuthStore((s) => s);
     const themeValue = themeStore(state => state.themeValue)
-    const { language } = useLanguage((state) => state);
     const { displayName } = useUser((state) => state);
-    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const handleSubmit = (data: FormData) => {
         const value = String(data.displayName).trim();
-        setDisplayName(t, value, themeValue);
+        setDisplayName(value);
     }
 
     return (
@@ -60,7 +54,7 @@ export const Settings = () => {
                             mb-2 
                         "
                     >
-                        {t("settings.title")}
+                        Configurações
                     </h1>
                     <p
                         className="
@@ -69,7 +63,7 @@ export const Settings = () => {
                             
                         "
                     >
-                        {t("settings.description")}
+                        Personalize as configurações do sistema
                     </p>
                 </div>
             </TitleStructure>
@@ -80,25 +74,16 @@ export const Settings = () => {
                     gap-8 items-center
                 "
             >
-                <Card icon={themeValue ? MoonStar : SunMedium} title={t("settings.cards.theme.title")} description={t("settings.cards.theme.description")}>
+                <Card icon={themeValue ? MoonStar : SunMedium} title="Alterar tema" description="Alterne entre o tema claro e escuro">
                     <ToggleButton
-                        onClick={() => setTheme(t, !themeValue)}
+                        onClick={() => setTheme()}
                         isActive={themeValue}
                     >
                         {themeValue ? <SunMedium height={17} /> : <MoonStar height={17} />}
                     </ToggleButton>
                 </Card>
 
-                <Card icon={Languages} title={t("settings.cards.language.title")} description={t("settings.cards.language.description")}>
-                    <ToggleButton
-                        onClick={() => setLang(t, themeValue)}
-                        isActive={language === "pt"}
-                    >
-                        {language === "pt" ? "PT" : "EN"}
-                    </ToggleButton>
-                </Card>
-
-                <Card icon={PersonStanding} title={t("settings.cards.displayName.title")} description={t("settings.cards.displayName.description")} column={true}>
+                <Card icon={PersonStanding} title="Nome de exibição" description="Altere o nome de exibição do sistema" column={true}>
                     <div
                         className="w-full md:max-w-96"
                     >
@@ -110,7 +95,7 @@ export const Settings = () => {
                                 <Form.Label
                                     htmlFor="displayName"
                                 >
-                                    {t("settings.cards.displayName.title")}
+                                    Nome de exibição
                                 </Form.Label>
                                 <Form.Input
                                     id="displayName"
@@ -123,13 +108,13 @@ export const Settings = () => {
                                 type="submit"
                                 className="md:max-w-40 md:h-10"
                             >
-                                {language === "pt" ? "Salvar" : "Save"}
+                                Salvar
                             </Button>
                         </Form.Root>
                     </div>
                 </Card>
 
-                <Card icon={BriefcaseBusiness} title={t("settings.cards.account.title")} description={t("settings.cards.account.description")}>
+                <Card icon={BriefcaseBusiness} title="Tipo da conta" description="Tipo da conta atual">
                     <div
                         className={`
                         border bg-zinc-200 border-zinc-300 text-zinc-600 
@@ -143,7 +128,7 @@ export const Settings = () => {
                     </div>
                 </Card>
 
-                <Card className="md:block hidden" icon={Smile} title={t("settings.cards.avatar.title")} description={t("settings.cards.avatar.description")} column={true}>
+                <Card className="md:block hidden" icon={Smile} title="Avatar" description="Escolha qual avatar utilizar na aplicação" column={true}>
                     <div
                         className="
                         flex flex-row justify-center items-center gap-2
@@ -159,7 +144,7 @@ export const Settings = () => {
                                         key={index}
                                         whileTap={{ scale: 0.9 }}
                                         transition={{ duration: 0.1 }}
-                                        onClick={() => setAvatar(t, { colors, name }, themeValue)}
+                                        onClick={() => setAvatar({ colors, name })}
                                     >
                                         <Avatar
                                             height={height}
@@ -175,9 +160,9 @@ export const Settings = () => {
                     </div>
                 </Card>
 
-                <Card icon={Info} title={t("settings.cards.aboutSystem.title")} description={t("settings.cards.aboutSystem.description")} />
+                <Card icon={Info} title="Sobre o sistema" description="Sistema de Gestão de Alunos - Instituto Reciclar | Versão 1.0.0 | © 2026 Instituto Reciclar" />
 
-                <Card icon={DoorOpen} title={t("settings.cards.logout.title")} description={t("settings.cards.logout.description")} column={true}>
+                <Card icon={DoorOpen} title="Sair do sistema" description="Finalize sua sessão atual e retorne à tela de login" column={true}>
                     <Button
                         typeButton="red"
                         type="button"
@@ -188,7 +173,7 @@ export const Settings = () => {
                             navigate("/sign-in");
                         }}
                     >
-                        {language === "pt" ? "Sair" : "Exit"}
+                        Sair
                     </Button>
                 </Card>
             </div>

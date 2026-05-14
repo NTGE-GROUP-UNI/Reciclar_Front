@@ -1,12 +1,6 @@
-//ZUSTAND
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
-//TOASTS
 import { handleToasts } from "@/shared/lib/toast/toast-custom";
-
-//I18N
-import type { TFunction } from "i18next";
 
 interface PayloadProps {
     colors: string[];
@@ -36,7 +30,7 @@ export const avatarStore = create<AvatarStoreProps>()(
         })
 )
 
-export const setAvatar = (t: TFunction, { colors, name }: PayloadProps, theme: boolean) => {
-    handleToasts({ message: t("settings.cards.avatar.message"), theme, type: "success" })
+export const setAvatar = ({ colors, name }: PayloadProps) => {
+    handleToasts({ message: "Avatar alterado com sucesso!", type: "success" })
     avatarStore.getState().changeAvatar(colors, name);
 }

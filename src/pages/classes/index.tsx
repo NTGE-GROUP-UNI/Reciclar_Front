@@ -16,12 +16,11 @@ import { useQuery } from "@tanstack/react-query";
 import { ModalDanger } from "./components/modal-danger";
 import { ModalEdit } from "./components/modal-edit";
 import { seletecUniqueClasses } from "@/shared/utils/classroom/utils";
-import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import { handleToasts } from "@/shared/lib/toast/toast-custom";
 
 export const Classes = () => {
 
-    const { t } = useTranslation();
     const [isFiltred, setIsFiltered] = useState(false);
     const [filteredClasses, setFilteredClasses] = useState<IClassSummary[] | null>(null);
     const [openModalRegister, setOpenModalRegister] = useState<boolean>(false);
@@ -40,6 +39,10 @@ export const Classes = () => {
 
         if (isFiltred) {
             reloadDatas();
+            handleToasts({
+                message: "Classes atualizadas!",
+                type: "success"
+            })
             return;
         }
 
@@ -47,7 +50,9 @@ export const Classes = () => {
 
         const condition = filterShift || filterClass;
 
-        if (condition && classes) {
+        if (!classes) return;
+
+        if (condition && classes.length > 1) {
             const filtered = classes.filter((cl) => {
 
                 const matchShift = filterShift
@@ -63,6 +68,17 @@ export const Classes = () => {
 
             setFilteredClasses(filtered);
             setIsFiltered(true);
+            handleToasts({
+                message: "Busca concluída!",
+                type: "success"
+            })
+        }
+
+        if (classes.length <= 1) {
+            handleToasts({
+                message: "O filtro não pode ser aplicado para apenas um registro...",
+                type: "info"
+            })
         }
     }
 
@@ -88,7 +104,7 @@ export const Classes = () => {
                             mb-2
                         "
                     >
-                        {t("classes.title")}
+                        Gestão de Turmas
                     </h1>
                     <p
                         className="
@@ -96,7 +112,7 @@ export const Classes = () => {
                             text-md dark:text-zinc-400
                         "
                     >
-                        {t("classes.description")}
+                        Gerenciamento e controle de turmas
                     </p>
                 </div>
 
@@ -106,7 +122,7 @@ export const Classes = () => {
                     className="md:max-w-48"
                     onClick={() => setOpenModalRegister(prev => !prev)}
                 >
-                    <Plus /> <span>{t("classes.buttons.registerClass")}</span>
+                    <Plus /> <span>Cadastrar turma</span>
                 </Button>
             </TitleStructure>
 
@@ -116,7 +132,7 @@ export const Classes = () => {
             >
                 <Form.Select.Wrapper>
                     <Description
-                        description={t("classes.inputs.filterClass.description")}
+                        description="Filtrar por turma"
                         dirX="right"
                         dirY="top"
                     >
@@ -130,7 +146,7 @@ export const Classes = () => {
                                 hidden
                                 value=""
                             >
-                                {t("classes.inputs.filterClass.value")}
+                                Turma
                             </Form.Select.Option>
                             {
                                 uniqueClasses &&
@@ -160,7 +176,7 @@ export const Classes = () => {
                 </Form.Select.Wrapper>
                 <Form.Select.Wrapper>
                     <Description
-                        description={t("classes.inputs.filterShift.description")}
+                        description="Filtrar por turno"
                         dirX="right"
                         dirY="top"
                     >
@@ -174,7 +190,7 @@ export const Classes = () => {
                                 hidden
                                 value=""
                             >
-                                {t("classes.inputs.filterShift.value")}
+                                Turno
                             </Form.Select.Option>
                             <Form.Select.Option
                                 value="Manhã"
@@ -210,7 +226,7 @@ export const Classes = () => {
                     typeButton="blue"
                     className="md:w-auto md:h-10 px-3"
                 >
-                    {!isFiltred ? <>{t("global.buttons.search")} <Search /></> : <>{t("global.buttons.uploadAgain")} <RotateCcw /></>}
+                    {!isFiltred ? <>Buscar <Search /></> : <>Carregar novamente <RotateCcw /></>}
                 </Button>
             </Form.Root>
 
@@ -230,8 +246,8 @@ export const Classes = () => {
                         list && list.length >= 1 ?
                             <div
                                 className="
-                py-8 flex flex-row flex-wrap gap-6
-            "
+                                    py-8 flex flex-row flex-wrap gap-6
+                                "
                             >
 
                                 {
@@ -271,7 +287,7 @@ export const Classes = () => {
                             dark:text-zinc-400 text-xl text-center
                         "
                                 >
-                                    {t("classes.errors.notFound")}
+                                    Não foi possível encontrar a turma...
                                 </h1>
                                 <img
                                     src="https://res.cloudinary.com/essencialdev-cloudinary/image/upload/v1778615035/not_found_filter_iylac4.svg"

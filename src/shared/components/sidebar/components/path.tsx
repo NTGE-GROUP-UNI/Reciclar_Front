@@ -21,7 +21,7 @@ export const Path = ({ children, to, className, ...props }: PathProps) => {
             onClick={setSideOpen}
             className={cn(
                 "text-left font-medium py-3 px-4 transition-all duration-300 relative",
-                "cursor-pointer flex flex-row gap-2 text-zinc-100 dark:text-zinc-200",
+                "cursor-pointer flex flex-row items-center gap-2 text-zinc-100 dark:text-zinc-200",
                 "hover:bg-zinc-200/10 dark:hover:bg-zinc-400/20",
                 isActive ? "bg-zinc-200/20 dark:bg-zinc-400/40" : "bg-transparent",
                 className

@@ -1,7 +1,6 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import { handleToasts } from "@/shared/lib/toast/toast-custom";
-import type { TFunction } from "i18next";
 
 interface ThemeStoreProps {
     themeValue: boolean;
@@ -18,7 +17,7 @@ export const themeStore = create<ThemeStoreProps>()(
         })
 )
 
-export const setTheme = (t: TFunction, theme: boolean) => {
-    handleToasts({ message: t("settings.cards.theme.message"), theme, type: "success" });
+export const setTheme = () => {
+    handleToasts({ message: "Tema alterado com sucesso!", type: "success" });
     themeStore.getState().toggleTheme();
 }

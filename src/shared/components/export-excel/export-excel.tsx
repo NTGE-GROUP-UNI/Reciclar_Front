@@ -1,6 +1,5 @@
 import { FileText } from "lucide-react"
 import { Button } from "../shared";
-import { useTranslation } from "react-i18next";
 import { useMutation } from "@tanstack/react-query";
 import { Spinner } from "@/shared/ui/spinner";
 
@@ -10,8 +9,6 @@ interface ExportExcelButtonProps {
 }
 
 export const ExportExcelButton = ({ fn, name }:ExportExcelButtonProps) => {
-
-    const { t } = useTranslation();
 
     const downloadSpreadsheet = async () => {
         const data = await fn();
@@ -44,7 +41,7 @@ export const ExportExcelButton = ({ fn, name }:ExportExcelButtonProps) => {
                 <Spinner />
                 :
                 <>
-                    <FileText /> <span>{t("global.buttons.excel")}</span>
+                    <FileText /> <span>Exportar Excel</span>
                 </>
             }
             
